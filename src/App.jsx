@@ -359,7 +359,7 @@ function App() {
               <p className="text-xs uppercase tracking-[0.3em] text-teal-200">
                 UUID version
               </p>
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="flex flex-col gap-3">
                 {versionChoices.map((choice) => {
                   const isActive = choice.id === selectedVersion;
                   const badgeTypeScale = badgeTypographyClass(choice.badge);
@@ -368,7 +368,7 @@ function App() {
                       key={choice.id}
                       type="button"
                       onClick={() => handleVersionChange(choice.id)}
-                      className={`rounded-2xl border px-4 py-4 text-left transition ${
+                      className={`w-full rounded-2xl border px-4 py-4 text-left transition ${
                         isActive
                           ? "border-teal-300 bg-white/10 text-white"
                           : "border-white/10 bg-white/5 text-slate-300 hover:border-white/30"
