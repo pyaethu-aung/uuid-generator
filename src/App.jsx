@@ -61,6 +61,18 @@ const versionChoices = [
   },
 ];
 
+const badgeTypographyClass = (label) => {
+  if (label.length >= 12) {
+    return "text-[0.55rem] tracking-[0.16em]";
+  }
+
+  if (label.length >= 9) {
+    return "text-[0.62rem] tracking-[0.18em]";
+  }
+
+  return "text-[0.7rem] tracking-[0.22em]";
+};
+
 const formatUuid = (value, options) => {
   let next = value;
 
@@ -350,6 +362,7 @@ function App() {
               <div className="grid gap-3 sm:grid-cols-2">
                 {versionChoices.map((choice) => {
                   const isActive = choice.id === selectedVersion;
+                  const badgeTypeScale = badgeTypographyClass(choice.badge);
                   return (
                     <button
                       key={choice.id}
@@ -361,12 +374,12 @@ function App() {
                           : "border-white/10 bg-white/5 text-slate-300 hover:border-white/30"
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <p className="text-base font-semibold text-inherit whitespace-nowrap">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-base font-semibold text-inherit">
                           {choice.title}
                         </p>
                         <span
-                          className={`ml-auto flex-shrink-0 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] whitespace-nowrap ${
+                          className={`rounded-full px-3 py-1 font-semibold uppercase ${badgeTypeScale} ${
                             isActive
                               ? "bg-teal-300/20 text-teal-100"
                               : "bg-white/10 text-slate-200"
