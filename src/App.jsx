@@ -361,12 +361,12 @@ function App() {
                           : "border-white/10 bg-white/5 text-slate-300 hover:border-white/30"
                       }`}
                     >
-                      <div className="flex items-center justify-between">
-                        <p className="text-base font-semibold text-inherit">
+                      <div className="flex items-center gap-3">
+                        <p className="text-base font-semibold text-inherit whitespace-nowrap">
                           {choice.title}
                         </p>
                         <span
-                          className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${
+                          className={`ml-auto flex-shrink-0 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] whitespace-nowrap ${
                             isActive
                               ? "bg-teal-300/20 text-teal-100"
                               : "bg-white/10 text-slate-200"
