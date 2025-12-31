@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { v1 as uuidV1, v4 as uuidV4, v7 as uuidV7 } from "uuid";
 import "./App.css";
 
 const defaultOptions = {
@@ -23,7 +24,42 @@ const createUuid = () => {
   });
 };
 
-const buildBatch = (count) => Array.from({ length: count }, () => createUuid());
+const uuidGenerators = {
+  v1: () => (typeof uuidV1 === "function" ? uuidV1() : createUuid()),
+  v4: () => (typeof uuidV4 === "function" ? uuidV4() : createUuid()),
+  v7: () => {
+    if (typeof uuidV7 === "function") {
+      return uuidV7();
+    }
+
+    return typeof uuidV4 === "function" ? uuidV4() : createUuid();
+  },
+};
+
+const buildBatch = (count, generator = uuidGenerators.v4) =>
+  Array.from({ length: count }, () => generator());
+
+const versionChoices = [
+  {
+    id: "v4",
+    title: "Version 4",
+    badge: "Random",
+    detail: "Pure randomness via Web Crypto for most workflows.",
+  },
+  {
+    id: "v1",
+    title: "Version 1",
+    badge: "Time-ordered",
+    detail: "Timestamp-first IDs that stay sortable for logs and tracing.",
+  },
+  {
+    id: "v7",
+    title: "Version 7",
+    badge: "Unix time",
+    detail:
+      "Modern hybrid using time bits plus randomness for distributed systems.",
+  },
+];
 
 const formatUuid = (value, options) => {
   let next = value;
@@ -45,6 +81,7 @@ const formatUuid = (value, options) => {
 
 function App() {
   const [batchSize, setBatchSize] = useState(1);
+  const [selectedVersion, setSelectedVersion] = useState("v4");
   const [options, setOptions] = useState(defaultOptions);
   const [rawUuids, setRawUuids] = useState(() => buildBatch(1));
   const [feedback, setFeedback] = useState("");
@@ -75,9 +112,21 @@ function App() {
     feedbackTimer.current = setTimeout(() => setFeedback(""), 2400);
   };
 
+  const generatorForVersion = useMemo(
+    () => uuidGenerators[selectedVersion] ?? uuidGenerators.v4,
+    [selectedVersion]
+  );
+
   const regenerate = () => {
-    setRawUuids(buildBatch(batchSize));
+    setRawUuids(buildBatch(batchSize, generatorForVersion));
     stageFeedback("Generated fresh UUIDs");
+  };
+
+  const handleVersionChange = (versionId) => {
+    setSelectedVersion(versionId);
+    const nextGenerator = uuidGenerators[versionId] ?? uuidGenerators.v4;
+    setRawUuids(buildBatch(batchSize, nextGenerator));
+    stageFeedback(`Switched to UUID ${versionId.toUpperCase()}`);
   };
 
   const handleCopy = async (value) => {
@@ -126,16 +175,16 @@ function App() {
 
   const insightCards = [
     {
-      label: "Characters each",
-      value: formattedUuids[0]?.length ?? 0,
+      label: "Version",
+      value: selectedVersion.toUpperCase(),
     },
     {
       label: "Batch size",
       value: formattedUuids.length,
     },
     {
-      label: "Format",
-      value: options.trimHyphens ? "Compact" : "RFC 4122",
+      label: "Characters each",
+      value: formattedUuids[0]?.length ?? 0,
     },
   ];
 
@@ -292,6 +341,47 @@ function App() {
               <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
                 Up to 20 UUIDs per batch
               </p>
+            </div>
+
+            <div className="mt-8 space-y-3">
+              <p className="text-xs uppercase tracking-[0.3em] text-teal-200">
+                UUID version
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {versionChoices.map((choice) => {
+                  const isActive = choice.id === selectedVersion;
+                  return (
+                    <button
+                      key={choice.id}
+                      type="button"
+                      onClick={() => handleVersionChange(choice.id)}
+                      className={`rounded-2xl border px-4 py-4 text-left transition ${
+                        isActive
+                          ? "border-teal-300 bg-white/10 text-white"
+                          : "border-white/10 bg-white/5 text-slate-300 hover:border-white/30"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <p className="text-base font-semibold text-inherit">
+                          {choice.title}
+                        </p>
+                        <span
+                          className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${
+                            isActive
+                              ? "bg-teal-300/20 text-teal-100"
+                              : "bg-white/10 text-slate-200"
+                          }`}
+                        >
+                          {choice.badge}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-inherit opacity-80">
+                        {choice.detail}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="mt-8 space-y-3">
