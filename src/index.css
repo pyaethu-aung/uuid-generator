@@ -1,70 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --page-bg: #030712;
+    --page-gradient: radial-gradient(
+        circle at 15% 20%,
+        rgba(45, 212, 191, 0.18),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 80% 10%,
+        rgba(59, 130, 246, 0.12),
+        transparent 50%
+      ),
+      linear-gradient(130deg, #030712 0%, #050918 45%, #05050e 100%);
+    --grid-color: rgba(148, 163, 184, 0.08);
   }
-  a:hover {
-    color: #747bff;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
-  button {
-    background-color: #f9f9f9;
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
+    background-color: var(--page-bg);
+    background-image: var(--page-gradient);
+    color: #e2e8ff;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(
+        transparent 0 90%,
+        rgba(255, 255, 255, 0.04) 90%
+      ),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 0);
+    background-size: 100% 60px, 60px 100%;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  code {
+    font-family: "Chivo Mono", "Space Grotesk", monospace;
+  }
+
+  ::selection {
+    background-color: rgba(45, 212, 191, 0.3);
+    color: #0f172a;
   }
 }

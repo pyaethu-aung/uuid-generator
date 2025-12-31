@@ -1,6 +1,38 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.app-shell {
+  min-height: 100vh;
+}
+
+.gradient-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.65;
+  pointer-events: none;
+  animation: blob-drift 18s ease-in-out infinite alternate;
+}
+
+.gradient-blob-one {
+  top: -10%;
+  right: -12%;
+  width: 28rem;
+  height: 28rem;
+  background: radial-gradient(circle at 30% 20%, #2ee7c9, transparent 60%);
+}
+
+.gradient-blob-two {
+  bottom: -15%;
+  left: -5%;
+  width: 36rem;
+  height: 36rem;
+  background: radial-gradient(circle at 70% 70%, #2563eb, transparent 65%);
+  animation-duration: 22s;
+}
+
+@keyframes blob-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, -6%, 0) scale(1.1);
+  }
 }
