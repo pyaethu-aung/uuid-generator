@@ -84,6 +84,7 @@ function App() {
   const [selectedVersion, setSelectedVersion] = useState("v4");
   const [options, setOptions] = useState(defaultOptions);
   const [rawUuids, setRawUuids] = useState(() => buildBatch(1));
+  const [copiedUuid, setCopiedUuid] = useState("");
   const [feedback, setFeedback] = useState("");
   const feedbackTimer = useRef(null);
 
@@ -137,7 +138,9 @@ function App() {
 
     try {
       await navigator.clipboard.writeText(value);
+      setCopiedUuid(value);
       stageFeedback("Copied to clipboard");
+      setTimeout(() => setCopiedUuid(""), 1200);
     } catch (error) {
       console.error("Unable to copy UUID", error);
       stageFeedback("Copy failed — please try again");
@@ -265,23 +268,49 @@ function App() {
                     <button
                       type="button"
                       onClick={() => handleCopy(uuid)}
-                      className="inline-flex items-center gap-2 rounded-full bg-teal-400/90 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-teal-300"
+                      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-slate-950 transition duration-200 ${
+                        copiedUuid === uuid
+                          ? "scale-95 bg-emerald-300 text-slate-900 shadow-inner"
+                          : "bg-teal-400/90 hover:scale-105 hover:bg-teal-300"
+                      }`}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        className="h-4 w-4"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M8 8h10M8 12h6M8 16h4M5 4h11a2 2 0 0 1 2 2v14l-4-3-4 3-4-3-4 3V6a2 2 0 0 1 2-2z"
-                        />
-                      </svg>
-                      Copy
+                      {copiedUuid === uuid ? (
+                        <>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            className="h-4 w-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                          Copied
+                        </>
+                      ) : (
+                        <>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            className="h-4 w-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M8 8h10M8 12h6M8 16h4M5 4h11a2 2 0 0 1 2 2v14l-4-3-4 3-4-3-4 3V6a2 2 0 0 1 2-2z"
+                            />
+                          </svg>
+                          Copy
+                        </>
+                      )}
                     </button>
                   </div>
                 </li>
