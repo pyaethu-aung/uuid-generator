@@ -61,18 +61,6 @@ const versionChoices = [
   },
 ];
 
-const badgeTypographyClass = (label) => {
-  if (label.length >= 12) {
-    return "text-[0.55rem] tracking-[0.16em]";
-  }
-
-  if (label.length >= 9) {
-    return "text-[0.62rem] tracking-[0.18em]";
-  }
-
-  return "text-[0.7rem] tracking-[0.22em]";
-};
-
 const formatUuid = (value, options) => {
   let next = value;
 
@@ -362,7 +350,6 @@ function App() {
               <div className="flex flex-col gap-3">
                 {versionChoices.map((choice) => {
                   const isActive = choice.id === selectedVersion;
-                  const badgeTypeScale = badgeTypographyClass(choice.badge);
                   return (
                     <button
                       key={choice.id}
@@ -379,7 +366,7 @@ function App() {
                           {choice.title}
                         </p>
                         <span
-                          className={`rounded-full px-3 py-1 font-semibold uppercase ${badgeTypeScale} ${
+                          className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${
                             isActive
                               ? "bg-teal-300/20 text-teal-100"
                               : "bg-white/10 text-slate-200"
