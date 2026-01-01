@@ -84,7 +84,6 @@ function App() {
   const [selectedVersion, setSelectedVersion] = useState("v4");
   const [options, setOptions] = useState(defaultOptions);
   const [rawUuids, setRawUuids] = useState(() => buildBatch(1));
-  const [downloadCount, setDownloadCount] = useState(20);
   const [copiedUuid, setCopiedUuid] = useState("");
   const [feedback, setFeedback] = useState("");
   const feedbackTimer = useRef(null);
@@ -119,8 +118,10 @@ function App() {
     [selectedVersion]
   );
 
+  const visibleBatchSize = Math.min(batchSize, 20);
+
   const regenerate = () => {
-    setRawUuids(buildBatch(batchSize, generatorForVersion));
+    setRawUuids(buildBatch(visibleBatchSize, generatorForVersion));
     stageFeedback("Generated fresh UUIDs");
   };
 
@@ -149,7 +150,7 @@ function App() {
   };
 
   const downloadList = () => {
-    const effectiveCount = Math.min(Math.max(downloadCount, 1), 200);
+    const effectiveCount = Math.min(Math.max(batchSize, 1), 200);
     const extendedBatch = buildBatch(effectiveCount, generatorForVersion);
     const formattedDownload = extendedBatch.map((value) =>
       formatUuid(value, options)
@@ -375,39 +376,14 @@ function App() {
                 id="batch-size"
                 type="range"
                 min={1}
-                max={20}
+                max={200}
                 value={batchSize}
                 onChange={(event) => setBatchSize(Number(event.target.value))}
                 className="w-full accent-teal-400"
               />
               <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
-                Up to 20 UUIDs per batch
-              </p>
-            </div>
-
-            <div className="mt-8 space-y-3">
-              <label
-                htmlFor="download-size"
-                className="flex items-center justify-between text-sm font-medium text-slate-200"
-              >
-                <span>Download size</span>
-                <span className="text-base font-semibold text-white">
-                  {downloadCount}
-                </span>
-              </label>
-              <input
-                id="download-size"
-                type="range"
-                min={1}
-                max={200}
-                value={downloadCount}
-                onChange={(event) =>
-                  setDownloadCount(Number(event.target.value))
-                }
-                className="w-full accent-teal-400"
-              />
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
-                Up to 200 UUIDs per download
+                Showing {visibleBatchSize} · downloading up to{" "}
+                {Math.min(batchSize, 200)}
               </p>
             </div>
 
