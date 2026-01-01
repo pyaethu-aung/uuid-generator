@@ -274,6 +274,22 @@ function App() {
               </button>
             </div>
 
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
+              {insightCards.map((card) => (
+                <div
+                  key={card.label}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-4"
+                >
+                  <p className="text-xs uppercase tracking-[0.3em] text-teal-200">
+                    {card.label}
+                  </p>
+                  <p className="mt-2 text-lg font-semibold text-white">
+                    {card.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+
             <ul className="mt-8 space-y-3">
               {formattedUuids.map((uuid, index) => (
                 <li
@@ -338,22 +354,6 @@ function App() {
                 </li>
               ))}
             </ul>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              {insightCards.map((card) => (
-                <div
-                  key={card.label}
-                  className="rounded-2xl border border-white/5 bg-white/5 p-4 text-center"
-                >
-                  <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
-                    {card.label}
-                  </p>
-                  <p className="mt-2 text-2xl font-semibold text-white">
-                    {card.value}
-                  </p>
-                </div>
-              ))}
-            </div>
           </article>
 
           <aside className="rounded-[32px] border border-white/10 bg-slate-950/60 p-6 shadow-[0_10px_60px_rgba(5,5,15,0.55)] backdrop-blur">
