@@ -293,7 +293,7 @@ function App() {
             <ul className="mt-8 space-y-3">
               {formattedUuids.map((uuid, index) => (
                 <li
-                  key={`${uuid}-${index}`}
+                  key={index}
                   className="group flex flex-col gap-4 rounded-2xl border border-white/5 bg-slate-950/40 p-4 transition hover:border-teal-400/60 hover:bg-slate-950/70 md:flex-row md:items-center"
                 >
                   <div className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
