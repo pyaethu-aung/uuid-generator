@@ -87,6 +87,7 @@ function App() {
   const [copiedUuid, setCopiedUuid] = useState("");
   const [feedback, setFeedback] = useState("");
   const feedbackTimer = useRef(null);
+  const copiedUuidTimer = useRef(null);
 
   const clipboardSupported =
     typeof navigator !== "undefined" && Boolean(navigator.clipboard?.writeText);
@@ -100,6 +101,9 @@ function App() {
     return () => {
       if (feedbackTimer.current) {
         clearTimeout(feedbackTimer.current);
+      }
+      if (copiedUuidTimer.current) {
+        clearTimeout(copiedUuidTimer.current);
       }
     };
   }, []);
@@ -148,9 +152,14 @@ function App() {
 
     try {
       await navigator.clipboard.writeText(value);
+      
+      if (copiedUuidTimer.current) {
+        clearTimeout(copiedUuidTimer.current);
+      }
+      
       setCopiedUuid(value);
       stageFeedback("Copied to clipboard");
-      setTimeout(() => setCopiedUuid(""), 1200);
+      copiedUuidTimer.current = setTimeout(() => setCopiedUuid(""), 1200);
     } catch (error) {
       console.error("Unable to copy UUID", error);
       stageFeedback("Copy failed — please try again");
