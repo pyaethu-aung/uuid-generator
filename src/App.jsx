@@ -389,7 +389,24 @@ function App() {
                 onChange={(event) => {
                   const nextValue = Number(event.target.value);
                   setBatchSize(nextValue);
-                  syncVisibleBatch(nextValue);
+                }}
+                onPointerUp={() => syncVisibleBatch()}
+                onTouchEnd={() => syncVisibleBatch()}
+                onMouseUp={() => syncVisibleBatch()}
+                onKeyUp={(event) => {
+                  const commitKeys = [
+                    "Enter",
+                    " ",
+                    "ArrowLeft",
+                    "ArrowRight",
+                    "ArrowUp",
+                    "ArrowDown",
+                    "Home",
+                    "End",
+                  ];
+                  if (commitKeys.includes(event.key)) {
+                    syncVisibleBatch();
+                  }
                 }}
                 className="w-full accent-teal-400"
               />
