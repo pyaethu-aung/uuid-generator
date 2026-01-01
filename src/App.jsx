@@ -120,15 +120,23 @@ function App() {
 
   const visibleBatchSize = Math.min(batchSize, 20);
 
+  const syncVisibleBatch = (
+    count = batchSize,
+    generator = generatorForVersion
+  ) => {
+    const limited = Math.min(Math.max(count, 1), 20);
+    setRawUuids(buildBatch(limited, generator));
+  };
+
   const regenerate = () => {
-    setRawUuids(buildBatch(visibleBatchSize, generatorForVersion));
+    syncVisibleBatch();
     stageFeedback("Generated fresh UUIDs");
   };
 
   const handleVersionChange = (versionId) => {
     setSelectedVersion(versionId);
     const nextGenerator = uuidGenerators[versionId] ?? uuidGenerators.v4;
-    setRawUuids(buildBatch(batchSize, nextGenerator));
+    syncVisibleBatch(batchSize, nextGenerator);
     stageFeedback(`Switched to UUID ${versionId.toUpperCase()}`);
   };
 
@@ -378,7 +386,11 @@ function App() {
                 min={1}
                 max={200}
                 value={batchSize}
-                onChange={(event) => setBatchSize(Number(event.target.value))}
+                onChange={(event) => {
+                  const nextValue = Number(event.target.value);
+                  setBatchSize(nextValue);
+                  syncVisibleBatch(nextValue);
+                }}
                 className="w-full accent-teal-400"
               />
               <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
@@ -460,7 +472,8 @@ function App() {
               onClick={regenerate}
               className="mt-10 w-full rounded-2xl bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400 px-6 py-4 text-base font-semibold text-slate-950 shadow-lg shadow-teal-500/30 transition hover:opacity-95"
             >
-              Generate {batchSize > 1 ? `${batchSize} UUIDs` : "a UUID"}
+              Generate{" "}
+              {visibleBatchSize > 1 ? `${visibleBatchSize} UUIDs` : "a UUID"}
             </button>
 
             {!clipboardSupported && (
