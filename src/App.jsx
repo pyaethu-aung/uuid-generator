@@ -410,9 +410,16 @@ function App() {
                     syncVisibleBatch();
                   }
                 }}
+                aria-valuemin={1}
+                aria-valuemax={200}
+                aria-valuenow={batchSize}
+                aria-describedby="batch-size-help"
                 className="w-full accent-teal-400"
               />
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
+              <p
+                id="batch-size-help"
+                className="text-xs uppercase tracking-[0.3em] text-slate-400"
+              >
                 Showing {visibleBatchSize} · downloading up to{" "}
                 {Math.min(batchSize, 200)}
               </p>
