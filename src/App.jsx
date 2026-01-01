@@ -84,6 +84,7 @@ function App() {
   const [selectedVersion, setSelectedVersion] = useState("v4");
   const [options, setOptions] = useState(defaultOptions);
   const [rawUuids, setRawUuids] = useState(() => buildBatch(1));
+  const [downloadCount, setDownloadCount] = useState(20);
   const [copiedUuid, setCopiedUuid] = useState("");
   const [feedback, setFeedback] = useState("");
   const feedbackTimer = useRef(null);
@@ -148,18 +149,26 @@ function App() {
   };
 
   const downloadList = () => {
+    const effectiveCount = Math.min(Math.max(downloadCount, 1), 200);
+    const extendedBatch = buildBatch(effectiveCount, generatorForVersion);
+    const formattedDownload = extendedBatch.map((value) =>
+      formatUuid(value, options)
+    );
+
     const timestamp = new Date()
       .toISOString()
       .replaceAll(":", "-")
       .replaceAll(".", "-");
-    const blob = new Blob([formattedUuids.join("\n")], { type: "text/plain" });
+    const blob = new Blob([formattedDownload.join("\n")], {
+      type: "text/plain",
+    });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = `uuids-${formattedUuids.length}-${timestamp}.txt`;
+    anchor.download = `uuids-${formattedDownload.length}-${timestamp}.txt`;
     anchor.click();
     URL.revokeObjectURL(url);
-    stageFeedback("Saved the batch as a .txt file");
+    stageFeedback(`Saved ${formattedDownload.length} UUIDs as a .txt file`);
   };
 
   const optionDescriptors = [
@@ -373,6 +382,32 @@ function App() {
               />
               <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
                 Up to 20 UUIDs per batch
+              </p>
+            </div>
+
+            <div className="mt-8 space-y-3">
+              <label
+                htmlFor="download-size"
+                className="flex items-center justify-between text-sm font-medium text-slate-200"
+              >
+                <span>Download size</span>
+                <span className="text-base font-semibold text-white">
+                  {downloadCount}
+                </span>
+              </label>
+              <input
+                id="download-size"
+                type="range"
+                min={1}
+                max={200}
+                value={downloadCount}
+                onChange={(event) =>
+                  setDownloadCount(Number(event.target.value))
+                }
+                className="w-full accent-teal-400"
+              />
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
+                Up to 200 UUIDs per download
               </p>
             </div>
 
