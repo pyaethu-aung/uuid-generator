@@ -148,11 +148,15 @@ function App() {
   };
 
   const downloadList = () => {
+    const timestamp = new Date()
+      .toISOString()
+      .replaceAll(":", "-")
+      .replaceAll(".", "-");
     const blob = new Blob([formattedUuids.join("\n")], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = `uuids-${formattedUuids.length}-${Date.now()}.txt`;
+    anchor.download = `uuids-${formattedUuids.length}-${timestamp}.txt`;
     anchor.click();
     URL.revokeObjectURL(url);
     stageFeedback("Saved the batch as a .txt file");
