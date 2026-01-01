@@ -422,13 +422,15 @@ function App() {
               <p className="text-xs uppercase tracking-[0.3em] text-teal-200">
                 UUID version
               </p>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3" role="radiogroup" aria-label="UUID version selection">
                 {versionChoices.map((choice) => {
                   const isActive = choice.id === selectedVersion;
                   return (
                     <button
                       key={choice.id}
                       type="button"
+                      role="radio"
+                      aria-checked={isActive}
                       onClick={() => handleVersionChange(choice.id)}
                       className={`w-full rounded-2xl border px-4 py-4 text-left transition ${
                         isActive
