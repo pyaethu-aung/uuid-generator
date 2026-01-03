@@ -16,7 +16,9 @@ function useUuidGenerator() {
   const [rawUuids, setRawUuids] = useState(() => buildBatch(initialBatchSize));
   const [copiedUuid, setCopiedUuid] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const feedbackTimer = useRef(null);
+  const refreshTimer = useRef(null);
 
   const clipboardSupported =
     typeof navigator !== "undefined" && Boolean(navigator.clipboard?.writeText);
@@ -37,6 +39,9 @@ function useUuidGenerator() {
     return () => {
       if (feedbackTimer.current) {
         clearTimeout(feedbackTimer.current);
+      }
+      if (refreshTimer.current) {
+        clearTimeout(refreshTimer.current);
       }
     };
   }, []);
@@ -59,9 +64,13 @@ function useUuidGenerator() {
   );
 
   const regenerate = useCallback(() => {
+    if (refreshTimer.current) {
+      clearTimeout(refreshTimer.current);
+    }
+    setIsRefreshing(true);
     syncVisibleBatch();
-    stageFeedback("Generated fresh UUIDs");
-  }, [syncVisibleBatch, stageFeedback]);
+    refreshTimer.current = setTimeout(() => setIsRefreshing(false), 400);
+  }, [syncVisibleBatch]);
 
   const handleVersionChange = useCallback(
     (versionId) => {
@@ -139,6 +148,7 @@ function useUuidGenerator() {
     copiedUuid,
     feedback,
     clipboardSupported,
+    isRefreshing,
     regenerate,
     handleCopy,
     handleVersionChange,
