@@ -32,7 +32,7 @@ function App() {
     () => [
       { label: "Version", value: selectedVersion.toUpperCase() },
       { label: "Batch size", value: formattedUuids.length },
-      { label: "Characters each", value: formattedUuids[0]?.length ?? 0 },
+      { label: "Characters", value: formattedUuids[0]?.length ?? 0 },
     ],
     [selectedVersion, formattedUuids]
   );
