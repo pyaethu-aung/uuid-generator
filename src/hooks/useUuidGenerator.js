@@ -17,8 +17,10 @@ function useUuidGenerator() {
   const [copiedUuid, setCopiedUuid] = useState("");
   const [feedback, setFeedback] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const feedbackTimer = useRef(null);
   const refreshTimer = useRef(null);
+  const downloadTimer = useRef(null);
 
   const clipboardSupported =
     typeof navigator !== "undefined" && Boolean(navigator.clipboard?.writeText);
@@ -42,6 +44,9 @@ function useUuidGenerator() {
       }
       if (refreshTimer.current) {
         clearTimeout(refreshTimer.current);
+      }
+      if (downloadTimer.current) {
+        clearTimeout(downloadTimer.current);
       }
     };
   }, []);
@@ -103,29 +108,46 @@ function useUuidGenerator() {
   );
 
   const downloadList = useCallback(() => {
-    const effectiveCount = clamp(batchSize, 1, 200);
-    const extendedBatch = buildBatch(effectiveCount, generatorForVersion);
-    const formattedDownload = extendedBatch.map((value) =>
-      formatUuid(value, options)
-    );
+    if (isDownloading) {
+      return;
+    }
 
-    const timestamp = new Date()
-      .toISOString()
-      .replaceAll(":", "-")
-      .replaceAll(".", "-");
-    const blob = new Blob([formattedDownload.join("\n")], {
-      type: "text/plain",
-    });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = `uuids-${formattedDownload.length}-${timestamp}.txt`;
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
-    URL.revokeObjectURL(url);
-    stageFeedback(`Saved ${formattedDownload.length} UUIDs as a .txt file`);
-  }, [batchSize, generatorForVersion, options, stageFeedback]);
+    if (downloadTimer.current) {
+      clearTimeout(downloadTimer.current);
+    }
+
+    setIsDownloading(true);
+
+    try {
+      const effectiveCount = clamp(batchSize, 1, 200);
+      const extendedBatch = buildBatch(effectiveCount, generatorForVersion);
+      const formattedDownload = extendedBatch.map((value) =>
+        formatUuid(value, options)
+      );
+
+      const timestamp = new Date()
+        .toISOString()
+        .replaceAll(":", "-")
+        .replaceAll(".", "-");
+      const blob = new Blob([formattedDownload.join("\n")], {
+        type: "text/plain",
+      });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `uuids-${formattedDownload.length}-${timestamp}.txt`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      URL.revokeObjectURL(url);
+      stageFeedback(`Saved ${formattedDownload.length} UUIDs as a .txt file`);
+    } catch (error) {
+      console.error("Unable to download UUID list", error);
+      stageFeedback("Download failed — please try again");
+    } finally {
+      downloadTimer.current = setTimeout(() => setIsDownloading(false), 400);
+    }
+  }, [batchSize, generatorForVersion, isDownloading, options, stageFeedback]);
 
   const toggleOption = useCallback((key) => {
     setOptions((prev) => ({
@@ -149,6 +171,7 @@ function useUuidGenerator() {
     feedback,
     clipboardSupported,
     isRefreshing,
+    isDownloading,
     regenerate,
     handleCopy,
     handleVersionChange,

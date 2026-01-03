@@ -21,6 +21,7 @@ function App() {
     feedback,
     clipboardSupported,
     isRefreshing,
+    isDownloading,
     regenerate,
     handleCopy,
     handleVersionChange,
@@ -87,23 +88,37 @@ function App() {
                 <button
                   type="button"
                   onClick={downloadList}
-                  className="theme-ghost-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition"
+                  className={`theme-ghost-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition ${
+                    isDownloading ? "is-busy" : ""
+                  }`}
+                  aria-live="polite"
+                  aria-busy={isDownloading}
+                  disabled={isDownloading}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    className="h-4 w-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4v12m0 0 4-4m-4 4-4-4M4 18h16"
-                    />
-                  </svg>
-                  Download
+                  {isDownloading ? (
+                    <>
+                      <span className="inline-loader" aria-hidden="true" />
+                      Preparing...
+                    </>
+                  ) : (
+                    <>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        className="h-4 w-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4v12m0 0 4-4m-4 4-4-4M4 18h16"
+                        />
+                      </svg>
+                      Download
+                    </>
+                  )}
                 </button>
               </div>
             </div>
