@@ -16,10 +16,12 @@ function BatchSlider({ value, onChange, onCommit, visibleBatchSize }) {
     <div className="mt-8 space-y-3">
       <label
         htmlFor="batch-size"
-        className="flex items-center justify-between text-sm font-medium text-slate-200"
+        className="flex items-center justify-between text-sm font-medium theme-text-secondary"
       >
         <span>Batch size</span>
-        <span className="text-base font-semibold text-white">{value}</span>
+        <span className="text-base font-semibold theme-text-primary">
+          {value}
+        </span>
       </label>
       <input
         id="batch-size"
@@ -36,9 +38,10 @@ function BatchSlider({ value, onChange, onCommit, visibleBatchSize }) {
             onCommit();
           }
         }}
-        className="w-full accent-teal-400"
+        className="w-full"
+        style={{ accentColor: "var(--accent-primary)" }}
       />
-      <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
+      <p className="text-xs uppercase tracking-[0.3em] theme-text-muted">
         Showing {visibleBatchSize} · downloading up to {Math.min(value, 200)}
       </p>
     </div>
@@ -48,7 +51,7 @@ function BatchSlider({ value, onChange, onCommit, visibleBatchSize }) {
 function VersionSelector({ selectedVersion, onVersionChange }) {
   return (
     <div className="mt-8 space-y-3">
-      <p className="text-xs uppercase tracking-[0.3em] text-teal-200">
+      <p className="text-xs uppercase tracking-[0.3em] theme-text-accent">
         UUID version
       </p>
       <div className="flex flex-col gap-3">
@@ -59,27 +62,23 @@ function VersionSelector({ selectedVersion, onVersionChange }) {
               key={choice.id}
               type="button"
               onClick={() => onVersionChange(choice.id)}
-              className={`w-full rounded-2xl border px-4 py-4 text-left transition ${
-                isActive
-                  ? "border-teal-300 bg-white/10 text-white"
-                  : "border-white/10 bg-white/5 text-slate-300 hover:border-white/30"
+              className={`w-full rounded-2xl border px-4 py-4 text-left transition theme-option ${
+                isActive ? "theme-option--active" : ""
               }`}
             >
               <div className="flex items-center justify-between gap-3">
-                <p className="text-base font-semibold text-inherit">
+                <p className="text-base font-semibold theme-text-primary">
                   {choice.title}
                 </p>
                 <span
-                  className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${
-                    isActive
-                      ? "bg-teal-300/20 text-teal-100"
-                      : "bg-white/10 text-slate-200"
+                  className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] theme-badge ${
+                    isActive ? "theme-badge--active" : ""
                   }`}
                 >
                   {choice.badge}
                 </span>
               </div>
-              <p className="mt-2 text-sm text-inherit opacity-80">
+              <p className="mt-2 text-sm theme-text-secondary">
                 {choice.detail}
               </p>
             </button>
@@ -96,17 +95,20 @@ function OptionToggles({ options, onToggleOption }) {
       {optionDescriptors.map((option) => (
         <label
           key={option.key}
-          className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
+          className="flex items-center justify-between gap-4 rounded-2xl border theme-border-subtle theme-glass px-4 py-3"
         >
           <div>
-            <p className="text-base font-semibold text-white">{option.title}</p>
-            <p className="text-sm text-slate-300">{option.detail}</p>
+            <p className="text-base font-semibold theme-text-primary">
+              {option.title}
+            </p>
+            <p className="text-sm theme-text-secondary">{option.detail}</p>
           </div>
           <input
             type="checkbox"
             checked={options[option.key]}
             onChange={() => onToggleOption(option.key)}
-            className="h-5 w-5 accent-teal-400"
+            className="h-5 w-5"
+            style={{ accentColor: "var(--accent-primary)" }}
           />
         </label>
       ))}
@@ -127,15 +129,15 @@ function ControlPanel({
   clipboardSupported,
 }) {
   return (
-    <aside className="rounded-4xl border border-white/10 bg-slate-950/60 p-6 shadow-[0_10px_60px_rgba(5,5,15,0.55)] backdrop-blur">
+    <aside className="rounded-[32px] border theme-border-subtle theme-panel theme-shadow-panel p-6 backdrop-blur">
       <div className="space-y-2">
-        <p className="text-sm uppercase tracking-[0.3em] text-teal-100">
+        <p className="text-sm uppercase tracking-[0.3em] theme-text-accent">
           Batch controls
         </p>
-        <h2 className="text-2xl font-semibold text-white">
+        <h2 className="text-2xl font-semibold theme-text-primary">
           Fine-tune your output
         </h2>
-        <p className="text-sm text-slate-300">
+        <p className="text-sm theme-text-secondary">
           Choose how many UUIDs to mint and the format you want before pressing
           generate.
         </p>
@@ -158,7 +160,7 @@ function ControlPanel({
       <button
         type="button"
         onClick={onGenerate}
-        className="mt-10 w-full rounded-2xl bg-linear-to-r from-teal-400 via-emerald-400 to-cyan-400 px-6 py-4 text-base font-semibold text-slate-950 shadow-lg shadow-teal-500/30 transition hover:opacity-95"
+        className="theme-cta mt-10 w-full rounded-2xl px-6 py-4 text-base font-semibold shadow-lg transition hover:opacity-95"
       >
         Generate {visibleBatchSize > 1 ? `${visibleBatchSize} UUIDs` : "a UUID"}
       </button>
