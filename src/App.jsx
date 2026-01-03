@@ -20,6 +20,7 @@ function App() {
     copiedUuid,
     feedback,
     clipboardSupported,
+    isRefreshing,
     regenerate,
     handleCopy,
     handleVersionChange,
@@ -64,6 +65,8 @@ function App() {
                   type="button"
                   onClick={regenerate}
                   className="theme-ghost-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition"
+                  aria-live="polite"
+                  aria-busy={isRefreshing}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +74,7 @@ function App() {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.5"
-                    className="h-4 w-4"
+                    className={`h-4 w-4 ${isRefreshing ? "icon-spin" : ""}`}
                   >
                     <path
                       strokeLinecap="round"
