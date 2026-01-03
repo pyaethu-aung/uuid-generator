@@ -59,27 +59,50 @@ function App() {
                   {formattedUuids.length === 1 ? "" : "s"}
                 </h2>
               </div>
-              <button
-                type="button"
-                onClick={downloadList}
-                className="theme-ghost-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  className="h-4 w-4"
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={regenerate}
+                  className="theme-ghost-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 4v12m0 0 4-4m-4 4-4-4M4 18h16"
-                  />
-                </svg>
-                Download
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 4v5h.582M20 20v-5h-.581M5 9a7 7 0 0 1 12.138-3.995L19 7M19 15a7 7 0 0 1-12.139 3.995L5 17"
+                    />
+                  </svg>
+                  Refresh
+                </button>
+                <button
+                  type="button"
+                  onClick={downloadList}
+                  className="theme-ghost-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 4v12m0 0 4-4m-4 4-4-4M4 18h16"
+                    />
+                  </svg>
+                  Download
+                </button>
+              </div>
             </div>
 
             <InsightCards insights={insights} />
