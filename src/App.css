@@ -151,3 +151,16 @@
   border-color: var(--border-strong);
   color: var(--text-primary);
 }
+
+.icon-spin {
+  animation: icon-rotate 0.9s linear infinite;
+}
+
+@keyframes icon-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
