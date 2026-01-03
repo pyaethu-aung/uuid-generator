@@ -78,7 +78,7 @@ function App() {
                     d="M12 4v12m0 0 4-4m-4 4-4-4M4 18h16"
                   />
                 </svg>
-                Download .txt
+                Download
               </button>
             </div>
 
