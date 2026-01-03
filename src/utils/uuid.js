@@ -46,6 +46,18 @@ export const optionDescriptors = [
   },
 ];
 
+export const uuidGenerators = {
+  v1: () => (typeof uuidV1 === "function" ? uuidV1() : createUuid()),
+  v4: () => (typeof uuidV4 === "function" ? uuidV4() : createUuid()),
+  v7: () => {
+    if (typeof uuidV7 === "function") {
+      return uuidV7();
+    }
+
+    return typeof uuidV4 === "function" ? uuidV4() : createUuid();
+  },
+};
+
 export const buildBatch = (count, generator = uuidGenerators.v4) =>
   Array.from({ length: count }, () => generator());
 
@@ -81,16 +93,4 @@ export const formatUuid = (value, options) => {
   }
 
   return next;
-};
-
-export const uuidGenerators = {
-  v1: () => (typeof uuidV1 === "function" ? uuidV1() : createUuid()),
-  v4: () => (typeof uuidV4 === "function" ? uuidV4() : createUuid()),
-  v7: () => {
-    if (typeof uuidV7 === "function") {
-      return uuidV7();
-    }
-
-    return typeof uuidV4 === "function" ? uuidV4() : createUuid();
-  },
 };
