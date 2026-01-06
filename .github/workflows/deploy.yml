@@ -4,11 +4,14 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - "README.md"
-      - "LICENSE"
-      - "**/*.md"
-      - "docs/**"
+    paths:
+      - ".github/workflows/deploy.yml"
+      - "src/**"
+      - "index.html"
+      - "package.json"
+      - "package-lock.json"
+      - "vite.config.js"
+      - "eslint.config.js"
 
 permissions:
   contents: read
