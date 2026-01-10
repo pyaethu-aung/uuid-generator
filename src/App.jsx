@@ -1,15 +1,48 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ControlPanel from "./components/ControlPanel";
 import Hero from "./components/Hero";
 import InsightCards from "./components/InsightCards";
+import ShortcutReference from "./components/ShortcutReference";
 import ThemeToggle from "./components/ThemeToggle";
 import UuidList from "./components/UuidList";
 import useTheme from "./hooks/useTheme";
 import useUuidGenerator from "./hooks/useUuidGenerator";
 import "./App.css";
 
+const SHORTCUTS = [
+  {
+    combo: "Cmd/Ctrl + Enter",
+    description: "Regenerate the latest UUID batch",
+  },
+  {
+    combo: "Cmd/Ctrl + Alt + S",
+    description: "Download the batch as a .txt file",
+  },
+  {
+    combo: "Alt + Arrow Up / Down",
+    description: "Adjust batch size (hold Shift for ±10)",
+  },
+  {
+    combo: "Alt + 1 / 2 / 3",
+    description: "Switch between v4, v1, and v7 generators",
+  },
+  {
+    combo: "Alt + U / H / B",
+    description: "Toggle uppercase, remove hyphens, wrap braces",
+  },
+  {
+    combo: "Shift + ?",
+    description: "Open the shortcut reference panel",
+  },
+  {
+    combo: "Esc",
+    description: "Close the shortcut panel",
+  },
+];
+
 function App() {
   const { theme, toggleTheme } = useTheme();
+  const [isShortcutHelpOpen, setShortcutHelpOpen] = useState(false);
   const {
     batchSize,
     setBatchSize,
@@ -66,6 +99,22 @@ function App() {
       const code = event.code;
       const isEnterKey = key === "enter" || key === "return";
       const metaOrCtrl = event.metaKey || event.ctrlKey;
+
+      if (key === "escape" && isShortcutHelpOpen) {
+        event.preventDefault();
+        setShortcutHelpOpen(false);
+        return;
+      }
+
+      if (key === "?" || (code === "Slash" && event.shiftKey)) {
+        event.preventDefault();
+        setShortcutHelpOpen(true);
+        return;
+      }
+
+      if (isShortcutHelpOpen) {
+        return;
+      }
 
       if (metaOrCtrl && isEnterKey) {
         event.preventDefault();
@@ -130,6 +179,7 @@ function App() {
     batchSize,
     downloadList,
     handleVersionChange,
+    isShortcutHelpOpen,
     regenerate,
     setBatchSizeAndCommit,
     toggleOption,
@@ -149,7 +199,15 @@ function App() {
       <div className="gradient-blob gradient-blob-one" aria-hidden="true" />
       <div className="gradient-blob gradient-blob-two" aria-hidden="true" />
       <main className="relative z-10 mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 lg:py-24">
-        <div className="flex justify-end">
+        <div className="flex items-center justify-end gap-3">
+          <button
+            type="button"
+            onClick={() => setShortcutHelpOpen(true)}
+            className="theme-ghost-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition"
+          >
+            <span aria-hidden="true">?</span>
+            <span>Shortcuts</span>
+          </button>
           <ThemeToggle theme={theme} onToggle={toggleTheme} />
         </div>
         <Hero feedback={feedback} />
@@ -251,6 +309,11 @@ function App() {
           />
         </section>
       </main>
+      <ShortcutReference
+        isOpen={isShortcutHelpOpen}
+        shortcuts={SHORTCUTS}
+        onClose={() => setShortcutHelpOpen(false)}
+      />
     </div>
   );
 }

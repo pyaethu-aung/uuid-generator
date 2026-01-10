@@ -1,4 +1,6 @@
-function ThemeToggle({ theme, onToggle }) {
+import { forwardRef } from "react";
+
+const ThemeToggle = forwardRef(function ThemeToggle({ theme, onToggle }, ref) {
   const isDark = theme === "dark";
   const label = `Switch to ${isDark ? "light" : "dark"} mode`;
 
@@ -8,6 +10,7 @@ function ThemeToggle({ theme, onToggle }) {
       onClick={onToggle}
       className="theme-toggle inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition"
       aria-label={label}
+      ref={ref}
     >
       {isDark ? (
         <svg
@@ -45,6 +48,6 @@ function ThemeToggle({ theme, onToggle }) {
       <span>{isDark ? "Dark" : "Light"} mode</span>
     </button>
   );
-}
+});
 
 export default ThemeToggle;
