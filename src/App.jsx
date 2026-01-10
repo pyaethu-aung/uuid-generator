@@ -1,44 +1,15 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import ControlPanel from "./components/ControlPanel";
 import Hero from "./components/Hero";
 import InsightCards from "./components/InsightCards";
 import ShortcutReference from "./components/ShortcutReference";
 import ThemeToggle from "./components/ThemeToggle";
 import UuidList from "./components/UuidList";
+import SHORTCUTS from "./data/shortcuts";
+import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
 import useTheme from "./hooks/useTheme";
 import useUuidGenerator from "./hooks/useUuidGenerator";
 import "./App.css";
-
-const SHORTCUTS = [
-  {
-    combo: "Cmd/Ctrl + Enter",
-    description: "Regenerate the latest UUID batch",
-  },
-  {
-    combo: "Cmd/Ctrl + Alt + S",
-    description: "Download the batch as a .txt file",
-  },
-  {
-    combo: "Alt + Arrow Up / Down",
-    description: "Adjust batch size (hold Shift for ±10)",
-  },
-  {
-    combo: "Alt + 1 / 2 / 3",
-    description: "Switch between v4, v1, and v7 generators",
-  },
-  {
-    combo: "Alt + U / H / B",
-    description: "Toggle uppercase, remove hyphens, wrap braces",
-  },
-  {
-    combo: "Shift + ?",
-    description: "Open the shortcut reference panel",
-  },
-  {
-    combo: "Esc",
-    description: "Close the shortcut panel",
-  },
-];
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -64,126 +35,18 @@ function App() {
     commitBatchSize,
   } = useUuidGenerator();
 
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return undefined;
-    }
-
-    const shouldIgnoreTarget = (target) => {
-      if (!target) return false;
-      if (target.isContentEditable) return true;
-      const tagName = target.tagName?.toUpperCase();
-      if (!tagName) return false;
-      if (["TEXTAREA", "SELECT"].includes(tagName)) return true;
-      if (tagName === "INPUT") {
-        const ignoredTypes = [
-          "text",
-          "email",
-          "search",
-          "url",
-          "password",
-          "number",
-          "tel",
-        ];
-        const inputType = target.type?.toLowerCase();
-        return ignoredTypes.includes(inputType ?? "");
-      }
-      return false;
-    };
-
-    const handleKeyDown = (event) => {
-      if (event.repeat) return;
-      if (shouldIgnoreTarget(event.target)) return;
-
-      const key = event.key?.toLowerCase?.() ?? "";
-      const code = event.code;
-      const isEnterKey = key === "enter" || key === "return";
-      const metaOrCtrl = event.metaKey || event.ctrlKey;
-
-      if (key === "escape" && isShortcutHelpOpen) {
-        event.preventDefault();
-        setShortcutHelpOpen(false);
-        return;
-      }
-
-      if (key === "?" || (code === "Slash" && event.shiftKey)) {
-        event.preventDefault();
-        setShortcutHelpOpen(true);
-        return;
-      }
-
-      if (isShortcutHelpOpen) {
-        return;
-      }
-
-      if (metaOrCtrl && isEnterKey) {
-        event.preventDefault();
-        regenerate();
-        return;
-      }
-
-      if (metaOrCtrl && event.altKey && code === "KeyS") {
-        event.preventDefault();
-        downloadList();
-        return;
-      }
-
-      if (event.altKey && !metaOrCtrl) {
-        if (code === "ArrowUp") {
-          event.preventDefault();
-          const increment = event.shiftKey ? 10 : 1;
-          setBatchSizeAndCommit(batchSize + increment);
-          return;
-        }
-        if (code === "ArrowDown") {
-          event.preventDefault();
-          const decrement = event.shiftKey ? 10 : 1;
-          setBatchSizeAndCommit(batchSize - decrement);
-          return;
-        }
-        if (code === "Digit1") {
-          event.preventDefault();
-          handleVersionChange("v4");
-          return;
-        }
-        if (code === "Digit2") {
-          event.preventDefault();
-          handleVersionChange("v1");
-          return;
-        }
-        if (code === "Digit3") {
-          event.preventDefault();
-          handleVersionChange("v7");
-          return;
-        }
-        if (code === "KeyU") {
-          event.preventDefault();
-          toggleOption("uppercase");
-          return;
-        }
-        if (code === "KeyH") {
-          event.preventDefault();
-          toggleOption("trimHyphens");
-          return;
-        }
-        if (code === "KeyB") {
-          event.preventDefault();
-          toggleOption("wrapBraces");
-        }
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [
+  useKeyboardShortcuts({
     batchSize,
+    formattedUuids,
+    isShortcutHelpOpen,
+    setShortcutHelpOpen,
+    regenerate,
     downloadList,
     handleVersionChange,
-    isShortcutHelpOpen,
-    regenerate,
-    setBatchSizeAndCommit,
     toggleOption,
-  ]);
+    setBatchSizeAndCommit,
+    handleCopy,
+  });
 
   const insights = useMemo(
     () => [
