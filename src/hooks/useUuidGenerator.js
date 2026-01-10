@@ -160,9 +160,19 @@ function useUuidGenerator() {
     syncVisibleBatch();
   }, [syncVisibleBatch]);
 
+  const setBatchSizeAndCommit = useCallback(
+    (nextCount) => {
+      const limited = clamp(nextCount, 1, 200);
+      setBatchSize(limited);
+      syncVisibleBatch(limited);
+    },
+    [syncVisibleBatch]
+  );
+
   return {
     batchSize,
     setBatchSize,
+    setBatchSizeAndCommit,
     visibleBatchSize,
     selectedVersion,
     options,
