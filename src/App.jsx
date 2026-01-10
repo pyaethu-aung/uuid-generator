@@ -31,17 +31,42 @@ function App() {
   } = useUuidGenerator();
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const shouldIgnoreTarget = (target) => {
+      if (!target) return false;
+      if (target.isContentEditable) return true;
+      const tagName = target.tagName?.toUpperCase();
+      if (!tagName) return false;
+      if (["TEXTAREA", "SELECT"].includes(tagName)) return true;
+      if (tagName === "INPUT") {
+        const ignoredTypes = [
+          "text",
+          "email",
+          "search",
+          "url",
+          "password",
+          "number",
+          "tel",
+        ];
+        const inputType = target.type?.toLowerCase();
+        return ignoredTypes.includes(inputType ?? "");
+      }
+      return false;
+    };
+
     const handleKeyDown = (event) => {
       if (event.repeat) return;
-      const targetTag = event.target?.tagName;
-      if (
-        targetTag &&
-        ["INPUT", "TEXTAREA", "SELECT"].includes(targetTag.toUpperCase())
-      ) {
-        return;
-      }
+      if (shouldIgnoreTarget(event.target)) return;
 
-      if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+      const isEnterKey =
+        event.key === "Enter" ||
+        event.key === "Return" ||
+        event.key === "NumpadEnter";
+
+      if ((event.metaKey || event.ctrlKey) && isEnterKey) {
         event.preventDefault();
         regenerate();
       }
