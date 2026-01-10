@@ -13,6 +13,7 @@ function App() {
   const {
     batchSize,
     setBatchSize,
+    setBatchSizeAndCommit,
     visibleBatchSize,
     selectedVersion,
     options,
@@ -79,6 +80,18 @@ function App() {
       }
 
       if (event.altKey && !metaOrCtrl) {
+        if (code === "ArrowUp") {
+          event.preventDefault();
+          const increment = event.shiftKey ? 10 : 1;
+          setBatchSizeAndCommit(batchSize + increment);
+          return;
+        }
+        if (code === "ArrowDown") {
+          event.preventDefault();
+          const decrement = event.shiftKey ? 10 : 1;
+          setBatchSizeAndCommit(batchSize - decrement);
+          return;
+        }
         if (code === "Digit1") {
           event.preventDefault();
           handleVersionChange("v4");
@@ -113,7 +126,14 @@ function App() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [downloadList, handleVersionChange, regenerate, toggleOption]);
+  }, [
+    batchSize,
+    downloadList,
+    handleVersionChange,
+    regenerate,
+    setBatchSizeAndCommit,
+    toggleOption,
+  ]);
 
   const insights = useMemo(
     () => [
