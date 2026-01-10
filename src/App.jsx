@@ -75,12 +75,30 @@ function App() {
       if (metaOrCtrl && event.altKey && code === "KeyS") {
         event.preventDefault();
         downloadList();
+        return;
+      }
+
+      if (event.altKey && !metaOrCtrl) {
+        if (code === "Digit1") {
+          event.preventDefault();
+          handleVersionChange("v4");
+          return;
+        }
+        if (code === "Digit2") {
+          event.preventDefault();
+          handleVersionChange("v1");
+          return;
+        }
+        if (code === "Digit3") {
+          event.preventDefault();
+          handleVersionChange("v7");
+        }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [downloadList, regenerate]);
+  }, [downloadList, handleVersionChange, regenerate]);
 
   const insights = useMemo(
     () => [
