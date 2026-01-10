@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import ControlPanel from "./components/ControlPanel";
 import Hero from "./components/Hero";
 import InsightCards from "./components/InsightCards";
@@ -29,6 +29,27 @@ function App() {
     downloadList,
     commitBatchSize,
   } = useUuidGenerator();
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.repeat) return;
+      const targetTag = event.target?.tagName;
+      if (
+        targetTag &&
+        ["INPUT", "TEXTAREA", "SELECT"].includes(targetTag.toUpperCase())
+      ) {
+        return;
+      }
+
+      if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+        event.preventDefault();
+        regenerate();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [regenerate]);
 
   const insights = useMemo(
     () => [
