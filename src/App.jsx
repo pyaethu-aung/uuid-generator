@@ -92,13 +92,28 @@ function App() {
         if (code === "Digit3") {
           event.preventDefault();
           handleVersionChange("v7");
+          return;
+        }
+        if (code === "KeyU") {
+          event.preventDefault();
+          toggleOption("uppercase");
+          return;
+        }
+        if (code === "KeyH") {
+          event.preventDefault();
+          toggleOption("trimHyphens");
+          return;
+        }
+        if (code === "KeyB") {
+          event.preventDefault();
+          toggleOption("wrapBraces");
         }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [downloadList, handleVersionChange, regenerate]);
+  }, [downloadList, handleVersionChange, regenerate, toggleOption]);
 
   const insights = useMemo(
     () => [
