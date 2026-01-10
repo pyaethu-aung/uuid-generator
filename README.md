@@ -32,6 +32,8 @@ A Tailwind-styled UUID generator built with React 19 and Vite. The app lets you 
 5. Extend download batches to 200 entries while keeping only 20 visible in the live preview.
 6. Replace multiple controls with one slider that manages both preview and download counts, updating immediately as it moves.
 7. Relocate version, batch size, and per-UUID character details into the stat cards above the list to avoid duplicate text elsewhere.
+8. Introduce power-user keyboard shortcuts for regeneration, downloading, batch tweaks, and formatting toggles.
+9. Add an in-app shortcut reference modal opened via Shift + ?, plus documentation describing every combo.
 
 ## Getting Started
 1. `npm install`
