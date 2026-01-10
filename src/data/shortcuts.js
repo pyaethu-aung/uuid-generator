@@ -1,26 +1,26 @@
 const SHORTCUTS = [
   {
-    combo: "Cmd/Ctrl + Enter",
+    combo: "⌘/Ctrl + Enter",
     description: "Regenerate the latest UUID batch",
   },
   {
-    combo: "Cmd/Ctrl + Alt + S",
+    combo: "⌘/Ctrl + Alt + S",
     description: "Download the batch as a .txt file",
   },
   {
-    combo: "Cmd/Ctrl + Shift + C",
+    combo: "⌘/Ctrl + Shift + C",
     description: "Copy the first UUID in the batch",
   },
   {
-    combo: "Alt + Arrow Up / Down",
+    combo: "⌥/Alt + Arrow Up / Down",
     description: "Adjust batch size (hold Shift for ±10)",
   },
   {
-    combo: "Alt + 1 / 2 / 3",
+    combo: "⌥/Alt + 1 / 2 / 3",
     description: "Switch between v4, v1, and v7 generators",
   },
   {
-    combo: "Alt + U / H / B",
+    combo: "⌥/Alt + U / H / B",
     description: "Toggle uppercase, remove hyphens, wrap braces",
   },
   {
