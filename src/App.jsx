@@ -61,20 +61,26 @@ function App() {
       if (event.repeat) return;
       if (shouldIgnoreTarget(event.target)) return;
 
-      const isEnterKey =
-        event.key === "Enter" ||
-        event.key === "Return" ||
-        event.key === "NumpadEnter";
+      const key = event.key?.toLowerCase?.() ?? "";
+      const code = event.code;
+      const isEnterKey = key === "enter" || key === "return";
+      const metaOrCtrl = event.metaKey || event.ctrlKey;
 
-      if ((event.metaKey || event.ctrlKey) && isEnterKey) {
+      if (metaOrCtrl && isEnterKey) {
         event.preventDefault();
         regenerate();
+        return;
+      }
+
+      if (metaOrCtrl && event.altKey && code === "KeyS") {
+        event.preventDefault();
+        downloadList();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [regenerate]);
+  }, [downloadList, regenerate]);
 
   const insights = useMemo(
     () => [
