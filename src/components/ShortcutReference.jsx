@@ -14,13 +14,9 @@ function ShortcutReference({ isOpen, shortcuts, onClose }) {
       if (dialogRef.current && typeof dialogRef.current.focus === "function") {
         dialogRef.current.focus();
       }
+    } else if (!isOpen && triggerRef.current instanceof HTMLElement && document.contains(triggerRef.current)) {
+      triggerRef.current.focus();
     }
-
-    return () => {
-      if (triggerRef.current instanceof HTMLElement && document.contains(triggerRef.current)) {
-        triggerRef.current.focus();
-      }
-    };
   }, [isOpen]);
 
   if (!isOpen) return null;
