@@ -24,6 +24,7 @@ function ShortcutReference({ isOpen, shortcuts, onClose }) {
             type="button"
             onClick={onClose}
             className="theme-ghost-button inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold"
+            aria-label="Close keyboard shortcuts dialog"
           >
             Close
           </button>
