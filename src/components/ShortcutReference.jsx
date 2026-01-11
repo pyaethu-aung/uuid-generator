@@ -8,13 +8,13 @@ function ShortcutReference({ isOpen, shortcuts, onClose }) {
 
   useEffect(() => {
     if (isOpen) {
-      if (document && document.activeElement instanceof HTMLElement) {
+      if (document.activeElement instanceof HTMLElement) {
         triggerRef.current = document.activeElement;
       }
       if (dialogRef.current && typeof dialogRef.current.focus === "function") {
         dialogRef.current.focus();
       }
-    } else if (!isOpen && triggerRef.current instanceof HTMLElement && document.contains(triggerRef.current)) {
+    } else if (!isOpen && triggerRef.current instanceof HTMLElement && document.body.contains(triggerRef.current)) {
       triggerRef.current.focus();
     }
   }, [isOpen]);
