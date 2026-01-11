@@ -126,6 +126,7 @@ function useKeyboardShortcuts({
         if (code === "KeyB") {
           event.preventDefault();
           toggleOption("wrapBraces");
+          return;
         }
       }
     };
