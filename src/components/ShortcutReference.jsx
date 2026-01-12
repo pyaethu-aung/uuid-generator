@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import FocusTrap from "focus-trap-react";
+import { FocusTrap } from "focus-trap-react";
 import PropTypes from "prop-types";
 
 function ShortcutReference({ isOpen, shortcuts, onClose }) {
@@ -14,7 +14,11 @@ function ShortcutReference({ isOpen, shortcuts, onClose }) {
       if (dialogRef.current && typeof dialogRef.current.focus === "function") {
         dialogRef.current.focus();
       }
-    } else if (!isOpen && triggerRef.current instanceof HTMLElement && document.body.contains(triggerRef.current)) {
+    } else if (
+      !isOpen &&
+      triggerRef.current instanceof HTMLElement &&
+      document.body.contains(triggerRef.current)
+    ) {
       triggerRef.current.focus();
     }
   }, [isOpen]);
@@ -22,7 +26,13 @@ function ShortcutReference({ isOpen, shortcuts, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <FocusTrap active={isOpen} focusTrapOptions={{ allowOutsideClick: true }}>
+    <FocusTrap
+      active={isOpen}
+      focusTrapOptions={{
+        allowOutsideClick: true,
+        fallbackFocus: () => dialogRef.current,
+      }}
+    >
       <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
         <div
           className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm"
@@ -56,7 +66,8 @@ function ShortcutReference({ isOpen, shortcuts, onClose }) {
             </button>
           </div>
           <p className="mt-2 text-sm theme-text-secondary">
-            Use these combos to stay in the flow. Press Esc to dismiss this panel.
+            Use these combos to stay in the flow. Press Esc to dismiss this
+            panel.
           </p>
           <ul className="mt-6 space-y-3">
             {shortcuts.map((entry) => (
@@ -67,7 +78,9 @@ function ShortcutReference({ isOpen, shortcuts, onClose }) {
                 <div className="text-sm font-semibold uppercase tracking-[0.2em] theme-text-accent">
                   {entry.combo}
                 </div>
-                <p className="text-sm theme-text-primary">{entry.description}</p>
+                <p className="text-sm theme-text-primary">
+                  {entry.description}
+                </p>
               </li>
             ))}
           </ul>
