@@ -11,8 +11,10 @@ const {
   mockToggleOption,
   mockSetBatchSize,
   mockCommitBatchSize,
+  mockSetBatchSizeAndCommit,
   useThemeMock,
   useUuidGeneratorMock,
+  useKeyboardShortcutsMock,
 } = vi.hoisted(() => ({
   mockToggleTheme: vi.fn(),
   mockRegenerate: vi.fn(),
@@ -22,8 +24,10 @@ const {
   mockToggleOption: vi.fn(),
   mockSetBatchSize: vi.fn(),
   mockCommitBatchSize: vi.fn(),
+  mockSetBatchSizeAndCommit: vi.fn(),
   useThemeMock: vi.fn(),
   useUuidGeneratorMock: vi.fn(),
+  useKeyboardShortcutsMock: vi.fn(),
 }));
 
 vi.mock("./hooks/useTheme", () => ({
@@ -34,9 +38,14 @@ vi.mock("./hooks/useUuidGenerator", () => ({
   default: useUuidGeneratorMock,
 }));
 
+vi.mock("./hooks/useKeyboardShortcuts", () => ({
+  default: useKeyboardShortcutsMock,
+}));
+
 const createGeneratorState = (overrides = {}) => ({
   batchSize: 5,
   setBatchSize: mockSetBatchSize,
+  setBatchSizeAndCommit: mockSetBatchSizeAndCommit,
   visibleBatchSize: 5,
   selectedVersion: "v4",
   options: { uppercase: false, trimHyphens: false, wrapBraces: false },
@@ -99,5 +108,41 @@ describe("App", () => {
       "true"
     );
     expect(screen.getByText(/Preparing.../i)).toBeInTheDocument();
+  });
+
+  it("integrates useKeyboardShortcuts hook with correct props", () => {
+    const state = createGeneratorState();
+    useUuidGeneratorMock.mockReturnValue(state);
+
+    render(<App />);
+
+    expect(useKeyboardShortcutsMock).toHaveBeenCalledWith({
+      batchSize: state.batchSize,
+      formattedUuids: state.formattedUuids,
+      isShortcutHelpOpen: false,
+      setShortcutHelpOpen: expect.any(Function),
+      regenerate: state.regenerate,
+      downloadList: state.downloadList,
+      handleVersionChange: state.handleVersionChange,
+      toggleOption: state.toggleOption,
+      setBatchSizeAndCommit: state.setBatchSizeAndCommit,
+      handleCopy: state.handleCopy,
+    });
+  });
+
+  it("opens and closes shortcut reference dialog", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const shortcutButton = screen.getByRole("button", { name: /shortcuts/i });
+    await user.click(shortcutButton);
+
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    expect(screen.getByText(/keyboard shortcuts/i)).toBeInTheDocument();
+
+    const closeButton = screen.getByRole("button", { name: /close/i });
+    await user.click(closeButton);
+
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 });
