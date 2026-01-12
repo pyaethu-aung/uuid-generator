@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import ControlPanel from "./ControlPanel";
 import Hero from "./Hero";
 import InsightCards from "./InsightCards";
+import ShortcutReference from "./ShortcutReference";
 import ThemeToggle from "./ThemeToggle";
 import UuidList from "./UuidList";
 
@@ -105,5 +106,79 @@ describe("ControlPanel", () => {
     expect(onGenerate).toHaveBeenCalled();
 
     expect(screen.getByText(/Clipboard API is disabled/i)).toBeInTheDocument();
+  });
+});
+
+describe("ShortcutReference", () => {
+  const mockShortcuts = [
+    { combo: "⌘ + K", description: "Open command palette" },
+    { combo: "⌘ + S", description: "Save file" },
+  ];
+
+  it("renders nothing when isOpen is false", () => {
+    const { container } = render(
+      <ShortcutReference
+        isOpen={false}
+        shortcuts={mockShortcuts}
+        onClose={vi.fn()}
+      />
+    );
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders dialog with shortcuts when isOpen is true", () => {
+    render(
+      <ShortcutReference
+        isOpen={true}
+        shortcuts={mockShortcuts}
+        onClose={vi.fn()}
+      />
+    );
+    expect(screen.getByText("Keyboard shortcuts")).toBeInTheDocument();
+    expect(screen.getByText("⌘ + K")).toBeInTheDocument();
+    expect(screen.getByText("Open command palette")).toBeInTheDocument();
+    expect(screen.getByText("⌘ + S")).toBeInTheDocument();
+    expect(screen.getByText("Save file")).toBeInTheDocument();
+  });
+
+  it("has proper accessibility attributes", () => {
+    render(
+      <ShortcutReference
+        isOpen={true}
+        shortcuts={mockShortcuts}
+        onClose={vi.fn()}
+      />
+    );
+    const dialog = screen.getByRole("dialog");
+    expect(dialog).toHaveAttribute("aria-modal", "true");
+    expect(dialog).toHaveAttribute("aria-label", "Keyboard shortcuts");
+  });
+
+  it("calls onClose when close button is clicked", async () => {
+    const onClose = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <ShortcutReference
+        isOpen={true}
+        shortcuts={mockShortcuts}
+        onClose={onClose}
+      />
+    );
+    await user.click(screen.getByRole("button", { name: /close/i }));
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("calls onClose when backdrop is clicked", () => {
+    const onClose = vi.fn();
+    const { container } = render(
+      <ShortcutReference
+        isOpen={true}
+        shortcuts={mockShortcuts}
+        onClose={onClose}
+      />
+    );
+    const backdrop = container.querySelector('[aria-hidden="true"]');
+    fireEvent.click(backdrop);
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });
