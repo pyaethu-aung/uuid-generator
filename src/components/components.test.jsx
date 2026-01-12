@@ -164,9 +164,7 @@ describe("ShortcutReference", () => {
         onClose={onClose}
       />
     );
-    await user.click(
-      screen.getByRole("button", { name: /close keyboard shortcuts dialog/i })
-    );
+    await user.click(screen.getByRole("button", { name: /close/i }));
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
