@@ -67,6 +67,7 @@ function App() {
             type="button"
             onClick={() => setShortcutHelpOpen(true)}
             className="theme-ghost-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition"
+            aria-label="Open keyboard shortcuts reference"
           >
             <span aria-hidden="true">?</span>
             <span>Shortcuts</span>
