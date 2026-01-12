@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import FocusTrap from "focus-trap-react";
+import { FocusTrap } from "focus-trap-react";
 import PropTypes from "prop-types";
 
 function ShortcutReference({ isOpen, shortcuts, onClose }) {
