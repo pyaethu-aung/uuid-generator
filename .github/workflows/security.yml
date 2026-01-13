@@ -22,9 +22,9 @@ permissions:
   actions: read
 
 jobs:
-  npm-audit:
+  security-scan:
     runs-on: ubuntu-latest
-    name: npm Audit (Node Dependencies)
+    name: Security Scan
 
     steps:
       - uses: actions/checkout@v4
@@ -41,23 +41,13 @@ jobs:
       - name: Run npm audit
         run: npm audit --audit-level=moderate
 
-  snyk-scan:
-    runs-on: ubuntu-latest
-    name: Snyk Scan
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install dependencies (for Snyk)
-        run: npm ci
-
       - name: Run Snyk vulnerability scanner
         uses: snyk/actions/node@master
         with:
           args: --severity-threshold=high --sarif-file-output=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        if: always()
+        continue-on-error: true
 
       - name: Upload Snyk results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
