@@ -58,12 +58,12 @@ function UuidList({ uuids, copiedUuid, onCopy }) {
       {uuids.map((uuid, index) => (
         <li
           key={`${uuid}-${index}`}
-          className="group flex flex-col gap-4 rounded-2xl border theme-border-subtle theme-panel p-4 transition hover:border-[color:var(--accent-primary)] md:flex-row md:items-center"
+          className="group flex min-w-0 flex-col gap-4 rounded-2xl border theme-border-subtle theme-panel p-4 transition hover:border-[color:var(--accent-primary)] md:flex-row md:items-center"
         >
           <div className="text-xs font-semibold uppercase tracking-[0.3em] theme-text-muted">
             #{String(index + 1).padStart(2, "0")}
           </div>
-          <code className="flex-1 font-['Chivo_Mono','Space_Grotesk',monospace] text-base theme-text-primary sm:text-lg">
+          <code className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-['Chivo_Mono','Space_Grotesk',monospace] text-base theme-text-primary sm:text-lg">
             {uuid}
           </code>
           <div className="flex items-center gap-2">
