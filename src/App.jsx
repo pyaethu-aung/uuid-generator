@@ -77,7 +77,7 @@ function App() {
         <Hero feedback={feedback} />
 
         <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-          <article className="rounded-[32px] border theme-border-subtle theme-card theme-shadow-card p-6 backdrop-blur">
+          <article className="min-w-0 overflow-hidden rounded-[32px] border theme-border-subtle theme-card theme-shadow-card p-6 backdrop-blur">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm uppercase tracking-[0.4em] theme-text-accent">
