@@ -2,13 +2,13 @@ name: Security
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
     paths:
       - "package.json"
       - "package-lock.json"
       - ".snyk"
   pull_request:
-    branches: [main, develop]
+    branches: [main]
     paths:
       - "package.json"
       - "package-lock.json"
