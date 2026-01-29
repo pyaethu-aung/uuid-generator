@@ -1,3 +1,8 @@
 export default function ScrollProgressBackground() {
-  return null;
+  return (
+    <div 
+      className="scroll-background-layer" 
+      aria-hidden="true"
+    />
+  );
 }
