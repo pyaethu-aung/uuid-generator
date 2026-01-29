@@ -31,8 +31,8 @@ Tests are mandatory for changed behavior and must be runnable via `npm run dev` 
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Create `src/hooks/useBrowserThemeSync.js` skeleton with theme detection logic
-- [ ] T004 Create `src/components/ScrollProgressBackground.jsx` skeleton with GPU-accelerated styling in `src/App.css`
+- [x] T003 Create `src/hooks/useBrowserThemeSync.js` skeleton with theme detection logic
+- [x] T004 Create `src/components/ScrollProgressBackground.jsx` skeleton with GPU-accelerated styling in `src/App.css`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
