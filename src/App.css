@@ -179,3 +179,14 @@
   border-top-color: var(--accent-primary);
   animation: icon-rotate 0.8s linear infinite;
 }
+
+.scroll-background-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--accent-primary);
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+  transition: background-color 200ms ease;
+}
