@@ -20,8 +20,8 @@ Tests are mandatory for changed behavior and must be runnable via `npm run dev` 
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 [P] Ensure development environment is clean by running `npm run dev`
-- [ ] T002 Establish new component structure for scroll effects in `src/components/`
+- [x] T001 [P] Ensure development environment is clean by running `npm run dev`
+- [x] T002 Establish new component structure for scroll effects in `src/components/`
 
 ---
 
