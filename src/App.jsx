@@ -8,11 +8,13 @@ import UuidList from "./components/UuidList";
 import SHORTCUTS from "./data/shortcuts";
 import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
 import useTheme from "./hooks/useTheme";
+import useBrowserThemeSync from "./hooks/useBrowserThemeSync";
 import useUuidGenerator from "./hooks/useUuidGenerator";
 import "./App.css";
 
 function App() {
   const { theme, toggleTheme } = useTheme();
+  useBrowserThemeSync(theme);
   const [isShortcutHelpOpen, setShortcutHelpOpen] = useState(false);
   const {
     batchSize,

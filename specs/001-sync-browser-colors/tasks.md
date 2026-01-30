@@ -45,13 +45,13 @@ Tests are mandatory for changed behavior and must be runnable via `npm run dev` 
 **Independent Test**: Verify that the `<meta name="theme-color">` tag in the head updates correctly when the theme is toggled.
 
 ### Tests for User Story 1
-- [ ] T005 [P] [US1] Create unit test in `src/hooks/useBrowserThemeSync.test.js` to verify meta tag updates on theme toggle
-- [ ] T006 [P] [US1] Ensure `src/hooks/useBrowserThemeSync.test.js` fails as expected before implementation
+- [x] T005 [P] [US1] Create unit test in `src/hooks/useBrowserThemeSync.test.js` to verify meta tag updates on theme toggle
+- [x] T006 [P] [US1] Ensure `src/hooks/useBrowserThemeSync.test.js` fails as expected before implementation
 
 ### Implementation for User Story 1
-- [ ] T007 [US1] Implement `useBrowserThemeSync` hook in `src/hooks/useBrowserThemeSync.js` using `getComputedStyle`
-- [ ] T008 [US1] Integrate `useBrowserThemeSync` into `src/App.jsx`
-- [ ] T009 [US1] Verify functional and unit test pass for Story 1
+- [x] T007 [US1] Implement `useBrowserThemeSync` hook in `src/hooks/useBrowserThemeSync.js` using `getComputedStyle`
+- [x] T008 [US1] Integrate `useBrowserThemeSync` into `src/App.jsx`
+- [x] T009 [US1] Verify functional and unit test pass for Story 1
 
 **Checkpoint**: User Story 1 (Browser Sync) is fully functional and testable independently.
 
