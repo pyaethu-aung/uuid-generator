@@ -17,6 +17,6 @@
 - Throttled `lodash.throttle`: Effective, but `requestAnimationFrame` is more native to the browser's render cycle for visual updates.
 
 ## Decision: Color "Source of Truth"
-**Rationale**: The `--accent-primary` variable defined in `index.css` will be the single source of truth. We will use `window.getComputedStyle(document.documentElement).getPropertyValue('--accent-primary')` to fetch the exact hex code for the meta tag.
+**Rationale**: The `--page-bg` variable defined in `index.css` will be the single source of truth for the browser theme-color, ensuring a seamless look between the content and the browser UI. We will use `window.getComputedStyle(document.documentElement).getPropertyValue('--page-bg')` to fetch the exact color for the meta tag.
 **Alternatives considered**: 
 - Hardcoding colors in JS: Increases maintenance burden and risk of drift between CSS and JS.

@@ -3,7 +3,7 @@
 ## UI States
 
 ### `themeColor` (Derived)
-- **Source**: Computed value of `--accent-primary`.
+- **Source**: Computed value of `--page-bg`.
 - **Description**: The hex code used to update the `<meta name="theme-color">`.
 - **Lifecycle**: Updates whenever the theme toggle (Dark/Light) is triggered.
 
