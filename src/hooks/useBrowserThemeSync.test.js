@@ -14,7 +14,7 @@ describe("useBrowserThemeSync", () => {
     // Mock getComputedStyle
     vi.spyOn(window, "getComputedStyle").mockImplementation(() => ({
       getPropertyValue: (prop) => {
-        if (prop === "--accent-primary") return "#2dd4bf";
+        if (prop === "--page-bg") return "#030712";
         return "";
       },
     }));
@@ -25,9 +25,9 @@ describe("useBrowserThemeSync", () => {
     vi.restoreAllMocks();
   });
 
-  it("updates the meta theme-color tag with the value of --accent-primary", () => {
+  it("updates the meta theme-color tag with the value of --page-bg", () => {
     renderHook(() => useBrowserThemeSync("dark"));
 
-    expect(metaTag.getAttribute("content")).toBe("#2dd4bf");
+    expect(metaTag.getAttribute("content")).toBe("#030712");
   });
 });

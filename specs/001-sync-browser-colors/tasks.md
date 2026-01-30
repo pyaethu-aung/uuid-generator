@@ -40,7 +40,7 @@ Tests are mandatory for changed behavior and must be runnable via `npm run dev` 
 
 ## Phase 3: User Story 1 - Consistent Brand Experience on Mobile (Priority: P1) 🎯 MVP
 
-**Goal**: Synchronize the browser's interface color (meta theme-color) with the application's `--accent-primary` color.
+**Goal**: Synchronize the browser's interface color (meta theme-color) with the application's `--page-bg` color.
 
 **Independent Test**: Verify that the `<meta name="theme-color">` tag in the head updates correctly when the theme is toggled.
 
@@ -49,7 +49,7 @@ Tests are mandatory for changed behavior and must be runnable via `npm run dev` 
 - [x] T006 [P] [US1] Ensure `src/hooks/useBrowserThemeSync.test.js` fails as expected before implementation
 
 ### Implementation for User Story 1
-- [x] T007 [US1] Implement `useBrowserThemeSync` hook in `src/hooks/useBrowserThemeSync.js` using `getComputedStyle`
+- [x] T007 [US1] Implement `useBrowserThemeSync` hook in `src/hooks/useBrowserThemeSync.js` using `getComputedStyle` for `--page-bg`
 - [x] T008 [US1] Integrate `useBrowserThemeSync` into `src/App.jsx`
 - [x] T009 [US1] Verify functional and unit test pass for Story 1
 
