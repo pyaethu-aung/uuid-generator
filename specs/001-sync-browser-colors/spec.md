@@ -11,7 +11,7 @@
 - Q: Should the scroll threshold be a fixed pixel value or a percentage of the viewport? → A: Option A - Fixed Pixel Value (80px).
 - Q: Should the background transition be a solid toggle or a gradient fade? → A: Option B - Linear Gradient Fade (Opacity increases relative to scroll depth).
 - Q: At what scroll position should the background reach its maximum primary color/opacity? → A: Option B - Standard Fade (Full opacity by 500px).
-- Q: Which color variable should be used as the source of truth? → A: Option A - `--accent-primary`.
+- Q: Which color variable should be used as the source of truth? → A: Option B - `--page-bg`.
 - Q: Which performance strategy should be prioritized for the gradient fade? → A: Option A - Opacity Layer (Transition the opacity of a separate fixed background element).
 
 ## User Scenarios & Testing *(mandatory)*
@@ -63,7 +63,7 @@ As a user scrolling through the application, I want the background color to tran
 
 ### Functional Requirements
 
-- **FR-001**: The system MUST dynamically update the browser's interface theme settings to match the active application theme's `--accent-primary` color.
+- **FR-001**: The system MUST dynamically update the browser's interface theme settings to match the active application theme's `--page-bg` color.
 - **FR-002**: The system MUST detect the user's vertical scroll position.
 - **FR-003**: The system MUST apply a linear gradient background fade that increases in opacity relative to scroll depth once the 80px threshold is passed, reaching full primary color intensity at 500px scroll depth.
 - **FR-004**: The system MUST handle theme changes (Dark/Light mode) and update both the interface color and scroll-based background color accordingly.
