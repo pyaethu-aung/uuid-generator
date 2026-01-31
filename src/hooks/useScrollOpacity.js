@@ -12,9 +12,9 @@ export default function useScrollOpacity() {
 
   useEffect(() => {
     let ticking = false;
-
     const handleScroll = () => {
       if (!ticking) {
+        ticking = true;
         window.requestAnimationFrame(() => {
           const scrollY = window.scrollY;
           const min = 80;
@@ -30,7 +30,6 @@ export default function useScrollOpacity() {
           }
           ticking = false;
         });
-        ticking = true;
       }
     };
 
