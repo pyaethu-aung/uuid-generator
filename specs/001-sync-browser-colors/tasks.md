@@ -64,14 +64,14 @@ Tests are mandatory for changed behavior and must be runnable via `npm run dev` 
 **Independent Test**: Scroll past 80px and watch the background layer appear, reaching full opacity at 500px.
 
 ### Tests for User Story 2
-- [ ] T010 [P] [US2] Create unit test in `src/components/ScrollProgressBackground.test.jsx` for opacity calculation logic
-- [ ] T011 [P] [US2] Ensure `src/components/ScrollProgressBackground.test.jsx` fails before implementation
+- [x] T010 [P] [US2] Create unit test in `src/hooks/useScrollOpacity.test.js` for opacity calculation logic
+- [x] T011 [P] [US2] Ensure `src/hooks/useScrollOpacity.test.js` fails before implementation
 
 ### Implementation for User Story 2
-- [ ] T012 [P] [US2] Add `.scroll-background-layer` and associated GPU optimizations to `src/App.css`
-- [ ] T013 [US2] Implement `ScrollProgressBackground` component in `src/components/ScrollProgressBackground.jsx` using `requestAnimationFrame`
-- [ ] T014 [US2] Integrate `ScrollProgressBackground` as a fixed overlay in `src/App.jsx`
-- [ ] T015 [US2] Verify functional and unit test pass for Story 2
+- [x] T012 [P] [US2] Add `.scroll-background-layer` and associated GPU optimizations to `src/App.css`
+- [x] T013 [US2] Implement `ScrollProgressBackground` component in `src/components/ScrollProgressBackground.jsx` using `requestAnimationFrame`
+- [x] T014 [US2] Integrate `ScrollProgressBackground` as a fixed overlay in `src/App.jsx`
+- [x] T015 [US2] Verify functional and unit test pass for Story 2
 
 **Checkpoint**: User Story 2 (Scroll Background) is fully functional and testable independently.
 
@@ -81,9 +81,9 @@ Tests are mandatory for changed behavior and must be runnable via `npm run dev` 
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T016 [P] Verify performance p95 interaction latency ≤100ms during transition via Chrome DevTools
-- [ ] T017 Run final validation according to `quickstart.md`
-- [ ] T018 Delete temporary test markers and run final `npm run dev` check
+- [x] T016 [P] Verify performance p95 interaction latency ≤100ms during transition via Chrome DevTools
+- [x] T017 Run final validation according to `quickstart.md`
+- [x] T018 Delete temporary test markers and run final `npm run dev` check
 
 ---
 
