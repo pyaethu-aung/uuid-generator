@@ -1,13 +1,6 @@
 name: Lint
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "src/**"
-      - "eslint.config.js"
-      - "package.json"
-      - "package-lock.json"
   pull_request:
     branches: [main]
     paths:
