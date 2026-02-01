@@ -115,6 +115,36 @@ describe("ShortcutReference", () => {
     { combo: "⌘ + S", description: "Save file" },
   ];
 
+  it("closes on Escape key", () => {
+    const onClose = vi.fn();
+    render(
+      <ShortcutReference
+        isOpen={true}
+        shortcuts={mockShortcuts}
+        onClose={onClose}
+      />
+    );
+
+    const dialog = screen.getByRole("dialog");
+    fireEvent.keyDown(dialog, { key: "Escape" });
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it("does not close on other keys", () => {
+    const onClose = vi.fn();
+    render(
+      <ShortcutReference
+        isOpen={true}
+        shortcuts={mockShortcuts}
+        onClose={onClose}
+      />
+    );
+
+    const dialog = screen.getByRole("dialog");
+    fireEvent.keyDown(dialog, { key: "Enter" });
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
   it("renders nothing when isOpen is false", () => {
     const { container } = render(
       <ShortcutReference
