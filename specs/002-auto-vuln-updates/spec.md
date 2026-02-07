@@ -86,6 +86,7 @@ As a project maintainer, I want to receive immediate notifications when vulnerab
 - **FR-006**: System MUST send notifications for Critical and High severity vulnerabilities immediately upon detection.
 - **FR-007**: System MUST handle vulnerabilities with no available fix by reporting the issue with recommendations to monitor for updates.
 - **FR-008**: System MUST prevent duplicate pull requests for the same vulnerability.
+- **FR-009**: All security update pull requests MUST require manual review before merge (no auto-merge).
 
 ### Key Entities
 
@@ -105,10 +106,19 @@ As a project maintainer, I want to receive immediate notifications when vulnerab
 - **SC-005**: Zero false duplicate PRs are created for the same vulnerability.
 - **SC-006**: All auto-generated PRs include complete vulnerability context (CVE, severity, versions, changelog).
 
+## Clarifications
+
+### Session 2026-02-08
+
+- Q: Which vulnerability scanning approach should be used? → A: Dependabot only (GitHub native)
+- Q: Should Dependabot security PRs be auto-merged? → A: Never auto-merge (all PRs require manual review)
+- Q: What is the primary notification channel? → A: GitHub notifications only (default)
+
 ## Assumptions
 
 - The project uses npm as the package manager (based on existing `package.json` and npm scripts in the project).
 - GitHub is the hosting platform (based on project repository structure).
 - GitHub Actions is available for CI/CD automation.
-- Team has permissions to enable Dependabot or similar vulnerability scanning tools.
-- Notifications will be delivered via GitHub notifications and/or configured integrations (Slack, email).
+- **Dependabot** is the chosen vulnerability scanning tool (GitHub native, zero-configuration).
+- Notifications will be delivered via **GitHub notifications only** (no additional integrations required).
+
