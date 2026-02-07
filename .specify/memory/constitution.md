@@ -1,81 +1,84 @@
 <!--
-Sync Impact Report
-- Version change: None → 1.0.0
-- Modified principles: template placeholders → Code Quality First, Test Discipline & Coverage, UX Consistency & Accessibility, Performance & Responsiveness, Workflow Guardrails
-- Added sections: Quality Gates & Standards, Development Workflow & Compliance
-- Removed sections: none
-- Templates requiring updates: 
-	- .specify/templates/plan-template.md ✅
-	- .specify/templates/spec-template.md ✅
-	- .specify/templates/tasks-template.md ✅
-- Follow-up TODOs: none
+SYNC IMPACT REPORT
+Version: 1.0.0 -> 2.0.0
+Modified Principles:
+- Code Quality First → I. Code Quality & Craftsmanship (expanded scope)
+- Test Discipline & Coverage → II. Testing & Execution Discipline (NON-NEGOTIABLE)
+- UX Consistency & Accessibility → III. User Experience Consistency
+- Performance & Responsiveness → IV. Performance Requirements
+- Workflow Guardrails → VI. Execution Discipline (NON-NEGOTIABLE)
+Added Sections:
+- V. Architecture & Structure (new)
+- VII. Cross-Platform & Browser Compatibility (new)
+- VIII. Theme Support Planning (new)
+- IX. Skill-Driven Development & Agentic Workflow (NON-NEGOTIABLE) (new)
+- Documentation & Standards (new section)
+- Review & Quality Gates (new section)
+Removed Sections:
+- Quality Gates & Standards (merged into Review & Quality Gates)
+- Development Workflow & Compliance (merged into Governance)
+Templates Updated:
+- .specify/templates/plan-template.md ✅ updated
+- .specify/templates/spec-template.md ✅ updated
+- .specify/templates/tasks-template.md ✅ updated
+- AGENTS.md ✅ created
+Deferred Items:
+- None
 -->
-
 # UUID Generator Constitution
 
 ## Core Principles
 
-### Code Quality First (Non-Negotiable)
-Code must be clear, small, and maintainable. Linting and prop validation
-requirements apply to all React components. Keep components focused, avoid
-duplication, and favor readability over cleverness. Any change that reduces
-clarity or introduces inconsistent styling must be refactored before merge.
+### I. Code Quality & Craftsmanship
+Code must be readable, maintainable, and idiomatic. Automated linting and formatting are required on every commit. No dead code, unused assets, or commented-out blocks are permitted; remove unreferenced resources as part of each change. Refactoring is continuous, and complexity is managed through modular design.
 
-### Test Discipline & Coverage
-Unit tests precede or accompany every change. Vitest is the standard harness.
-Global unit test coverage MUST remain at or above 85% and may not regress.
-Failing or flaky tests block merges. Add focused unit cases for edge
-conditions and regression fixes.
+### II. Testing & Execution Discipline (NON-NEGOTIABLE)
+Testing is mandatory (Unit & Integration). Run `npm run test`, `npm run lint`, and `npm run build` locally after every task and before opening a PR. Every code change MUST add or update relevant unit tests, and all tests MUST pass locally and in CI before merge. **Every utility function in `src/utils/` MUST have a corresponding unit test file** (Vitest). Regression tests are required for bug fixes. Maintain coverage at or above 85%. Tests must be deterministic, fast, and independent. TDD is encouraged.
 
-### UX Consistency & Accessibility
-Interactions must align with the established control patterns, keyboard
-shortcuts, and Tailwind styling documented in the app. All UI changes must
-preserve accessible semantics (labels, focus order, ARIA where needed), remain
-responsive, and avoid visual regressions across breakpoints.
+### III. User Experience Consistency
+Interfaces (CLI, API, UI) must be predictable and consistent. Standardize flags, error messages, and return codes across the application. Documentation must match implementation. Prioritize user intent and minimize cognitive load in workflows.
 
-### Performance & Responsiveness
-UI interactions (e.g., slider moves, copy/download actions) should complete in
-p95 ≤100ms on target devices. Initial load should remain lightweight (p75
-Time-to-Interactive under 2s on a modern laptop). Avoid expensive rerenders;
-prefer memoization and event throttling to keep interactions smooth.
+### IV. Performance Requirements
+Performance is a feature. Define and respect latency/throughput budgets (e.g., <200ms response time for user info). O(n) complexity or better is preferred for core algorithms. Resource usage (CPU/RAM) must be bounded and monitored.
 
-### Workflow Guardrails
-After every change, run `npm run dev` to execute linting and unit checks; if
-`npm run dev` does not execute lint + tests, adjust the script or run the
-equivalent commands before merge. Commit after each task with a title ≤50
-characters and body lines ≤72 characters. Do not merge without proof of the
-latest checks.
+### V. Architecture & Structure
+Follow the agreed project layout: UI in `src/components`, stateful hooks in `src/hooks`, pure utilities in `src/utils`, and data shapers/models in `src/data` (plus shared types in `src/types` when using TypeScript). Keep configuration minimal and co-located. Avoid ad-hoc folders and remove unused files as the structure evolves.
 
-## Quality Gates & Standards
+### VI. Execution Discipline (NON-NEGOTIABLE)
+After completing each task, the project MUST be validated with a successful `npm run build` (or equivalent platform build) in addition to `npm run test` and `npm run lint`. If the build cannot run (e.g., platform limitations), document the blocker and perform a local smoke run to verify runtime basics. Never mark a task complete without a passing build or documented exception.
 
-- Lint + unit test gate: run `npm run dev` (or its lint+test equivalent) after
-	each change; merges require a clean run.
-- Coverage gate: Vitest coverage MUST stay ≥85% overall; new code includes unit
-	tests that protect new behaviors and edge cases.
-- UX gate: preserve documented keyboard shortcuts, focus states, responsive
-	layouts, and avoid layout shifts when updating components.
-- Performance gate: p95 interaction latency ≤100ms for control changes; avoid
-	unnecessary renders and keep bundle additions minimal.
+### VII. Cross-Platform & Browser Compatibility
+The user interface MUST be fully functional and aesthetically consistent across desktop and mobile browsers, including all major browsers (Chrome, Safari, Firefox, Edge). Responsive design is mandatory, and testing must be performed on both screen types before marking UI tasks as complete.
 
-## Development Workflow & Compliance
+### VIII. Theme Support Planning
+All UI features MUST be planned and implemented with dark/light theme support from the start. Never hard-code colors or theme-specific values that would create technical debt when adding theme switching. The default theme MUST match the user's system preference (using `prefers-color-scheme` media query). User theme choice MUST be persisted in browser storage (localStorage) and take precedence over system preference for returning users. Design tokens and CSS custom properties are required for all color and theme-related styling.
 
-- Every task produces a commit; messages follow ≤50 char titles and ≤72 char
-	bodies.
-- Code reviews verify: lint+tests run (`npm run dev` or equivalent), coverage
-	impact, UX consistency, and performance implications.
-- Feature plans and specs must declare how they satisfy quality, testing, UX,
-	performance, and workflow gates. Violations require explicit justification
-	and risk acceptance.
+**Rationale**: Retrofitting theme support is expensive and error-prone. Planning for themes from the beginning ensures maintainable, accessible UI with minimal technical debt. Respecting system preferences improves user experience, while persisting explicit user choices ensures preference continuity.
+
+### IX. Skill-Driven Development & Agentic Workflow (NON-NEGOTIABLE)
+The Agent MUST treat the following skills as "Primary Source Truth" during all phases of the spec-kit workflow (`/specify`, `/plan`, `/implement`):
+- **React Standards**: Use `.agent/skills/vercel-react-best-practices/SKILL.md`. Every `/plan` must explicitly verify state management and hook usage against these rules.
+- **UI/UX & Design**: Use `.agent/skills/web-design-guidelines/SKILL.md`. Every `/specify` phase must define accessibility (ARIA) and responsive requirements based on these guidelines.
+- **TypeScript Learning Mode**: When implementing code, the Agent should provide brief comments (1-sentence) explaining *why* a certain TypeScript pattern was used (e.g., Discriminated Unions vs. Interfaces) if it relates to a guideline in the skills.
+
+**Rationale**: This ensures the AI doesn't just "generate code," but acts as a senior mentor that follows industry-standard guidelines. By integrating skills into the planning phase, we prevent technical debt before it is even written.
+
+## Documentation & Standards
+
+All public APIs and libraries must be documented. The README must be kept up to date with the latest features and usage instructions. Internal documentation should use Markdown and be co-located with the code. Architecture and structure decisions must be reflected in docs and code owners should prune obsolete references.
+
+## Review & Quality Gates
+
+All code changes require a Pull Request review. Continuous Integration (CI) checks (linting, testing, build) must pass before merging; tests must be added/updated for the change set. No direct pushes to the main branch are permitted. Reviews must confirm adherence to structure conventions, removal of unused code/resources, compliance with these principles, documented local runs of `npm run test`, `npm run lint`, and `npm run build`, and coverage remaining above 85%.
 
 ## Governance
 
-This constitution governs all delivery practices for UUID Generator. Any
-conflicting guideline is superseded by this document. Amendments require a
-documented change proposal, updated version number, and a migration/rollout
-plan when behavior changes. Semantic versioning applies: MAJOR for breaking
-governance changes or principle removals; MINOR for new principles or expanded
-guidance; PATCH for clarifications. Compliance is verified during planning,
-code review, and before merge by checking gates, coverage, and commit/log
-evidence of `npm run dev` (or equivalent) runs.
+This Constitution supersedes previous ad-hoc practices. Amendments require a Pull Request with justification and team approval.
 
-**Version**: 1.0.0 | **Ratified**: 2026-01-19 | **Last Amended**: 2026-01-19
+**AGENTS.md Sync (MANDATORY)**: Whenever this Constitution is amended, `AGENTS.md` MUST be updated to reflect the changes. This ensures AI coding assistants (Antigravity, Gemini CLI, GitHub Copilot, etc.) always operate with current project guidelines.
+
+**Commit Discipline (MANDATORY)**: Each phase in `tasks.md` MUST be committed individually after completion. Commit messages MUST follow the 50/72 rule: subject line ≤50 characters (imperative mood, no period), followed by a blank line, then optional body text with lines ≤72 characters. Subject lines should start with a conventional commit type prefix (e.g., `feat:`, `fix:`, `docs:`, `refactor:`, `test:`). Every commit must represent a complete, testable unit of work.
+
+Versioning follows Semantic Versioning (MAJOR for principle changes, MINOR for additions, PATCH for clarifications). Compliance is verified during Code Review and CI.
+
+**Version**: 2.0.0 | **Ratified**: 2026-01-19 | **Last Amended**: 2026-02-08
