@@ -77,6 +77,17 @@ When implementing code, provide brief comments (1-sentence) explaining *why* a c
 - Generic constraints
 - Utility types usage
 
+## Active Features Context
+
+### 002-auto-vuln-updates
+
+**Automated Dependency Vulnerability Updates**
+
+- **Configuration**: Managed via `.github/dependabot.yml` (npm ecosystem, daily schedule).
+- **Auto-Merge Policy**: **STRICTLY FORBIDDEN** (FR-009). All security PRs must be manually reviewed.
+- **Notifications**: Rely on GitHub native notifications.
+- **Key Files**: `.github/dependabot.yml`.
+
 ---
 
 **Synced with Constitution**: v2.0.0 | **Last Updated**: 2026-02-08
