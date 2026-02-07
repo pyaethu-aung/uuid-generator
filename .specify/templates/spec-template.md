@@ -84,12 +84,25 @@
 
 ### Constitution Alignment (Mandatory)
 
-- Detail how the feature preserves code clarity and lint cleanliness.
-- Specify unit test coverage impact and edge cases to keep global coverage ≥85%.
-- Describe UX consistency: keyboard shortcuts, focus order, responsive layouts,
-  and Tailwind styling alignment.
-- Capture performance expectations: p95 interaction latency ≤100ms; p75
+- **I. Code Quality & Craftsmanship**: Detail how the feature preserves code
+  clarity, lint cleanliness, and avoids dead code or unused assets.
+- **II. Testing & Execution Discipline**: Specify unit test coverage impact and
+  edge cases to keep global coverage ≥85%; ensure every utility has tests.
+- **III. UX Consistency**: Describe keyboard shortcuts, focus order, responsive
+  layouts, and Tailwind styling alignment.
+- **IV. Performance Requirements**: Capture p95 interaction latency ≤100ms; p75
   Time-to-Interactive under 2s where applicable.
+- **V. Architecture & Structure**: Confirm files placed in correct folders
+  (`src/components`, `src/hooks`, `src/utils`, `src/data`, `src/types`).
+- **VI. Execution Discipline**: Confirm `npm run test`, `npm run lint`, and
+  `npm run build` validation after each task.
+- **VII. Cross-Platform & Browser Compatibility**: Describe testing across
+  desktop/mobile and major browsers (Chrome, Safari, Firefox, Edge).
+- **VIII. Theme Support Planning**: Ensure no hard-coded colors; use CSS custom
+  properties and design tokens.
+- **IX. Skill-Driven Development**: Reference applicable skills for React
+  patterns (`.agent/skills/vercel-react-best-practices/SKILL.md`) and
+  accessibility/UX (`.agent/skills/web-design-guidelines/SKILL.md`).
 
 ### Functional Requirements
 
