@@ -45,3 +45,15 @@ A Tailwind-styled UUID generator built with React 19 and Vite. The app lets you 
 - Tailwind CSS
 - `uuid` npm package
 - Clipboard and File APIs
+
+## Security & Maintenance
+
+### Automated Dependency Updates
+This project uses **GitHub Dependabot** to automatically detect vulnerable dependencies and create pull requests to fix them.
+
+- **Configuration**: Managed via `.github/dependabot.yml`.
+- **Schedule**: Scans run daily.
+- **PR Limits**: Maximum 10 open security PRs at a time to prevent alert fatigue (Best Practice: [Dependabot Security Config](https://docs.github.com/en/code-security/dependabot/dependabot-security-updates/configuring-dependabot-security-updates)).
+- **Review Policy**: **Manual review is required** for all security updates. Auto-merge is strictly disabled to ensure human oversight.
+- **Notifications**: Alerts are sent via GitHub's native notification system (Web/Email). Ensure you are "Watching" the repository to receive them.
+

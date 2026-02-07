@@ -30,19 +30,19 @@
 
 **Goal**: Enable automated vulnerability detection and PR creation with strict manual review policy.
 
-- [ ] T-001 [US1] [US2] Create `.github/dependabot.yml` with daily npm schedule, PR limit of 10, and explicit no-auto-merge comment. `/.github/dependabot.yml`
+- [x] T-001 [US1] [US2] Create `.github/dependabot.yml` with daily npm schedule, PR limit of 10, and explicit no-auto-merge comment. `/.github/dependabot.yml`
 
 ### Phase 2: Documentation (US3)
 
 **Goal**: Ensure maintainers know how to enable and receive notifications.
 
-- [ ] T-002 [US3] Update `README.md` with "Security & Maintenance" section detailing Dependabot setup and notification channels. `/README.md`
+- [x] T-002 [US3] Update `README.md` with "Security & Maintenance" section detailing Dependabot setup and notification channels. `/README.md`
 
 ### Phase 3: Verification
 
 **Goal**: Validate configuration and project structure.
 
-- [ ] T-003 Validate `.github/dependabot.yml` syntax and ensure file placement is correct. `/.github/dependabot.yml`
+- [x] T-003 Validate `.github/dependabot.yml` syntax and ensure file placement is correct. `/.github/dependabot.yml`
 
 ## Implementation Strategy
 
