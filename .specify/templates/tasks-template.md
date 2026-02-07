@@ -9,8 +9,8 @@ description: "Task list template for feature implementation"
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
 **Tests**: Include unit test tasks for every story to keep global coverage ≥85%.
-Tests are mandatory for new or changed behavior and must be runnable via
-`npm run dev` (or the lint+test equivalent) before merge.
+Tests are mandatory for new or changed behavior. After each task, run
+`npm run test`, `npm run lint`, and `npm run build` before merge.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -252,4 +252,5 @@ With multiple developers:
 - Stop at any checkpoint to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
 - Commit messages: title ≤50 chars, body lines ≤72 chars; include evidence of
-  latest `npm run dev` (or lint+test equivalent) run when tasks complete
+  latest `npm run test`, `npm run lint`, and `npm run build` run when tasks complete
+

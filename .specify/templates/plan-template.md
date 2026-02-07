@@ -31,17 +31,26 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-- Code Quality: Plan keeps components small, readable, and lint-clean; note any
-  exceptions that would reduce clarity.
-- Testing: Define the unit test approach (Vitest) and how coverage stays ≥85%;
-  identify new edge cases to cover.
-- UX Consistency: Describe how changes preserve keyboard shortcuts, focus
+- **I. Code Quality & Craftsmanship**: Plan keeps components small, readable, and
+  lint-clean; no dead code or unused assets; note exceptions that reduce clarity.
+- **II. Testing & Execution Discipline**: Define the unit test approach (Vitest)
+  and how coverage stays ≥85%; identify new edge cases; ensure every utility in
+  `src/utils/` has a corresponding test file.
+- **III. UX Consistency**: Describe how changes preserve keyboard shortcuts, focus
   handling, responsive layouts, and Tailwind patterns already in use.
-- Performance: State expected p95 interaction latency ≤100ms and load targets
-  (p75 Time-to-Interactive under 2s); list optimizations that keep rerenders
-  minimal.
-- Workflow: Confirm `npm run dev` (or lint+test equivalent) will run after each
-  change and that commits follow ≤50/≤72 character limits per task.
+- **IV. Performance Requirements**: State expected p95 interaction latency ≤100ms
+  and load targets (p75 Time-to-Interactive under 2s); list optimizations.
+- **V. Architecture & Structure**: Confirm files go into the correct folders
+  (`src/components`, `src/hooks`, `src/utils`, `src/data`, `src/types`).
+- **VI. Execution Discipline**: Confirm `npm run test`, `npm run lint`, and
+  `npm run build` will run after each task; commits follow 50/72 rule.
+- **VII. Cross-Platform & Browser Compatibility**: Describe how changes will be
+  tested across desktop/mobile and major browsers (Chrome, Safari, Firefox, Edge).
+- **VIII. Theme Support Planning**: Confirm no hard-coded colors; use CSS custom
+  properties and design tokens for theme compatibility.
+- **IX. Skill-Driven Development**: Reference `.agent/skills/vercel-react-best-practices/SKILL.md`
+  for state management and `.agent/skills/web-design-guidelines/SKILL.md` for
+  accessibility/responsive requirements.
 
 ## Project Structure
 
