@@ -2,7 +2,7 @@
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning  
 **Created**: 2026-02-08  
-**Feature**: [spec.md](file:///Users/pyaethuaung/go/src/github.com/pyaethu-aung/uuid-generator/specs/002-auto-vuln-updates/spec.md)
+**Feature**: [spec.md](../spec.md)
 
 ## Content Quality
 
