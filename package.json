@@ -8,7 +8,9 @@
     "build": "vite build",
     "lint": "eslint . --cache --cache-location .eslintcache",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "docker:build": "docker build -t uuid-generator:local .",
+    "docker:run": "docker run --rm -p 8080:80 --name uuid-app --read-only --cap-drop ALL --tmpfs /var/cache/nginx --tmpfs /var/run --tmpfs /tmp uuid-generator:local"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
