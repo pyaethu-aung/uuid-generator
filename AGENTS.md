@@ -88,6 +88,16 @@ When implementing code, provide brief comments (1-sentence) explaining *why* a c
 - **Notifications**: Rely on GitHub native notifications.
 - **Key Files**: `.github/dependabot.yml`.
 
+### 003-docker-containerization
+
+**Docker Integration**
+
+- **Build**: Multi-stage `Dockerfile` (Node 20 -> Nginx Alpine).
+- **Security**: Non-root user, read-only FS, Trivy scanning (blocking fixable HIGH/CRITICAL).
+- **Target**: Linux/AMD64 only (<5min build time).
+- **Registry**: GHCR.
+
+
 ---
 
 **Synced with Constitution**: v2.0.0 | **Last Updated**: 2026-02-08
