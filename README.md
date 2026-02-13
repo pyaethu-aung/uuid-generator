@@ -57,3 +57,18 @@ This project uses **GitHub Dependabot** to automatically detect vulnerable depen
 - **Review Policy**: **Manual review is required** for all security updates. Auto-merge is strictly disabled to ensure human oversight.
 - **Notifications**: Alerts are sent via GitHub's native notification system (Web/Email). Ensure you are "Watching" the repository to receive them.
 
+## Docker Support
+
+Production-ready Docker support is available with optimized multi-stage builds and security hardening.
+
+### Quick Run
+```bash
+# Build locally
+npm run docker:build
+
+# Run locally (port 8080)
+npm run docker:run
+```
+
+For detailed instructions on architecture, security, and troubleshooting, see [Docker Quickstart](specs/003-docker-containerization/quickstart.md).
+

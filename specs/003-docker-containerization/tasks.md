@@ -95,8 +95,8 @@ For Docker tasks, testing involves `docker build` validation and `trivy` scannin
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T016 [P] Documentation updates in `README.md` (add Docker instructions)
-- [ ] T017 [P] Verify `quickstart.md` instructions against final implementation
+- [x] T016 [P] Documentation updates in `README.md` (add Docker instructions)
+- [x] T017 [P] Verify `quickstart.md` instructions against final implementation
 
 ---
 
