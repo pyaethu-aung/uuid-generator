@@ -68,9 +68,9 @@ For Docker tasks, testing involves `docker build` validation and `trivy` scannin
 
 ### Implementation for User Story 2
 
-- [ ] T011 [US2] update `package.json` with `docker:build` and `docker:run` scripts for local convenience
-- [ ] T012 [US2] Verify local build size < 25MB and document findings in `research.md` if different
-- [ ] T013 [US2] Verify non-root user execution in local container (documentation/validation)
+- [x] T011 [US2] update `package.json` with `docker:build` and `docker:run` scripts for local convenience
+- [x] T012 [US2] Verify local build size < 25MB and document findings in `research.md` if different
+- [x] T013 [US2] Verify non-root user execution in local container (documentation/validation)
 
 **Checkpoint**: User Stories 1 AND 2 should both work independently
 
