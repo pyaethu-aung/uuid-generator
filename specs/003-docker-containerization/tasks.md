@@ -84,8 +84,8 @@ For Docker tasks, testing involves `docker build` validation and `trivy` scannin
 
 ### Implementation for User Story 3
 
-- [ ] T014 [US3] Configure daily schedule in `docker-publish.yml` for vulnerability scanning
-- [ ] T015 [US3] Add `.trivyignore` file if needed for unfixable false positives (optional/on-demand)
+- [x] T014 [US3] Configure daily schedule in `docker-publish.yml` for vulnerability scanning
+- [x] T015 [US3] Add `.trivyignore` file if needed for unfixable false positives (optional/on-demand)
 
 **Checkpoint**: All user stories should now be independently functional
 
