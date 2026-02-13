@@ -14,22 +14,19 @@ RUN npm run build && npm prune --production
 # Stage 2: Runtime
 FROM nginx:alpine AS runtime
 
-# Install curl for healthcheck
-RUN apk add --no-cache curl
+# Install curl for healthcheck and configure non-root user
+# hadolint ignore=DL3018
+RUN apk add --no-cache curl && \
+    adduser -D -H -u 1000 -s /bin/false app && \
+    mkdir -p /var/run/nginx /var/log/nginx /var/cache/nginx && \
+    touch /var/run/nginx.pid && \
+    chown -R app:app /var/run/nginx.pid /var/log/nginx /var/cache/nginx /etc/nginx/conf.d
 
-# Create non-root user 'app'
-RUN adduser -D -H -u 1000 -s /bin/false app
+# Copy build artifacts with correct ownership
+COPY --from=builder --chown=app:app /app/dist /usr/share/nginx/html
 
-# Copy build artifacts
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Copy custom nginx config
-COPY .docker/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Set permissions for non-root execution
-RUN touch /var/run/nginx.pid && \
-    mkdir -p /var/cache/nginx /var/log/nginx && \
-    chown -R app:app /var/run/nginx.pid /var/cache/nginx /var/log/nginx /etc/nginx/conf.d /usr/share/nginx/html
+# Copy custom nginx config with correct ownership
+COPY --chown=app:app .docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 USER app
 
