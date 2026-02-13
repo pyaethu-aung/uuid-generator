@@ -5,6 +5,12 @@
 **Status**: Draft  
 **Input**: User description: "Implement Docker containerization for the UUID Generator single-page React application using the docker-security-hardening and docker-multi-stage-optimization skills."
 
+## Clarifications
+
+### Session 2026-02-13
+- Q: How should we balance multi-platform build requirements (AMD64+ARM64) against the strict 5-minute CI time limit? → A: prioritize speed; drop ARM64 requirement and build only for linux/amd64.
+- Q: Should the build fail on ALL Critical/High vulnerabilities, even if no patch exists in Alpine upstream? → A: fail only on "fixable" vulnerabilities to avoid blocking releases on unpatched upstream issues.
+
 ## User Scenarios & Testing *(mandatory)*
 
 <!--
@@ -23,7 +29,7 @@ As a DevOps engineer, I want the application to be packaged as a secure, optimiz
 
 **Acceptance Scenarios**:
 
-1. **Given** a commit is pushed to main, **When** the CI pipeline runs, **Then** a multi-platform Docker image is built and pushed to GHCR.
+1. **Given** a commit is pushed to main, **When** the CI pipeline runs, **Then** a `linux/amd64` Docker image is built and pushed to GHCR.
 2. **Given** the image is built, **When** Trivy scans it, **Then** no critical or high vulnerabilities are reported.
 3. **Given** the container is running in production, **When** inspected, **Then** it runs as a non-root user with a read-only filesystem (except required temp dirs).
 4. **Given** the container is running, **When** a request is made to the health endpoint, **Then** it returns a 200 OK status.
@@ -63,7 +69,6 @@ As a security engineer, I want automated checks for Dockerfile best practices an
 
 - **Registry Rate Limits**: Build process should handle potential rate limiting from Docker Hub (for base images) by caching or mirroring if critical.
 - **Base Image Vulnerabilities**: If the base `node:20-alpine` or `nginx:alpine` image has a critical vulnerability, the build MUST fail, preventing deployment of insecure artifacts.
-- **Platform Incompatibility**: If an `arm64` build fails due to missing dependencies, the entire pipeline should fail to ensure consistency.
 - **Secrets in Build Args**: If a developer accidentally passes secrets as build args, the process should ideally detect (via secret scanning) or documentation must explicitly warn against it.
 - **Cache Invalidation**: Optimization relies on caching; if `package.json` changes frequently in ways that don't affect deps, build times might increase (mitigated by `npm ci` strategy).
 
@@ -80,7 +85,7 @@ As a security engineer, I want automated checks for Dockerfile best practices an
 - **IV. Performance Requirements**: Image size must be minimized (< 25MB target) for fast deployment/scaling. Nginx configuration must enable gzip/brotli compression if supported and cache headers.
 - **V. Architecture & Structure**: Docker related files (`Dockerfile`, `.dockerignore`, `nginx.conf`) placed in root or appropriate config folder.
 - **VI. Execution Discipline**: `docker build` and scan commands are integrated into `npm` scripts or Makefile if useful.
-- **VII. Cross-Platform & Browser Compatibility**: Application functionality is preserved; Docker image supports `linux/amd64` and `linux/arm64`.
+- **VII. Cross-Platform & Browser Compatibility**: Application functionality is preserved; Docker image supports `linux/amd64` only.
 - **VIII. Theme Support Planning**: N/A.
 - **IX. Skill-Driven Development**: Adheres to `docker-multi-stage-optimization` and `docker-security-hardening`.
 
@@ -94,7 +99,7 @@ As a security engineer, I want automated checks for Dockerfile best practices an
 - **FR-004**: System MUST mount the root filesystem as read-only, with exceptions only for strictly necessary writable directories (e.g., `/var/cache/nginx`, `/var/run`, `/tmp`).
 - **FR-005**: System MUST include a GitHub Actions workflow that builds, tests, and pushes the image to GitHub Container Registry (GHCR).
 - **FR-006**: System MUST implement semantic versioning for image tags based on Git tags (`v*`), ensuring `latest` points to the most recent stable release.
-- **FR-007**: System MUST scan images for CVEs using Trivy in the CI/CD pipeline and fail on `CRITICAL` or `HIGH` severity vulnerabilities.
+- **FR-007**: System MUST scan images for CVEs using Trivy in the CI/CD pipeline and fail on `CRITICAL` or `HIGH` severity vulnerabilities ONLY if a fix is available (using `--ignore-unfixed`).
 - **FR-008**: System MUST validate the `Dockerfile` syntax and best practices using `hadolint` during CI.
 - **FR-009**: System MUST perform daily scheduled vulnerability scans of the `latest` image.
 - **FR-010**: System MUST NOT include any secrets or sensitive environment variables in the final image or build history.
@@ -104,7 +109,7 @@ As a security engineer, I want automated checks for Dockerfile best practices an
     - `Referrer-Policy: strict-origin-when-cross-origin`
     - `Content-Security-Policy` (configured for React app needs)
 - **FR-012**: System MUST expose a lightweight health check endpoint (e.g., `/health` serving a simple 200 OK) configured in Nginx or via a static file.
-- **FR-013**: System MUST support multi-platform builds for `linux/amd64` and `linux/arm64`.
+- **FR-013**: System MUST support single-platform builds for `linux/amd64` only (multi-platform disabled for speed).
 
 ### Key Entities *(include if feature involves data)*
 
@@ -117,8 +122,8 @@ As a security engineer, I want automated checks for Dockerfile best practices an
 ### Measurable Outcomes
 
 - **SC-001**: Final Docker image size is under 25MB (compressed layer size as reported by registry or `docker save | gzip`). *Note: Uncompressed size might exceed 25MB depending on base Alpine+Nginx overhead, but best efforts will be made to minimize uncompressed size too.*
-- **SC-002**: CI pipeline completes successfully (build, test, scan, push) in under 5 minutes.
-- **SC-003**: Trivy scan reports 0 `CRITICAL` and 0 `HIGH` vulnerabilities in the final image.
+- **SC-002**: CI pipeline completes successfully (build, test, scan, push) in under 5 minutes (single platform linux/amd64).
+- **SC-003**: Trivy scan reports 0 fixable `CRITICAL` and 0 fixable `HIGH` vulnerabilities in the final image.
 - **SC-004**: Application within container is accessible via HTTP on port 8080 (or configured port) and renders the homepage correctly.
 - **SC-005**: Health check endpoint returns HTTP 200 status code.
 - **SC-006**: Dockerfile scores 10/10 on Hadolint (no errors/warnings).
