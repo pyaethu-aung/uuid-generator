@@ -23,8 +23,8 @@ For Docker tasks, testing involves `docker build` validation and `trivy` scannin
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create `.docker` directory and `.dockerignore` file in root
-- [ ] T002 Create `.github/workflows` directory if it doesn't exist
+- [x] T001 Create `.docker` directory and `.dockerignore` file in root
+- [x] T002 Create `.github/workflows` directory if it doesn't exist
 
 ---
 
@@ -34,8 +34,8 @@ For Docker tasks, testing involves `docker build` validation and `trivy` scannin
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Create `nginx.conf` in `.docker/nginx.conf` with SPA routing and security headers
-- [ ] T004 Create initial `Dockerfile` in root with multi-stage structure (Node 20 + Nginx Alpine)
+- [x] T003 Create `nginx.conf` in `.docker/nginx.conf` with SPA routing and security headers
+- [x] T004 Create initial `Dockerfile` in root with multi-stage structure (Node 20 + Nginx Alpine)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -49,12 +49,12 @@ For Docker tasks, testing involves `docker build` validation and `trivy` scannin
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] Configure multi-stage build in `Dockerfile` (Builder stage)
-- [ ] T006 [US1] Configure multi-stage build in `Dockerfile` (Runtime stage with non-root user)
-- [ ] T007 [US1] Implement GitHub Actions workflow `docker-publish.yml` for build and push
-- [ ] T008 [US1] Add Trivy vulnerability scanning to `docker-publish.yml` (blocking fixable HIGH/CRITICAL)
-- [ ] T009 [US1] Add Hadolint linting to `docker-publish.yml`
-- [ ] T010 [US1] Add health check endpoint configuration in `.docker/nginx.conf`
+- [x] T005 [US1] Configure multi-stage build in `Dockerfile` (Builder stage)
+- [x] T006 [US1] Configure multi-stage build in `Dockerfile` (Runtime stage with non-root user)
+- [x] T007 [US1] Implement GitHub Actions workflow `docker-publish.yml` for build and push
+- [x] T008 [US1] Add Trivy vulnerability scanning to `docker-publish.yml` (blocking fixable HIGH/CRITICAL)
+- [x] T009 [US1] Add Hadolint linting to `docker-publish.yml`
+- [x] T010 [US1] Add health check endpoint configuration in `.docker/nginx.conf`
 
 **Checkpoint**: User Story 1 fully functional and testable independently
 
