@@ -4,7 +4,7 @@ This document provides guidelines for AI coding assistants (Antigravity, Gemini 
 
 ## Constitution Reference
 
-Refer to `.specify/memory/constitution.md` (v2.0.0) for the authoritative governance document. This file summarizes key rules for quick reference during development.
+Refer to `.specify/memory/constitution.md` (v2.1.0) for the authoritative governance document. This file summarizes key rules for quick reference during development.
 
 ## Core Principles Summary
 
@@ -25,7 +25,9 @@ Refer to `.specify/memory/constitution.md` (v2.0.0) for the authoritative govern
 The Agent MUST consult these skills during planning and implementation:
 
 - **React & Vite Essentials**: `.agent/skills/react-vite-essentials/SKILL.md`
-- **UI/UX & Design**: `.agent/skills/web-design-guidelines/SKILL.md`
+- **Docker CI/CD Integration**: `.agent/skills/docker-cicd-integration/SKILL.md`
+- **Docker Multi-Stage Optimization**: `.agent/skills/docker-multi-stage-optimization/SKILL.md`
+- **Docker Security Hardening**: `.agent/skills/docker-security-hardening/SKILL.md`
 
 ## Validation Checklist
 
@@ -107,4 +109,4 @@ When implementing code, provide brief comments (1-sentence) explaining *why* a c
 
 ---
 
-**Synced with Constitution**: v2.0.0 | **Last Updated**: 2026-02-15
+**Synced with Constitution**: v2.1.0 | **Last Updated**: 2026-02-16
