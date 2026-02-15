@@ -59,9 +59,18 @@ This project uses **GitHub Dependabot** to automatically detect vulnerable depen
 
 ## Docker Support
 
-Production-ready Docker support is available with optimized multi-stage builds and security hardening.
+Production-ready Docker support is available with optimized multi-stage builds and security hardening. Images are multi-platform (`linux/amd64` and `linux/arm64`).
 
-### Quick Run
+### Pull from GHCR
+```bash
+# Pull the latest published version (e.g. v1.0.0 → tag 1.0.0)
+docker pull ghcr.io/pyaethu-aung/uuid-generator:1.0.0
+
+# Run on port 8080
+docker run -d -p 8080:80 --name uuid-app ghcr.io/pyaethu-aung/uuid-generator:1.0.0
+```
+
+### Build Locally
 ```bash
 # Build locally
 npm run docker:build
@@ -69,6 +78,16 @@ npm run docker:build
 # Run locally (port 8080)
 npm run docker:run
 ```
+
+### CI/CD Publishing
+Images are published to GHCR **only on version tag pushes** (`v*.*.*`). Pushes to `main` and pull requests build and scan but do not publish. A daily scheduled Trivy scan runs to catch newly disclosed CVEs.
+
+| Event            | Build | Trivy Scan | Push to Registry | Cosign Sign |
+|------------------|-------|------------|------------------|-------------|
+| Push to `main`   | ✅    | ✅         | ❌               | ❌          |
+| Pull request     | ✅    | ✅         | ❌               | ❌          |
+| Tag `v*.*.*`     | ✅    | ✅         | ✅               | ✅          |
+| Schedule (daily) | ✅    | ✅         | ❌               | ❌          |
 
 For detailed instructions on architecture, security, and troubleshooting, see [Docker Quickstart](specs/003-docker-containerization/quickstart.md).
 
