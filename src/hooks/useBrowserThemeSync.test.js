@@ -6,16 +6,13 @@ describe("useBrowserThemeSync", () => {
   let metaTag;
 
   beforeEach(() => {
-    // Setup meta tag in head
     metaTag = document.createElement("meta");
     metaTag.setAttribute("name", "theme-color");
     document.head.appendChild(metaTag);
 
-    // Mock getComputedStyle
     vi.spyOn(window, "getComputedStyle").mockImplementation(() => ({
       getPropertyValue: (prop) => {
         if (prop === "--page-bg") return "#030712";
-        if (prop === "--accent-primary") return "#2dd4bf";
         return "";
       },
     }));
@@ -26,20 +23,42 @@ describe("useBrowserThemeSync", () => {
     vi.restoreAllMocks();
   });
 
-  it("updates the meta theme-color tag with the value of --page-bg", () => {
+  it("sets theme-color to the static --page-bg value", () => {
     renderHook(() => useBrowserThemeSync("dark"));
 
     expect(metaTag.getAttribute("content")).toBe("#030712");
   });
 
-  it("updates the meta theme-color tag with an interpolated value when opacity is provided", () => {
-    // pageBg: #030712, accentColor: #2dd4bf
-    // Interpolation at 0.5:
-    // #030712 -> R:3, G:7, B:18
-    // #2dd4bf -> R:45, G:212, B:191
-    // Midpoint: R:24, G:110, B:105 -> #186e69
-    renderHook(() => useBrowserThemeSync("dark", 0.5));
+  it("creates meta tag if none exists", () => {
+    document.head.removeChild(metaTag);
 
-    expect(metaTag.getAttribute("content")).toBe("#186e69");
+    renderHook(() => useBrowserThemeSync("dark"));
+
+    const created = document.querySelector('meta[name="theme-color"]');
+    expect(created).not.toBeNull();
+    expect(created.getAttribute("content")).toBe("#030712");
+
+    // Clean up the created tag for afterEach
+    metaTag = created;
+  });
+
+  it("updates theme-color when theme changes", () => {
+    const { rerender } = renderHook(
+      ({ theme }) => useBrowserThemeSync(theme),
+      { initialProps: { theme: "dark" } }
+    );
+
+    expect(metaTag.getAttribute("content")).toBe("#030712");
+
+    vi.spyOn(window, "getComputedStyle").mockImplementation(() => ({
+      getPropertyValue: (prop) => {
+        if (prop === "--page-bg") return "#f8fafc";
+        return "";
+      },
+    }));
+
+    rerender({ theme: "light" });
+
+    expect(metaTag.getAttribute("content")).toBe("#f8fafc");
   });
 });
