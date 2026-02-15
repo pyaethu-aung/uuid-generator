@@ -101,8 +101,8 @@
 }
 
 .theme-cta {
-  background-color: rgb(45 212 191 / 0.9);
-  color: #020617;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
   box-shadow: var(--cta-shadow);
 }
 
