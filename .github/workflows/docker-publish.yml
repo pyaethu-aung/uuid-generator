@@ -66,6 +66,11 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
 
       # Build and export to Docker so Trivy can scan it
       - name: Build and load Docker image for scan
@@ -96,7 +101,7 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name == 'push' }}
+          push: ${{ startsWith(github.ref, 'refs/tags/') }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
@@ -104,7 +109,7 @@ jobs:
 
       # Sign the resulting Docker image digest except on PRs.
       - name: Sign the published Docker image
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
         env:
           TAGS: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
