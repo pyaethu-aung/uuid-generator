@@ -74,14 +74,14 @@ As a user, I want call-to-action buttons and interactive UI elements to use soli
 
 **Why this priority**: The CTA button gradient is the most prominent remaining gradient in the UI after background simplification. Replacing it with a solid color completes the minimalist visual language.
 
-**Independent Test**: Inspect the primary "Generate" button and the "Copy" button on each UUID row. Both should display the same solid teal accent color background — no color transitions across the surface.
+**Independent Test**: Inspect the primary "Generate" button and the "Copy" button on each UUID row. Both should display the same accent color driven by `--btn-bg` / `--btn-text` design tokens — no hardcoded colors, no gradients.
 
 **Acceptance Scenarios**:
 
 1. **Given** the dark theme is active, **When** the Generate button renders, **Then** its background MUST be a solid accent color — not a multi-stop gradient.
 2. **Given** the light theme is active, **When** the Generate button renders, **Then** its background MUST be a solid accent color.
 3. **Given** either theme is active, **When** the user hovers over the CTA button, **Then** the hover state must remain a solid color variation (e.g., slight opacity or shade shift) — not a gradient.
-4. **Given** either theme is active, **When** the CTA and Copy buttons render, **Then** both MUST display the same teal background color and dark text color.
+4. **Given** either theme is active, **When** the CTA and Copy buttons render, **Then** both MUST use shared `--btn-bg` and `--btn-text` design tokens.
 
 ---
 
@@ -116,7 +116,7 @@ As a user, I want call-to-action buttons and interactive UI elements to use soli
 - **FR-006**: Card and panel surface tokens MUST be updated to use opaque or near-opaque values, removing heavy glassmorphism transparency.
 - **FR-007**: All CSS custom properties, hooks, components, and test files made obsolete by FR-001 through FR-006 MUST be removed to prevent dead code.
 - **FR-008**: CTA buttons and interactive UI elements MUST use a solid accent background color instead of a gradient fill. The `--gradient-cta` design token MUST be replaced with a solid color token.
-- **FR-009**: The CTA button MUST visually match the Copy button's teal accent color (`bg-teal-400/90`) and hover behavior (`hover:scale-105`, `hover:bg-teal-300`).
+- **FR-009**: The CTA and Copy buttons MUST share the same `--btn-bg`, `--btn-text`, `--btn-hover`, and `--btn-active` design tokens. No hardcoded Tailwind color utilities for button backgrounds or text.
 
 ### Assumptions
 

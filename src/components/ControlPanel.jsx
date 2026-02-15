@@ -158,7 +158,7 @@ function ControlPanel({
       <button
         type="button"
         onClick={onGenerate}
-        className="theme-cta mt-10 w-full rounded-2xl px-6 py-4 text-base font-semibold shadow-lg transition hover:scale-105 hover:bg-teal-300"
+        className="theme-cta mt-10 w-full rounded-2xl px-6 py-4 text-base font-semibold shadow-lg transition hover:scale-105 hover:bg-[var(--btn-hover)]"
       >
         Generate {visibleBatchSize > 1 ? `${visibleBatchSize} UUIDs` : "a UUID"}
       </button>
