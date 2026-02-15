@@ -51,8 +51,8 @@ Remove test files for deleted hooks. After each task, run
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] Remove blob `<div>` elements and `ScrollProgressBackground` JSX from `src/App.jsx`; remove `useScrollOpacity` import and invocation
-- [ ] T010 [US1] Simplify `useBrowserThemeSync(theme, scrollOpacity)` call to `useBrowserThemeSync(theme)` in `src/App.jsx`
+- [x] T009 [US1] Remove blob `<div>` elements and `ScrollProgressBackground` JSX from `src/App.jsx`; remove `useScrollOpacity` import and invocation
+- [x] T010 [US1] Simplify `useBrowserThemeSync(theme, scrollOpacity)` call to `useBrowserThemeSync(theme)` in `src/App.jsx`
 
 **Checkpoint**: App renders with solid background, no blobs, no scroll-progress overlay. Build may warn on `useBrowserThemeSync` signature mismatch — resolved in Phase 5.
 
