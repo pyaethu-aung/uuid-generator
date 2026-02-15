@@ -70,3 +70,14 @@
 - `ScrollProgressBackground.jsx` (100% coverage) — no dedicated test file
 
 Net effect: removing low-coverage code (`useBrowserThemeSync.js` at 62.96%) will slightly improve overall percentages. The simplified `useBrowserThemeSync` hook (fewer branches) will have higher coverage from the updated test.
+
+### 8. Should the CTA button match the Copy button's styling?
+
+**Decision**: Yes — update `.theme-cta` to use the Copy button's color values (`rgb(45 212 191 / 0.9)`, `#020617`) and hover behavior (`hover:scale-105`, `hover:bg-teal-300`).
+
+**Rationale**: The Copy button's `bg-teal-400/90` styling provides a bright, high-contrast accent that feels more vibrant than the design-token `--accent-primary` value. Aligning the CTA to this style creates visual consistency across all interactive teal buttons. The Copy button retains its existing hardcoded Tailwind values as the source of truth for the shared style.
+
+**Alternatives considered**:
+- Align Copy to CTA tokens → Rejected by user: preferred the Copy button's brighter, more interactive feel.
+- Create shared design tokens for both → Deferred: current approach works; tokenization is a future cleanup opportunity.
+

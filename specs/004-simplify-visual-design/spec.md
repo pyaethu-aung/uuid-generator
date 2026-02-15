@@ -2,7 +2,7 @@
 
 **Feature Branch**: `004-simplify-visual-design`  
 **Created**: 2026-02-15  
-**Status**: Draft  
+**Status**: Implemented  
 **Input**: User description: "Simplify the visual design of the application by removing decorative background elements and dynamic browser integration behaviors. The goal is to create a minimalist, high-contrast interface for both light and dark themes."
 
 ## User Scenarios & Testing *(mandatory)*
@@ -74,13 +74,14 @@ As a user, I want call-to-action buttons and interactive UI elements to use soli
 
 **Why this priority**: The CTA button gradient is the most prominent remaining gradient in the UI after background simplification. Replacing it with a solid color completes the minimalist visual language.
 
-**Independent Test**: Inspect the primary "Generate" button and any other gradient-styled interactive elements. They should display a solid accent color background — no color transitions across the surface.
+**Independent Test**: Inspect the primary "Generate" button and the "Copy" button on each UUID row. Both should display the same solid teal accent color background — no color transitions across the surface.
 
 **Acceptance Scenarios**:
 
 1. **Given** the dark theme is active, **When** the Generate button renders, **Then** its background MUST be a solid accent color — not a multi-stop gradient.
 2. **Given** the light theme is active, **When** the Generate button renders, **Then** its background MUST be a solid accent color.
 3. **Given** either theme is active, **When** the user hovers over the CTA button, **Then** the hover state must remain a solid color variation (e.g., slight opacity or shade shift) — not a gradient.
+4. **Given** either theme is active, **When** the CTA and Copy buttons render, **Then** both MUST display the same teal background color and dark text color.
 
 ---
 
@@ -89,7 +90,7 @@ As a user, I want call-to-action buttons and interactive UI elements to use soli
 - What happens when the user's OS prefers reduced motion? — The removal of animated blobs and scroll transitions inherently satisfies `prefers-reduced-motion`; no additional handling is needed beyond what this feature achieves.
 - How does this affect the existing theme toggle animation? — Theme toggle transitions (200ms ease on background-color and color) remain unaffected; only the decorative elements and scroll-based behaviors are removed.
 - What if a user has a browser that does not support `theme-color`? — The existing fallback behavior (no meta tag support = no effect) remains unchanged. The simplification only removes the scroll-based interpolation.
-- What happens to the `colors.js` utility (`interpolateColor`)? — While this utility is no longer used by the removed browser-theme-sync feature, it should be evaluated for removal if no other consumers exist; however, removal of shared utilities is a secondary concern and should be assessed during implementation.
+- What happens to the `colors.js` utility (`interpolateColor`)? — Deleted. No other consumers existed; confirmed via grep scan during implementation.
 
 ## Requirements *(mandatory)*
 
@@ -115,6 +116,7 @@ As a user, I want call-to-action buttons and interactive UI elements to use soli
 - **FR-006**: Card and panel surface tokens MUST be updated to use opaque or near-opaque values, removing heavy glassmorphism transparency.
 - **FR-007**: All CSS custom properties, hooks, components, and test files made obsolete by FR-001 through FR-006 MUST be removed to prevent dead code.
 - **FR-008**: CTA buttons and interactive UI elements MUST use a solid accent background color instead of a gradient fill. The `--gradient-cta` design token MUST be replaced with a solid color token.
+- **FR-009**: The CTA button MUST visually match the Copy button's teal accent color (`bg-teal-400/90`) and hover behavior (`hover:scale-105`, `hover:bg-teal-300`).
 
 ### Assumptions
 
