@@ -123,12 +123,12 @@ Remove test files for deleted hooks. After each task, run
 
 **Purpose**: Final validation, dead-reference scan, and cleanup
 
-- [ ] T018 Run `npm run test` — all tests pass
-- [ ] T019 Run `npm run lint` — zero errors
-- [ ] T020 Run `npm run build` — clean build
-- [ ] T021 Run `npx vitest run --coverage` — confirm statement coverage ≥85%
-- [ ] T022 Run dead-reference grep: `grep -r "interpolateColor\|useScrollOpacity\|ScrollProgressBackground\|gradient-blob\|page-gradient\|grid-color\|blob-one\|blob-two\|gradient-cta" src/` — expect zero matches
-- [ ] T023 Visual verification via `npm run dev`: check both themes, scroll behavior, CTA button, surface contrast
+- [x] T018 Run `npm run test` — all tests pass
+- [x] T019 Run `npm run lint` — zero errors
+- [x] T020 Run `npm run build` — clean build
+- [x] T021 Run `npx vitest run --coverage` — confirm statement coverage ≥85%
+- [x] T022 Run dead-reference grep: `grep -r "interpolateColor\|useScrollOpacity\|ScrollProgressBackground\|gradient-blob\|page-gradient\|grid-color\|blob-one\|blob-two\|gradient-cta" src/` — expect zero matches
+- [x] T023 Visual verification via `npm run dev`: check both themes, scroll behavior, CTA button, surface contrast
 
 ---
 
