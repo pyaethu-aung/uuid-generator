@@ -12,12 +12,12 @@ Strip all decorative background elements (gradients, grid overlay, animated blob
 **Language/Version**: JavaScript (ES2022+), JSX  
 **Primary Dependencies**: React 18, Vite, Tailwind CSS  
 **Storage**: N/A  
-**Testing**: Vitest + @testing-library/react (current coverage: 88.59% stmts / 90.05% lines)  
+**Testing**: Vitest + @testing-library/react (final coverage: 89.96% stmts / 91.3% lines)  
 **Target Platform**: Web — desktop and mobile browsers (Chrome, Safari, Firefox, Edge)  
 **Project Type**: Web (single SPA)  
 **Performance Goals**: p95 interaction latency ≤100ms; p75 TTI <2s  
 **Constraints**: Coverage must remain ≥85%; zero lint/build errors  
-**Scale/Scope**: ~15 files affected (modify 5, delete 5, remove ~200 LOC)
+**Scale/Scope**: ~15 files affected (modify 6, delete 4, remove ~200 LOC)
 
 ## Constitution Check
 
@@ -57,8 +57,8 @@ src/
 ├── App.css                      # MODIFY: remove .gradient-blob*, @keyframes blob-drift,
 │                                #   .scroll-background-layer; update .theme-cta;
 │                                #   remove .theme-glass
-├── App.jsx                      # MODIFY: remove blob divs, ScrollProgressBackground,
-│                                #   useScrollOpacity import/call, simplify
+├── App.jsx                      # MODIFY: removed blob divs, ScrollProgressBackground,
+│                                #   useScrollOpacity import/call, simplified
 │                                #   useBrowserThemeSync call, remove backdrop-blur
 ├── hooks/
 │   ├── useBrowserThemeSync.js   # MODIFY: remove scroll-based interpolation,
@@ -68,7 +68,8 @@ src/
 │   └── useScrollOpacity.test.js # DELETE
 ├── components/
 │   ├── ScrollProgressBackground.jsx  # DELETE
-│   └── ControlPanel.jsx         # MODIFY: backdrop-blur removal (if applicable)
+│   ├── ControlPanel.jsx         # MODIFY: removed backdrop-blur from aside
+│   └── UuidList.jsx             # MODIFY: aligned Copy button to design tokens
 └── utils/
     └── colors.js                # DELETE (sole consumer removed)
 ```
@@ -150,6 +151,16 @@ src/
 
 ---
 
+### Task 8: Align Copy button with CTA design tokens
+
+**Files**: `src/components/UuidList.jsx`
+
+**Changes**:
+1. Replace hardcoded `bg-teal-400/90`, `text-slate-950`, `bg-emerald-300` with `--accent-primary`, `--accent-secondary`, `--text-contrast` design tokens
+2. Align hover behavior with CTA (opacity-based rather than color-based)
+
+---
+
 ### Task 7: Validation
 
 Run the full validation suite:
@@ -161,6 +172,7 @@ Run the full validation suite:
 ## Complexity Tracking
 
 > No Constitution Check violations detected. All gates pass.
+> **Implementation complete** — 23 tasks + 1 post-implementation alignment task.
 
 ## Design Token Changes
 
