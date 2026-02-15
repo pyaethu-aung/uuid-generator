@@ -97,9 +97,9 @@ Remove test files for deleted hooks. After each task, run
 
 ### Implementation for User Story 4
 
-- [ ] T014 [P] [US4] Update `--surface-card`, `--surface-panel`, `--surface-glass`, `--surface-soft` tokens to opaque/near-opaque values in both `:root` and `:root[data-theme="light"]` in `src/index.css`
-- [ ] T015 [P] [US4] Remove `backdrop-blur` from the card `<article>` className in `src/App.jsx`
-- [ ] T016 [P] [US4] Remove `backdrop-blur` from the `<aside>` className in `src/components/ControlPanel.jsx`
+- [x] T014 [P] [US4] Update `--surface-card`, `--surface-panel`, `--surface-glass`, `--surface-soft` tokens to opaque/near-opaque values in both `:root` and `:root[data-theme="light"]` in `src/index.css`
+- [x] T015 [P] [US4] Remove `backdrop-blur` from the card `<article>` className in `src/App.jsx`
+- [x] T016 [P] [US4] Remove `backdrop-blur` from the `<aside>` className in `src/components/ControlPanel.jsx`
 
 **Checkpoint**: Surfaces are opaque. `backdrop-blur` retained only on `ShortcutReference.jsx` modal overlay.
 
@@ -113,7 +113,7 @@ Remove test files for deleted hooks. After each task, run
 
 ### Implementation for User Story 5
 
-- [ ] T017 [US5] Update `.theme-cta` in `src/App.css`: replace `background-image: var(--gradient-cta)` with `background-color: var(--accent-primary)`
+- [x] T017 [US5] Update `.theme-cta` in `src/App.css`: replace `background-image: var(--gradient-cta)` with `background-color: var(--accent-primary)`
 
 **Checkpoint**: CTA button is flat. All P2 stories complete.
 
