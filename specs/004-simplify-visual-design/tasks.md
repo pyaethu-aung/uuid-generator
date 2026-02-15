@@ -21,7 +21,7 @@ Remove test files for deleted hooks. After each task, run
 
 **Purpose**: No project initialization needed — existing SPA. This phase captures pre-flight verification.
 
-- [ ] T001 Verify clean baseline: run `npm run test`, `npm run lint`, `npm run build` and confirm all pass on current branch
+- [x] T001 Verify clean baseline: run `npm run test`, `npm run lint`, `npm run build` and confirm all pass on current branch
 
 ---
 
@@ -31,13 +31,13 @@ Remove test files for deleted hooks. After each task, run
 
 **⚠️ CRITICAL**: Token removals and file deletions must complete before story-level component updates
 
-- [ ] T002 [P] Remove `--page-gradient`, `--grid-color`, `--blob-one-color`, `--blob-two-color`, `--gradient-cta` tokens from `:root` and `:root[data-theme="light"]` in `src/index.css`
-- [ ] T003 [P] Remove `body::before` grid-pattern rule and `background-image: var(--page-gradient)` from `body` in `src/index.css`
-- [ ] T004 [P] Remove `.gradient-blob`, `.gradient-blob-one`, `.gradient-blob-two`, `@keyframes blob-drift`, and `.scroll-background-layer` rules from `src/App.css`
-- [ ] T005 Delete `src/hooks/useScrollOpacity.js`
-- [ ] T006 Delete `src/hooks/useScrollOpacity.test.js`
-- [ ] T007 Delete `src/components/ScrollProgressBackground.jsx`
-- [ ] T008 Delete `src/utils/colors.js`
+- [x] T002 [P] Remove `--page-gradient`, `--grid-color`, `--blob-one-color`, `--blob-two-color`, `--gradient-cta` tokens from `:root` and `:root[data-theme="light"]` in `src/index.css`
+- [x] T003 [P] Remove `body::before` grid-pattern rule and `background-image: var(--page-gradient)` from `body` in `src/index.css`
+- [x] T004 [P] Remove `.gradient-blob`, `.gradient-blob-one`, `.gradient-blob-two`, `@keyframes blob-drift`, and `.scroll-background-layer` rules from `src/App.css`
+- [x] T005 Delete `src/hooks/useScrollOpacity.js`
+- [x] T006 Delete `src/hooks/useScrollOpacity.test.js`
+- [x] T007 Delete `src/components/ScrollProgressBackground.jsx`
+- [x] T008 Delete `src/utils/colors.js`
 
 **Checkpoint**: All dead tokens, rules, and files removed. Remaining code may have broken imports — resolved in story phases.
 
