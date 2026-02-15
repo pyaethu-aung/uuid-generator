@@ -68,7 +68,7 @@ Remove test files for deleted hooks. After each task, run
 
 > All DOM-level decorative elements were already removed in T003 (grid), T004 (blob CSS), and T009 (blob JSX). This phase validates completeness.
 
-- [ ] T011 [US2] Verify no residual references to `gradient-blob`, `page-gradient`, `grid-color`, `blob-one`, `blob-two` in `src/` by running `grep -r` scan
+- [x] T011 [US2] Verify no residual references to `gradient-blob`, `page-gradient`, `grid-color`, `blob-one`, `blob-two` in `src/` by running `grep -r` scan
 
 **Checkpoint**: Zero decorative background elements in DOM or CSS. Stories 1 & 2 deliver the MVP.
 
@@ -82,8 +82,8 @@ Remove test files for deleted hooks. After each task, run
 
 ### Implementation for User Story 3
 
-- [ ] T012 [US3] Refactor `src/hooks/useBrowserThemeSync.js`: remove `opacity` parameter, remove `interpolateColor` import, set `theme-color` directly to `--page-bg` value
-- [ ] T013 [US3] Update `src/hooks/useBrowserThemeSync.test.js`: remove interpolation test cases, add test for static `--page-bg` theme-color assignment
+- [x] T012 [US3] Refactor `src/hooks/useBrowserThemeSync.js`: remove `opacity` parameter, remove `interpolateColor` import, set `theme-color` directly to `--page-bg` value
+- [x] T013 [US3] Update `src/hooks/useBrowserThemeSync.test.js`: remove interpolation test cases, add test for static `--page-bg` theme-color assignment
 
 **Checkpoint**: `useBrowserThemeSync` is a static theme-color setter. All tests pass.
 
