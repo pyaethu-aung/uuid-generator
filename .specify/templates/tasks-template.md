@@ -251,6 +251,3 @@ With multiple developers:
 - Commit after each task or logical group
 - Stop at any checkpoint to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
-- Commit messages: title ≤50 chars, body lines ≤72 chars; include evidence of
-  latest `npm run test`, `npm run lint`, and `npm run build` run when tasks complete
-
