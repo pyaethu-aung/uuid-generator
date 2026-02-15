@@ -24,9 +24,8 @@ Refer to `.specify/memory/constitution.md` (v2.0.0) for the authoritative govern
 
 The Agent MUST consult these skills during planning and implementation:
 
-- **React Standards**: `.agent/skills/vercel-react-best-practices/SKILL.md`
+- **React & Vite Essentials**: `.agent/skills/react-vite-essentials/SKILL.md`
 - **UI/UX & Design**: `.agent/skills/web-design-guidelines/SKILL.md`
-- **Composition Patterns**: `.agent/skills/vercel-composition-patterns/SKILL.md`
 
 ## Validation Checklist
 
