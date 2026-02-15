@@ -1,27 +1,30 @@
 <!--
 SYNC IMPACT REPORT
-Version: 1.0.0 -> 2.0.0
+Version: 2.0.0 -> 2.1.0
 Modified Principles:
-- Code Quality First → I. Code Quality & Craftsmanship (expanded scope)
-- Test Discipline & Coverage → II. Testing & Execution Discipline (NON-NEGOTIABLE)
-- UX Consistency & Accessibility → III. User Experience Consistency
-- Performance & Responsiveness → IV. Performance Requirements
-- Workflow Guardrails → VI. Execution Discipline (NON-NEGOTIABLE)
+- IX. Skill-Driven Development & Agentic Workflow → IX. Skill-Driven Development & Agentic Workflow (redefined skill references)
 Added Sections:
-- V. Architecture & Structure (new)
-- VII. Cross-Platform & Browser Compatibility (new)
-- VIII. Theme Support Planning (new)
-- IX. Skill-Driven Development & Agentic Workflow (NON-NEGOTIABLE) (new)
-- Documentation & Standards (new section)
-- Review & Quality Gates (new section)
+- None
 Removed Sections:
-- Quality Gates & Standards (merged into Review & Quality Gates)
-- Development Workflow & Compliance (merged into Governance)
+- None
+Skill Changes:
+- REMOVED: `.agent/skills/vercel-react-best-practices/SKILL.md` (replaced by react-vite-essentials)
+- REMOVED: `.agent/skills/web-design-guidelines/SKILL.md` (no longer exists)
+- ADDED: `.agent/skills/react-vite-essentials/SKILL.md`
+- ADDED: `.agent/skills/docker-cicd-integration/SKILL.md`
+- ADDED: `.agent/skills/docker-multi-stage-optimization/SKILL.md`
+- ADDED: `.agent/skills/docker-security-hardening/SKILL.md`
 Templates Updated:
-- .specify/templates/plan-template.md ✅ updated
-- .specify/templates/spec-template.md ✅ updated
-- .specify/templates/tasks-template.md ✅ updated
-- AGENTS.md ✅ created
+- .specify/templates/plan-template.md ✅ reviewed (no constitution-level changes needed)
+- .specify/templates/spec-template.md ✅ reviewed (no constitution-level changes needed)
+- .specify/templates/tasks-template.md ✅ reviewed (no constitution-level changes needed)
+- .specify/templates/constitution-template.md ✅ reviewed
+- .specify/templates/agent-file-template.md ✅ reviewed
+- AGENTS.md ⚠ pending (must be updated to reflect new skill paths)
+Files Requiring Manual Follow-Up:
+- AGENTS.md: Update Required Skills section to replace stale skill paths
+- specs/004-simplify-visual-design/plan.md: Contains stale skill references (historical, no action needed)
+- specs/004-simplify-visual-design/spec.md: Contains stale skill references (historical, no action needed)
 Deferred Items:
 - None
 -->
@@ -57,11 +60,14 @@ All UI features MUST be planned and implemented with dark/light theme support fr
 
 ### IX. Skill-Driven Development & Agentic Workflow (NON-NEGOTIABLE)
 The Agent MUST treat the following skills as "Primary Source Truth" during all phases of the spec-kit workflow (`/specify`, `/plan`, `/implement`):
-- **React Standards**: Use `.agent/skills/vercel-react-best-practices/SKILL.md`. Every `/plan` must explicitly verify state management and hook usage against these rules.
-- **UI/UX & Design**: Use `.agent/skills/web-design-guidelines/SKILL.md`. Every `/specify` phase must define accessibility (ARIA) and responsive requirements based on these guidelines.
-- **TypeScript Learning Mode**: When implementing code, the Agent should provide brief comments (1-sentence) explaining *why* a certain TypeScript pattern was used (e.g., Discriminated Unions vs. Interfaces) if it relates to a guideline in the skills.
 
-**Rationale**: This ensures the AI doesn't just "generate code," but acts as a senior mentor that follows industry-standard guidelines. By integrating skills into the planning phase, we prevent technical debt before it is even written.
+- **React & Vite Essentials**: Use `.agent/skills/react-vite-essentials/SKILL.md`. Every `/plan` must explicitly verify component architecture, hook usage, and Vite-specific performance patterns against these rules.
+- **Docker CI/CD Integration**: Use `.agent/skills/docker-cicd-integration/SKILL.md`. Reference when planning or implementing CI/CD pipelines, automated builds, container registry integration, or deployment automation.
+- **Docker Multi-Stage Optimization**: Use `.agent/skills/docker-multi-stage-optimization/SKILL.md`. Reference when creating or optimizing Dockerfiles, analyzing build performance, or reducing image size.
+- **Docker Security Hardening**: Use `.agent/skills/docker-security-hardening/SKILL.md`. Reference when reviewing Docker configurations for security, setting up vulnerability scanning, or hardening container runtime settings.
+- **TypeScript Learning Mode**: When implementing code, the Agent MUST provide brief comments (1-sentence) explaining *why* a certain TypeScript pattern was used (e.g., Discriminated Unions vs. Interfaces) if it relates to a guideline in the skills.
+
+**Rationale**: This ensures the AI doesn't just "generate code," but acts as a senior mentor that follows industry-standard guidelines. By integrating skills into the planning phase, we prevent technical debt before it is even written. Docker skills ensure containerization follows security, performance, and CI/CD best practices from the start.
 
 ## Documentation & Standards
 
@@ -81,4 +87,4 @@ This Constitution supersedes previous ad-hoc practices. Amendments require a Pul
 
 Versioning follows Semantic Versioning (MAJOR for principle changes, MINOR for additions, PATCH for clarifications). Compliance is verified during Code Review and CI.
 
-**Version**: 2.0.0 | **Ratified**: 2026-01-19 | **Last Amended**: 2026-02-08
+**Version**: 2.1.0 | **Ratified**: 2026-01-19 | **Last Amended**: 2026-02-16
