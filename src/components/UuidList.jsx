@@ -3,11 +3,10 @@ function CopyButton({ isCopied, onCopy }) {
     <button
       type="button"
       onClick={onCopy}
-      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-slate-950 transition duration-200 ${
-        isCopied
-          ? "scale-95 bg-emerald-300 text-slate-900 shadow-inner"
-          : "bg-teal-400/90 hover:scale-105 hover:bg-teal-300"
-      }`}
+      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition duration-200 ${isCopied
+          ? "scale-95 shadow-inner bg-[var(--btn-active)] text-[var(--btn-text)]"
+          : "bg-[var(--btn-bg)] text-[var(--btn-text)] hover:scale-105 hover:bg-[var(--btn-hover)]"
+        }`}
     >
       {isCopied ? (
         <>

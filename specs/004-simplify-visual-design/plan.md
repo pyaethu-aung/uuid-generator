@@ -195,12 +195,16 @@ Run the full validation suite:
 | `--surface-glass` | `rgba(148,163,184,0.08)` → `rgba(148,163,184,0.12)` | `rgba(226,232,240,0.7)` → `rgba(226,232,240,0.92)` |
 | `--surface-soft` | `rgba(15,23,42,0.58)` → `rgba(15,23,42,0.85)` | `rgba(226,232,240,0.85)` → `rgba(226,232,240,0.95)` |
 
-### CTA Token Replacement
+### CTA / Button Token Replacement
 
-| Token | Dark (before → after) | Light (before → after) |
-|-------|-----------------------|------------------------|
-| `--gradient-cta` (removed) | `linear-gradient(...)` → N/A | `linear-gradient(...)` → N/A |
-| `.theme-cta` styling | `background-image: gradient` → `background-color: var(--accent-primary)` | same |
+| Token | Dark | Light |
+|-------|------|-------|
+| `--gradient-cta` | removed | removed |
+| `--btn-bg` (new) | `rgb(45 212 191 / 0.9)` | `#0d9488` |
+| `--btn-text` (new) | `#020617` | `#f0fdfa` |
+| `--btn-hover` (new) | `#5eead4` | `#14b8a6` |
+| `--btn-active` (new) | `#6ee7b7` | `#34d399` |
+| `.theme-cta` styling | `background-color: var(--btn-bg)` | same |
 
 ## Verification Plan
 

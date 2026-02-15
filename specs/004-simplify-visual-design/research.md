@@ -78,6 +78,5 @@ Net effect: removing low-coverage code (`useBrowserThemeSync.js` at 62.96%) will
 **Rationale**: The Copy button's `bg-teal-400/90` styling provides a bright, high-contrast accent that feels more vibrant than the design-token `--accent-primary` value. Aligning the CTA to this style creates visual consistency across all interactive teal buttons. The Copy button retains its existing hardcoded Tailwind values as the source of truth for the shared style.
 
 **Alternatives considered**:
-- Align Copy to CTA tokens → Rejected by user: preferred the Copy button's brighter, more interactive feel.
-- Create shared design tokens for both → Deferred: current approach works; tokenization is a future cleanup opportunity.
-
+- Align Copy to CTA tokens → Rejected by user: preferred the Copy button’s brighter, more interactive feel.
+- Create shared design tokens for both → **Resolved**: Added `--btn-bg`, `--btn-text`, `--btn-hover`, `--btn-active` tokens to both themes. Both CTA (`.theme-cta`) and Copy button now consume the same tokens. Dark theme uses teal-400 family; light theme uses teal-600 family for proper contrast on white surfaces.
