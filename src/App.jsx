@@ -8,16 +8,11 @@ import UuidList from "./components/UuidList";
 import SHORTCUTS from "./data/shortcuts";
 import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
 import useTheme from "./hooks/useTheme";
-import useBrowserThemeSync from "./hooks/useBrowserThemeSync";
-import useScrollOpacity from "./hooks/useScrollOpacity";
 import useUuidGenerator from "./hooks/useUuidGenerator";
-import ScrollProgressBackground from "./components/ScrollProgressBackground";
 import "./App.css";
 
 function App() {
   const { theme, toggleTheme } = useTheme();
-  const scrollOpacity = useScrollOpacity();
-  useBrowserThemeSync(theme, scrollOpacity);
   const [isShortcutHelpOpen, setShortcutHelpOpen] = useState(false);
   const {
     batchSize,
@@ -64,7 +59,6 @@ function App() {
 
   return (
     <div className="app-shell relative isolate overflow-hidden">
-      <ScrollProgressBackground opacity={scrollOpacity} />
       <div className="gradient-blob gradient-blob-one" aria-hidden="true" />
       <div className="gradient-blob gradient-blob-two" aria-hidden="true" />
       <main className="relative z-10 mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 lg:py-24">
@@ -121,9 +115,8 @@ function App() {
                 <button
                   type="button"
                   onClick={downloadList}
-                  className={`theme-ghost-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition ${
-                    isDownloading ? "is-busy" : ""
-                  }`}
+                  className={`theme-ghost-button inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition ${isDownloading ? "is-busy" : ""
+                    }`}
                   aria-live="polite"
                   aria-busy={isDownloading}
                   disabled={isDownloading}
