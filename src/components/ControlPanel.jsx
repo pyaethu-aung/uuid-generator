@@ -62,18 +62,16 @@ function VersionSelector({ selectedVersion, onVersionChange }) {
               key={choice.id}
               type="button"
               onClick={() => onVersionChange(choice.id)}
-              className={`w-full rounded-2xl border px-4 py-4 text-left transition theme-option ${
-                isActive ? "theme-option--active" : ""
-              }`}
+              className={`w-full rounded-2xl border px-4 py-4 text-left transition theme-option ${isActive ? "theme-option--active" : ""
+                }`}
             >
               <div className="flex items-center justify-between gap-3">
                 <p className="text-base font-semibold theme-text-primary">
                   {choice.title}
                 </p>
                 <span
-                  className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] theme-badge ${
-                    isActive ? "theme-badge--active" : ""
-                  }`}
+                  className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] theme-badge ${isActive ? "theme-badge--active" : ""
+                    }`}
                 >
                   {choice.badge}
                 </span>
@@ -129,7 +127,7 @@ function ControlPanel({
   clipboardSupported,
 }) {
   return (
-    <aside className="rounded-[32px] border theme-border-subtle theme-panel theme-shadow-panel p-6 backdrop-blur">
+    <aside className="rounded-[32px] border theme-border-subtle theme-panel theme-shadow-panel p-6">
       <div className="space-y-2">
         <p className="text-sm uppercase tracking-[0.3em] theme-text-accent">
           Batch controls
