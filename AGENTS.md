@@ -97,7 +97,15 @@ When implementing code, provide brief comments (1-sentence) explaining *why* a c
 - **Target**: Linux/AMD64 only (<5min build time).
 - **Registry**: GHCR.
 
+### 004-simplify-visual-design
+
+**Simplify Visual Design**
+
+- **Scope**: Remove decorative backgrounds (gradients, grid, blobs), scroll-based browser theme sync, and glassmorphism. Replace CTA gradient with solid accent.
+- **Approach**: Subtractive — delete unused hooks, components, CSS, utilities (~200 LOC removed).
+- **Key Files Modified**: `src/index.css`, `src/App.css`, `src/App.jsx`, `src/hooks/useBrowserThemeSync.js`.
+- **Key Files Deleted**: `useScrollOpacity.js/.test.js`, `ScrollProgressBackground.jsx`, `colors.js`.
 
 ---
 
-**Synced with Constitution**: v2.0.0 | **Last Updated**: 2026-02-08
+**Synced with Constitution**: v2.0.0 | **Last Updated**: 2026-02-15
