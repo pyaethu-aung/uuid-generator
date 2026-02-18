@@ -21,7 +21,7 @@ Implement a production-grade Docker containerization strategy for the UUID Gener
 **Primary Dependencies**: Docker, GitHub Actions, Trivy, Hadolint  
 **Storage**: N/A (Stateless container)  
 **Testing**: Container smoke tests (curl healthcheck), Trivy image scan, Hadolint static analysis  
-**Target Platform**: Docker (Linux/AMD64), deploying to GHCR  
+**Target Platform**: Docker (Linux/AMD64, Linux/ARM64), deploying to GHCR  
 **Project Type**: Single-page Application (SPA) container  
 **Performance Goals**: Image size < 25MB (compressed), Build time < 5 min  
 **Constraints**: Non-root execution, Read-only filesystem, No secrets in image  
@@ -37,7 +37,7 @@ Implement a production-grade Docker containerization strategy for the UUID Gener
 - **IV. Performance Requirements**: Optimized Nginx config (gzip/brotli, caching) ensures fast load times; small image size ensures fast scale-up.
 - **V. Architecture & Structure**: Configuration files (`Dockerfile`, `nginx.conf`) placed in `.docker/` or root as per standard; avoiding clutter.
 - **VI. Execution Discipline**: CI pipeline enforcing `npm test`, `npm run build`, and `docker build` success before push.
-- **VII. Cross-Platform & Browser Compatibility**: Browser compatibility handled by React app; Container targets Linux/AMD64 (ARM64 dropped for speed).
+- **VII. Cross-Platform & Browser Compatibility**: Browser compatibility handled by React app; Container targets Linux/AMD64 and Linux/ARM64.
 - **VIII. Theme Support Planning**: N/A.
 - **IX. Skill-Driven Development**: Strictly adhering to `docker-multi-stage-optimization` and `docker-security-hardening` skills.
 
@@ -69,7 +69,7 @@ specs/003-docker-containerization/
 Dockerfile                  # Main build definition
 ```
 
-**Structure Decision**: Placing `Dockerfile` in root is standard convention. `nginx.conf` and strict `.dockerignore` will live in `.docker/` (or root if tool tooling requires) to keep root clean, but usually `Dockerfile` expects config near it. Will place `nginx.conf` in root or `.config/` based on preference, but root/config is standard. Let's start with root for simplicity or specific `config/nginx.conf` to avoid clutter. **Decision**: `Dockerfile` in root, `.dockerignore` in root, `nginx.conf` in `config/docker/nginx.conf`.
+**Structure Decision**: Placing `Dockerfile` in root is standard convention. `nginx.conf` and strict `.dockerignore` will live in `.docker/` (or root if tool tooling requires) to keep root clean, but usually `Dockerfile` expects config near it. Will place `nginx.conf` in `.docker/` based on preference. **Decision**: `Dockerfile` in root, `.dockerignore` in root, `nginx.conf` in `.docker/nginx.conf`.
 
 ## Complexity Tracking
 
