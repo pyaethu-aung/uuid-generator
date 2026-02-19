@@ -50,13 +50,13 @@ Tests are mandatory for new or changed behavior. After each task, run
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T004 [P] [US1] Create unit test for Hero content and structure in `src/components/Hero.test.jsx`
+- [x] T004 [P] [US1] Create unit test for Hero content and structure in `src/components/Hero.test.jsx`
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] Implement new Hero structure (Badge, H1, Subhead) in `src/components/Hero.jsx`
-- [ ] T006 [US1] Implement CTA buttons (Primary & External Secondary) in `src/components/Hero.jsx`
-- [ ] T007 [US1] Implement CSS/SVG background patterns in `src/components/Hero.jsx` (or via CSS classes)
+- [x] T005 [US1] Implement new Hero structure (Badge, H1, Subhead) in `src/components/Hero.jsx`
+- [x] T006 [US1] Implement CTA buttons (Primary & External Secondary) in `src/components/Hero.jsx`
+- [x] T007 [US1] Implement CSS/SVG background patterns in `src/components/Hero.jsx` (or via CSS classes)
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
