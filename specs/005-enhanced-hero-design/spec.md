@@ -63,6 +63,10 @@ As a user who prefers a specific system theme (Light or Dark), I want the hero s
 
 **Stitch Project ID**: `projects/3811513497141801643`
 **Target Screen Name**: "Enhanced Hero Section Design"
+**Design Reference**:
+![Enhanced Hero Design](./assets/design.png)
+[Design HTML](./assets/design.html) (Download to view computed styles)
+
 **Note**: Automated design generation via Stitch is currently pending availability. Implementation should mirror the aesthetic defined in the project's existing design system or the manual design mockup if available.
 
 ## Clarifications
