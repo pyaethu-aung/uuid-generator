@@ -7,28 +7,24 @@ describe('Hero Component', () => {
         render(<Hero />);
 
         // Badge
-        expect(screen.getByText(/FRESH IDS/i)).toBeInTheDocument();
+        expect(screen.getByText(/Fresh IDs/i)).toBeInTheDocument();
 
         // Headline
-        expect(screen.getByText(/Generate UUIDs Instantly/i)).toBeInTheDocument();
+        expect(screen.getByText(/Instant UUID generator built for flow/i)).toBeInTheDocument();
 
         // Sub-headline (check for partial text)
-        expect(screen.getByText(/Fast, secure, and verifiable/i)).toBeInTheDocument();
+        expect(screen.getByText(/Generate high-entropy RFC 4122 identifiers/i)).toBeInTheDocument();
 
 
 
-        const learnMoreLink = screen.getByRole('link', { name: /Learn More/i });
-        expect(learnMoreLink).toBeInTheDocument();
-        expect(learnMoreLink).toHaveAttribute('href', 'https://datatracker.ietf.org/doc/html/rfc4122');
-        expect(learnMoreLink).toHaveAttribute('target', '_blank');
-        expect(learnMoreLink).toHaveAttribute('rel', 'noopener noreferrer');
+
     });
 
     it('renders hero background container', () => {
         render(<Hero />);
         // Check for the full-width section with relative positioning
         const section = screen.getByLabelText('Hero');
-        expect(section).toHaveClass('relative', 'overflow-hidden', 'hero-bg');
+        expect(section).toHaveClass('relative', 'hero-bg');
     });
 
     it('uses theme-aware classes', () => {
@@ -42,7 +38,7 @@ describe('Hero Component', () => {
         expect(h1).toHaveClass('theme-text-primary');
 
 
-        const learnMoreLink = screen.getByRole('link', { name: /Learn More/i });
-        expect(learnMoreLink).toHaveClass('theme-ghost-button');
+        const learnMoreLink = screen.queryByRole('link', { name: /Learn More/i });
+        expect(learnMoreLink).not.toBeInTheDocument();
     });
 });

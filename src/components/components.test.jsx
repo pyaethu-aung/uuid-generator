@@ -17,7 +17,7 @@ const defaultOptions = {
 describe("Hero", () => {
   it("renders the headline and optional feedback", () => {
     render(<Hero feedback="Copied!" />);
-    expect(screen.getByText(/Generate UUIDs Instantly/i)).toBeInTheDocument();
+    expect(screen.getByText(/Instant UUID generator built for flow/i)).toBeInTheDocument();
     expect(screen.getByText("Copied!")).toBeInTheDocument();
   });
 });

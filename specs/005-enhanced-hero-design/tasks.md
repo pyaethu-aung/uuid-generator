@@ -1,8 +1,8 @@
 ---
-description: "Task list for Enhanced Hero Section Design implementation"
+description: "Task list for Compact Hero Section Design implementation"
 ---
 
-# Tasks: Enhanced Hero Section Design
+# Tasks: Compact Hero Section Design
 
 **Input**: Design documents from `specs/005-enhanced-hero-design/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories)
@@ -34,17 +34,17 @@ Tests are mandatory for new or changed behavior. After each task, run
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
 - [x] T002 Allow full-bleed layout by refactoring `src/App.jsx` layout structure
-- [x] T003 [P] Define new theme variables for subtle gradients/patterns in `src/App.css`
+- [x] T003 [P] Define flat background color variables in `src/index.css`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
 ---
 
-## Phase 3: User Story 1 - View High-Impact Hero Section (Priority: P1)
+## Phase 3: User Story 1 - View Compact Hero Section (Priority: P1)
 
-**Goal**: As a visitor, I want to see a modern, professionally designed hero section immediately.
+**Goal**: As a visitor, I want to see a modern, compact and clean hero header immediately.
 
-**Independent Test**: Load landing page, verify Hero matches design (Badge, Typography, CTAs, Background).
+**Independent Test**: Load landing page, verify Hero matches "Compact" design (Badge, Typography, Background).
 
 ### Tests for User Story 1 ⚠️
 
@@ -55,8 +55,7 @@ Tests are mandatory for new or changed behavior. After each task, run
 ### Implementation for User Story 1
 
 - [x] T005 [US1] Implement new Hero structure (Badge, H1, Subhead) in `src/components/Hero.jsx`
-- [x] T006 [US1] Implement CTA buttons (Primary & External Secondary) in `src/components/Hero.jsx`
-- [x] T007 [US1] Implement CSS/SVG background patterns in `src/components/Hero.jsx` (or via CSS classes)
+- [x] T006 [US1] Apply flat theme-aware background to `.hero-bg` in `src/index.css`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -66,17 +65,16 @@ Tests are mandatory for new or changed behavior. After each task, run
 
 **Goal**: As a user, I want the hero section to look consistent and beautiful in my preferred theme.
 
-**Independent Test**: Toggle Light/Dark mode, observe Hero background and text contrast changes.
+**Independent Test**: Toggle Light/Dark mode, observe Hero background changes.
 
 ### Tests for User Story 2 ⚠️
 
-- [x] T008 [P] [US2] Update unit tests to verify theme-specific class presence in `src/components/Hero.test.jsx`
+- [x] T007 [P] [US2] Update unit tests to verify theme-specific class presence in `src/components/Hero.test.jsx`
 
 ### Implementation for User Story 2
 
-- [x] T009 [US2] Verify and adjust Light mode specific styles for Hero in `src/App.css` / `Hero.jsx`
-- [x] T010 [US2] Verify and adjust Dark mode specific styles for Hero in `src/App.css` / `Hero.jsx`
-- [x] T011 [US2] Ensure smooth transition properties apply to new Hero elements in `src/App.css`
+- [x] T008 [US2] Ensure smooth transition properties apply to new Hero elements in `src/App.css`
+- [x] T009 [US2] Verify high-contrast color palette in Light and Dark modes in `src/index.css`
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -86,10 +84,11 @@ Tests are mandatory for new or changed behavior. After each task, run
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T012 [P] Verify responsiveness on mobile (stacking) vs desktop in `src/components/Hero.jsx`
-- [ ] T013 Run full lint check `npm run lint` and fix any new style issues
-- [ ] T014 Verify `npm run build` passes with new components
-- [ ] T015 Update specific documentation if needed in `docs/`
+- [x] T010 [P] Verify responsiveness on mobile (stacking) vs desktop in `src/components/Hero.jsx`
+- [x] T011 Run full lint check `npm run lint` and fix any new style issues (e.g., unused vars)
+- [x] T012 Verify `npm run build` passes with new components
+- [x] T013 Update design assets in `specs/005-enhanced-hero-design/assets/` to match "Compact" screen
+- [x] T014 Verify Hero section LCP contribution is <100ms (SC-001) using Chrome DevTools/Lighthouse
 
 ---
 
@@ -117,8 +116,8 @@ Tests are mandatory for new or changed behavior. After each task, run
 
 ### Parallel Opportunities
 
-- T004 (Tests US1) and T008 (Tests US2) can be written in parallel
-- Once T002 (Layout) is done, visual work in T005/T006 and theme work in T009/T010 can partly overlap
+- T004 (Tests US1) and T007 (Tests US2) can be written in parallel
+- Once T002 (Layout) is done, visual work in T005/T006 and theme work in T008/T009 can partly overlap
 
 ---
 
