@@ -53,16 +53,24 @@ As a user who prefers a specific system theme (Light or Dark), I want the hero s
 - **FR-001**: The hero section MUST display the main headline "Generate UUIDs Instantly" (or similar impact text).
 - **FR-002**: The hero section MUST include a subheadline describing key features (e.g., "Fast, secure, and verifiable UUIDs v4, v7").
 - **FR-003**: The section MUST include a primary "Generate Now" CTA button that links to the generator functionality.
-- **FR-004**: The section MUST include a secondary "Documentation" or "Learn More" link/button.
+- **FR-004**: The section MUST include a secondary "Documentation" or "Learn More" link/button linking externally to RFC 4122 or Wikipedia.
 - **FR-005**: The design MUST be implemented using the existing CSS/Styling framework (Vanilla CSS per project standards).
 - **FR-006**: The component MUST fully support Light and Dark themes via CSS variables or specific classes.
 - **FR-007**: The visual design MUST align with the Stitch project `projects/3811513497141801643` (UUID Generator Landing Page).
+- **FR-008**: The hero section background MUST span the full viewport width (full-bleed), while content text remains aligned with the main page container.
 
 ### Design Resources
 
 **Stitch Project ID**: `projects/3811513497141801643`
 **Target Screen Name**: "Enhanced Hero Section Design"
 **Note**: Automated design generation via Stitch is currently pending availability. Implementation should mirror the aesthetic defined in the project's existing design system or the manual design mockup if available.
+
+## Clarifications
+
+### Session 2026-02-20
+- Q: What visual element should be used in the hero section to convey "Security/Speed"? → A: **CSS/SVG Patterns** (Use CSS gradients or simple inline SVG shapes to create a modern background effect).
+- Q: Where should the secondary "Learn More" CTA lead? → A: **External Link** (Link to RFC 4122 spec or Wikipedia to build trust without adding internal pages).
+- Q: How should the hero section background be laid out? → A: **Full-Bleed Background** (Background colors/gradients stretch edge-to-edge, content remains centered).
 
 ### Key Entities
 
