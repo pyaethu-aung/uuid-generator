@@ -26,9 +26,26 @@ describe('Hero Component', () => {
     });
 
     it('renders hero background container', () => {
-        const { container } = render(<Hero />);
+        render(<Hero />);
         // Check for the full-width section with relative positioning
-        const section = container.querySelector('section');
+        const section = screen.getByLabelText('Hero');
         expect(section).toHaveClass('relative', 'overflow-hidden', 'hero-bg');
+    });
+
+    it('uses theme-aware classes', () => {
+        render(<Hero />);
+
+        // Check for theme classes on key elements
+        const badge = screen.getByText(/FRESH IDS/i);
+        expect(badge).toHaveClass('theme-badge');
+
+        const h1 = screen.getByRole('heading', { level: 1 });
+        expect(h1).toHaveClass('theme-text-primary');
+
+        const generateBtn = screen.getByRole('button', { name: /Generate Now/i });
+        expect(generateBtn).toHaveClass('theme-cta');
+
+        const learnMoreLink = screen.getByRole('link', { name: /Learn More/i });
+        expect(learnMoreLink).toHaveClass('theme-ghost-button');
     });
 });

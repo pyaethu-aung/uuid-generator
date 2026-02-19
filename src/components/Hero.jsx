@@ -24,7 +24,7 @@ function Hero({ feedback }) {
   };
 
   return (
-    <section className="relative overflow-hidden hero-bg py-16 sm:py-24 lg:py-32">
+    <section aria-label="Hero" className="relative overflow-hidden hero-bg py-16 sm:py-24 lg:py-32">
       <div className="relative z-10 mx-auto max-w-6xl px-4 text-center">
         <div className="space-y-8">
           {/* Badge */}

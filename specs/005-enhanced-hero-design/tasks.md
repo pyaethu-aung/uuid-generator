@@ -70,13 +70,13 @@ Tests are mandatory for new or changed behavior. After each task, run
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T008 [P] [US2] Update unit tests to verify theme-specific class presence in `src/components/Hero.test.jsx`
+- [x] T008 [P] [US2] Update unit tests to verify theme-specific class presence in `src/components/Hero.test.jsx`
 
 ### Implementation for User Story 2
 
-- [ ] T009 [US2] Verify and adjust Light mode specific styles for Hero in `src/App.css` / `Hero.jsx`
-- [ ] T010 [US2] Verify and adjust Dark mode specific styles for Hero in `src/App.css` / `Hero.jsx`
-- [ ] T011 [US2] Ensure smooth transition properties apply to new Hero elements in `src/App.css`
+- [x] T009 [US2] Verify and adjust Light mode specific styles for Hero in `src/App.css` / `Hero.jsx`
+- [x] T010 [US2] Verify and adjust Dark mode specific styles for Hero in `src/App.css` / `Hero.jsx`
+- [x] T011 [US2] Ensure smooth transition properties apply to new Hero elements in `src/App.css`
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
