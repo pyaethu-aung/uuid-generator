@@ -46,12 +46,7 @@ function Hero({ feedback }) {
 
           {/* Actions */}
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <button
-              onClick={scrollToGenerator}
-              className="theme-cta inline-flex h-12 items-center justify-center rounded-full px-8 text-base font-semibold transition hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--page-bg)]"
-            >
-              Generate Now
-            </button>
+
             <a
               href="https://datatracker.ietf.org/doc/html/rfc4122"
               target="_blank"

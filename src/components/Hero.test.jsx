@@ -15,8 +15,7 @@ describe('Hero Component', () => {
         // Sub-headline (check for partial text)
         expect(screen.getByText(/Fast, secure, and verifiable/i)).toBeInTheDocument();
 
-        // Buttons
-        expect(screen.getByRole('button', { name: /Generate Now/i })).toBeInTheDocument();
+
 
         const learnMoreLink = screen.getByRole('link', { name: /Learn More/i });
         expect(learnMoreLink).toBeInTheDocument();
@@ -42,8 +41,6 @@ describe('Hero Component', () => {
         const h1 = screen.getByRole('heading', { level: 1 });
         expect(h1).toHaveClass('theme-text-primary');
 
-        const generateBtn = screen.getByRole('button', { name: /Generate Now/i });
-        expect(generateBtn).toHaveClass('theme-cta');
 
         const learnMoreLink = screen.getByRole('link', { name: /Learn More/i });
         expect(learnMoreLink).toHaveClass('theme-ghost-button');

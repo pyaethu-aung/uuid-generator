@@ -5,7 +5,7 @@
 
 ## Summary
 
-Enhance the Hero section to improve first impressions and trust. The new design will feature a full-bleed background using CSS/SVG patterns, a "Fresh IDs" badge, impactful typography, and clear calls to action (Primary: Generate, Secondary: External Docs). The implementation will support seamless light/dark theme switching and align with the "UUID Generator Landing Page" design aesthetic.
+Enhance the Hero section to improve first impressions and trust. The new design will feature a full-bleed background using CSS/SVG patterns, a "Fresh IDs" badge, impactful typography, and clear calls to action (Secondary: External Docs). The implementation will support seamless light/dark theme switching and align with the "UUID Generator Landing Page" design aesthetic.
 
 ## Technical Context
 
@@ -34,7 +34,7 @@ Enhance the Hero section to improve first impressions and trust. The new design 
 
 **Status**: [Resolved]
 
-- **Layout Strategy**: The current `App.jsx` constrains all content within a `max-w-6xl` container. To achieve "Full-Bleed Background" (FR-008), we must restructure `App.jsx` to allow the Hero component to span the full viewport width while its internal content ensures alignment.
+- **Layout Strategy**: The current `App.jsx` constrains all content within a `max-w-6xl` container. To achieve "Full-Bleed Background" (FR-007), we must restructure `App.jsx` to allow the Hero component to span the full viewport width while its internal content ensures alignment.
 - **Visual Assets**: background patterns will be implemented using CSS gradients/SVG to avoid image loads and allow easy theming.
 - **Design Source**: Retrieved screenshot from Stitch project `projects/3811513497141801643`.
 
@@ -59,7 +59,7 @@ Enhance the Hero section to improve first impressions and trust. The new design 
         - Badge: "FRESH IDS" (Styled pill)
         - H1: "Generate UUIDs Instantly"
         - P: Subheadline
-        - Actions: "Generate Now" (Primary), "Learn More" (Secondary - External)
+        - Actions: "Learn More" (External)
         - Background: Abstract shapes/gradients via CSS/SVG.
 
 #### `App` (Refactor)
@@ -69,7 +69,7 @@ Enhance the Hero section to improve first impressions and trust. The new design 
 
 #### Automated Tests
 - **Unit**: `src/components/Hero.test.jsx`
-    - Verify rendering of H1, Badge, and Buttons.
+    - Verify rendering of H1, Badge.
     - Verify "Learn More" link has `target="_blank"` and `rel="noopener noreferrer"`.
     - Verify secondary button text.
 
