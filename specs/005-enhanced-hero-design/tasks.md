@@ -23,7 +23,7 @@ Tests are mandatory for new or changed behavior. After each task, run
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create documentation folder `specs/005-enhanced-hero-design/` and ensure assets exist in `specs/005-enhanced-hero-design/assets`
+- [x] T001 Create documentation folder `specs/005-enhanced-hero-design/` and ensure assets exist in `specs/005-enhanced-hero-design/assets`
 
 ---
 
@@ -33,8 +33,8 @@ Tests are mandatory for new or changed behavior. After each task, run
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T002 Allow full-bleed layout by refactoring `src/App.jsx` layout structure
-- [ ] T003 [P] Define new theme variables for subtle gradients/patterns in `src/App.css`
+- [x] T002 Allow full-bleed layout by refactoring `src/App.jsx` layout structure
+- [x] T003 [P] Define new theme variables for subtle gradients/patterns in `src/App.css`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
