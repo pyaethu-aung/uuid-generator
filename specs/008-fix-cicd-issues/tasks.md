@@ -213,8 +213,8 @@
 
 **Purpose**: Final validation pass across all three workflow files before opening PR.
 
-- [ ] T008 [P] Lint all three modified workflow files for YAML syntax validity (e.g., `yamllint .github/workflows/docker-publish.yml .github/workflows/security.yml .github/workflows/lint.yml` or equivalent)
-- [ ] T009 Open a PR from `008-fix-cicd-issues` → `main` and confirm all existing GitHub Actions workflows pass (SC-005 regression gate) per `quickstart.md` § Regression Check
+- [x] T008 [P] Lint all three modified workflow files for YAML syntax validity (e.g., `yamllint .github/workflows/docker-publish.yml .github/workflows/security.yml .github/workflows/lint.yml` or equivalent)
+- [x] T009 Open a PR from `008-fix-cicd-issues` → `main` and confirm all existing GitHub Actions workflows pass (SC-005 regression gate) per `quickstart.md` § Regression Check
 
 ---
 
