@@ -176,7 +176,7 @@
 
 ### Implementation for User Story 4
 
-- [ ] T007 [US4] In `.github/workflows/docker-publish.yml`, remove `- "eslint.config.js"` from the `pull_request.paths` filter list (currently the last entry in that block)
+- [x] T007 [US4] In `.github/workflows/docker-publish.yml`, remove `- "eslint.config.js"` from the `pull_request.paths` filter list (currently the last entry in that block)
 
   ```yaml
   # BEFORE

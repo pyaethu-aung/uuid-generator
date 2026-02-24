@@ -21,7 +21,6 @@ on:
       - "package.json"
       - "package-lock.json"
       - "vite.config.js"
-      - "eslint.config.js"
   schedule:
     - cron: '35 6 * * *'
 
