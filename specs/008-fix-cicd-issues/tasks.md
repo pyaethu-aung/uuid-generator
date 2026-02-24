@@ -40,7 +40,26 @@
 
 ### Implementation for User Story 1
 
-- [ ] T002 [US1] In `.github/workflows/docker-publish.yml`, split the `on.push` block into two separate `push:` entries: one with `branches: ["main"]` and `paths:` (retaining the existing path list minus `eslint.config.js`), and one with `tags: ["v*.*.*"]` and no `paths:` key
+- [ ] T002 [US1][US4] In `.github/workflows/docker-publish.yml`, split the `on.push` block into two separate `push:` entries: one with `branches: ["main"]` and `paths:` (retaining the existing path list minus `eslint.config.js`), and one with `tags: ["v*.*.*"]` and no `paths:` key *(also satisfies FR-003/US4 for `push.paths`; `pull_request.paths` is completed by T007)*
+
+  **⚠️ Pre-flight — verify duplicate push key behaviour before editing the production workflow**: Create a throwaway branch with a minimal test workflow containing two `push:` entries and confirm both triggers fire independently. If GitHub Actions only honours the last `push:` key, use the `release: [published]` event for the tag trigger instead:
+
+  ```yaml
+  # Alternative if duplicate push keys are not supported:
+  on:
+    push:
+      branches: [ "main" ]
+      paths:
+        - ".github/workflows/docker-publish.yml"
+        - "src/**"
+        - "index.html"
+        - "package.json"
+        - "package-lock.json"
+        - "vite.config.js"
+    release:
+      types: [ published ]
+  ```
+  > If using the `release` alternative: update the Cosign signing step `if:` condition from `startsWith(github.ref, 'refs/tags/')` to `github.event_name == 'release'`.
 
   **Exact change** — replace the current `on.push` block (lines 3–14):
   ```yaml
@@ -280,7 +299,7 @@ Apply in this order for clean, bisectable commits:
 
 - [P] tasks = different files, no content dependencies
 - [Story] label maps each task to its user story for traceability
-- No `npm run test / lint / build` required locally — workflow changes are validated by the PR CI gate (T009)
+- No `npm run test / lint / build` required locally. **Constitution § VI exception applies**: this feature modifies only `.github/workflows/` YAML files; there is no npm build artifact to validate. Per the exception clause ("If the build cannot run, document the blocker and perform a local smoke run"), `yamllint` via T008 serves as the equivalent local smoke run. All other validation is performed by the PR CI gate (T009).
 - Commits must follow the 50/72 rule with conventional commit prefixes (`fix:`, `ci:`) per Constitution § Commit Discipline
 - Each commit must represent exactly one complete, testable fix
 - Do not combine US1 and US4 changes into a single commit — they are separate acceptance criteria

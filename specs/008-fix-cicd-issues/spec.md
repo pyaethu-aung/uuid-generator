@@ -109,6 +109,6 @@ As a maintainer, I want the Docker publish workflow's path filters to only inclu
 
 - **SC-001**: 100% of version-tagged pushes result in a Docker image publish workflow run completing successfully, regardless of which files changed in that commit.
 - **SC-002**: The Snyk SARIF upload step produces zero "file not found" failures across all workflow runs where Snyk itself errors.
-- **SC-003**: ESLint lint runs that involve only source file changes (no config or lockfile changes) restore from cache at least 90% of the time within the same branch lineage.
+- **SC-003**: ESLint lint runs that involve only source file changes (no config or lockfile changes) restore from cache (exact key match or `restore-keys` prefix fallback) at least 90% of the time, whether on the same branch or on a branch whose most recent ancestor ran the lint workflow with an unchanged `eslint.config.js` and `package-lock.json`.
 - **SC-004**: A change to only `eslint.config.js` does NOT trigger a Docker image build/publish workflow run on a non-tagged push.
 - **SC-005**: All five identified issues are resolved and all existing GitHub Actions workflows pass on a pull request to `main` with no new failures introduced.

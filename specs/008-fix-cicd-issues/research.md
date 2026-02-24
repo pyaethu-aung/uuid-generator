@@ -15,6 +15,8 @@ No NEEDS CLARIFICATION items remain. All five decisions below were derived from 
 
 **Rationale**: GitHub Actions processes `on:` event entries additively. The `push.tags` entry with no `paths` key triggers unconditionally on any matching tag, satisfying FR-001. The `push.branches` entry retains its `paths` filter for non-tagged events (FR-002). This is the minimal structural change with no behaviour side-effects on other triggers.
 
+**Risk**: Standard go-yaml v3 keeps only the last value for duplicate map keys. GitHub Actions' internal workflow parser may handle this differently from stock go-yaml. A pre-flight verification using a throwaway workflow file with two `push:` entries is required before applying T002 to confirm both triggers fire independently. If the duplicate-key approach is rejected at runtime, fall back to the `release: [published]` event for the tag trigger (see T002 Alternative in tasks.md). If using the release alternative, update the Cosign signing step condition from `startsWith(github.ref, 'refs/tags/')` to `github.event_name == 'release'`.
+
 **Alternatives considered**:
 - Use a `release` event instead of `push.tags` — rejected: changes event semantics (requires a published GitHub Release, not just a git tag); breaks Cosign signing and metadata-action tag extraction patterns already in use.
 - Remove `paths` entirely from the `push` block — rejected: would trigger Docker builds on every commit to `main`, wasting CI minutes and violating the intent of the path filter.
