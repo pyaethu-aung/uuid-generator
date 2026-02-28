@@ -25,9 +25,9 @@
 
 ## Phase 3: Polish & Cross-Cutting Concerns
 
-- [ ] T004 Verify local docker build succeeds and trivy scan reports 0 critical vulnerabilities based on instructions in `/specs/009-fix-publish-workflow/quickstart.md`
-- [ ] T005 Trigger the GitHub Actions automated pipeline and verify successful execution of the scan stage without `libpng` failures in `/.github/workflows/docker-publish.yml`
-- [ ] T006 Update the specification status to "Implemented" and document the completion date in `/specs/009-fix-publish-workflow/spec.md`
+- [x] T004 Verify local docker build succeeds and trivy scan reports 0 critical vulnerabilities based on instructions in `/specs/009-fix-publish-workflow/quickstart.md`
+- [x] T005 Trigger the GitHub Actions automated pipeline and verify successful execution of the scan stage without `libpng` failures in `/.github/workflows/docker-publish.yml`
+- [x] T006 Update the specification status to "Implemented" and document the completion date in `/specs/009-fix-publish-workflow/spec.md`
 
 ## Dependencies
 
