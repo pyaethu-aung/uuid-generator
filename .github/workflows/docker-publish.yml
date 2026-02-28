@@ -5,6 +5,8 @@ on:
     branches: [ "main" ]
     paths:
       - ".github/workflows/docker-publish.yml"
+      - "Dockerfile"
+      - ".dockerignore"
       - "src/**"
       - "index.html"
       - "package.json"
@@ -16,6 +18,8 @@ on:
     branches: [ "main" ]
     paths:
       - ".github/workflows/docker-publish.yml"
+      - "Dockerfile"
+      - ".dockerignore"
       - "src/**"
       - "index.html"
       - "package.json"
