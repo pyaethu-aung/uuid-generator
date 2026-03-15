@@ -12,11 +12,13 @@ COPY . .
 RUN npm run build && npm prune --production
 
 # Stage 2: Runtime
+# Using alpine-slim to minimize attack surface
 FROM nginx:alpine-slim AS runtime
 
 # Install curl for healthcheck and configure non-root user
 # hadolint ignore=DL3018
-RUN apk add --no-cache curl && \
+RUN apk update && apk upgrade --no-cache && \
+    apk add --no-cache curl && \
     adduser -D -H -u 1000 -s /bin/false app && \
     mkdir -p /var/run/nginx /var/log/nginx /var/cache/nginx && \
     touch /var/run/nginx.pid && \
