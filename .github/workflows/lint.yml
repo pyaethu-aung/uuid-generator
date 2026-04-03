@@ -31,9 +31,6 @@ jobs:
           node-version-file: '.nvmrc'
           cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci
-
       - name: Cache ESLint dependencies
         uses: actions/cache@v4
         with:
@@ -41,6 +38,9 @@ jobs:
           key: ${{ runner.os }}-eslint-${{ hashFiles('eslint.config.js', 'package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-eslint-
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run ESLint
         run: npm run lint -- --cache --cache-location .eslintcache
