@@ -17,6 +17,7 @@ FROM nginx:alpine-slim AS runtime
 
 # Install curl for healthcheck and configure non-root user
 # hadolint ignore=DL3018
+# Upgrade base packages to pull in libcrypto3 >=3.5.6-r0 (CVE-2026-28390)
 RUN apk update && apk upgrade --no-cache && \
     apk add --no-cache curl && \
     adduser -D -H -u 1000 -s /bin/false app && \
