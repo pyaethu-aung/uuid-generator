@@ -6,13 +6,67 @@ import Hero from "./Hero";
 import InsightCards from "./InsightCards";
 import ShortcutReference from "./ShortcutReference";
 import ThemeToggle from "./ThemeToggle";
+import UuidInput from "./UuidInput";
 import UuidList from "./UuidList";
+import ValidationBadge from "./ValidationBadge";
 
 const defaultOptions = {
   uppercase: false,
   trimHyphens: false,
   wrapBraces: false,
 };
+
+describe("UuidInput", () => {
+  it("renders input with placeholder", () => {
+    render(<UuidInput value="" onChange={() => {}} />);
+    expect(screen.getByPlaceholderText("Paste or type a UUID…")).toBeInTheDocument();
+  });
+
+  it("hides clear button when value is empty", () => {
+    render(<UuidInput value="" onChange={() => {}} />);
+    expect(screen.queryByRole("button", { name: /clear input/i })).toBeNull();
+  });
+
+  it("shows clear button when value is present", () => {
+    render(<UuidInput value="abc" onChange={() => {}} />);
+    expect(screen.getByRole("button", { name: /clear input/i })).toBeInTheDocument();
+  });
+
+  it("calls onChange with empty string when clear button is clicked", async () => {
+    const onChange = vi.fn();
+    const user = userEvent.setup();
+    render(<UuidInput value="abc" onChange={onChange} />);
+    await user.click(screen.getByRole("button", { name: /clear input/i }));
+    expect(onChange).toHaveBeenCalledWith("");
+  });
+});
+
+describe("ValidationBadge", () => {
+  it("renders nothing for null result", () => {
+    const { container } = render(<ValidationBadge result={null} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders invalid badge for invalid result", () => {
+    render(<ValidationBadge result={{ valid: false }} />);
+    expect(screen.getByRole("status")).toHaveTextContent("Invalid UUID");
+  });
+
+  it("renders valid badge with version label for v4", () => {
+    render(<ValidationBadge result={{ valid: true, version: 4 }} />);
+    expect(screen.getByRole("status")).toHaveTextContent("Valid — UUID v4 (random)");
+  });
+
+  it("renders valid badge with version label for v7", () => {
+    render(<ValidationBadge result={{ valid: true, version: 7 }} />);
+    expect(screen.getByRole("status")).toHaveTextContent("Valid — UUID v7 (time-ordered)");
+  });
+
+  it("renders valid badge with version label for v1", () => {
+    render(<ValidationBadge result={{ valid: true, version: 1 }} />);
+    expect(screen.getByRole("status")).toHaveTextContent("Valid — UUID v1 (time-based)");
+  });
+});
 
 describe("Hero", () => {
   it("renders the headline", () => {
