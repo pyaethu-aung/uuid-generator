@@ -1,4 +1,5 @@
 import useUuidValidator from "../hooks/useUuidValidator";
+import UuidBreakdown from "./UuidBreakdown";
 import UuidInput from "./UuidInput";
 import ValidationBadge from "./ValidationBadge";
 
@@ -23,6 +24,7 @@ function ValidatorPanel() {
       <div className="validator-workbench">
         <UuidInput value={rawInput} onChange={setRawInput} />
         <ValidationBadge result={result} />
+        <UuidBreakdown fields={result?.valid ? result.fields : null} />
       </div>
     </section>
   );

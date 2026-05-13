@@ -7,6 +7,7 @@ import InsightCards from "./InsightCards";
 import ShortcutReference from "./ShortcutReference";
 import ThemeToggle from "./ThemeToggle";
 import ToolbarNav from "./ToolbarNav";
+import UuidBreakdown from "./UuidBreakdown";
 import UuidInput from "./UuidInput";
 import UuidList from "./UuidList";
 import ValidationBadge from "./ValidationBadge";
@@ -311,6 +312,32 @@ describe("ShortcutReference", () => {
     const backdrop = container.querySelector('[aria-hidden="true"]');
     fireEvent.click(backdrop);
     expect(onClose).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("UuidBreakdown", () => {
+  const V4_FIELDS = {
+    timeLow: "550e8400",
+    timeMid: "e29b",
+    timeHighAndVersion: "41d4",
+    clockSeqAndReserved: "a716",
+    node: "446655440000",
+  };
+
+  it("renders nothing for null fields", () => {
+    const { container } = render(<UuidBreakdown fields={null} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders 5 segment blocks for valid fields", () => {
+    render(<UuidBreakdown fields={V4_FIELDS} />);
+    expect(document.querySelectorAll(".uuid-breakdown__seg")).toHaveLength(5);
+  });
+
+  it("each block contains the correct hex substring", () => {
+    render(<UuidBreakdown fields={V4_FIELDS} />);
+    expect(document.querySelector(".seg-a .uuid-breakdown__hex")).toHaveTextContent("550e8400");
+    expect(document.querySelector(".seg-e .uuid-breakdown__hex")).toHaveTextContent("446655440000");
   });
 });
 
