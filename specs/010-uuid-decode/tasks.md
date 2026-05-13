@@ -16,7 +16,7 @@
 
 **Purpose**: Establish baseline before adding new code
 
-- [ ] T001 Run `npm run test` to confirm all existing tests pass before starting feature work
+- [x] T001 Run `npm run test` to confirm all existing tests pass before starting feature work
 
 ---
 
@@ -26,8 +26,8 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T002 Create `src/utils/uuidDecoder.js` — export `normalizeInput(raw)`, `extractFields(uuid)`, `detectVariant(hex)`, `parseUuid(raw)`, `decodeUuidV1(fields)`, `decodeUuidV7(fields)`, `formatRelativeTime(date)` per `specs/010-uuid-decode/research.md` decisions 2–5 and `specs/010-uuid-decode/data-model.md` entity definitions
-- [ ] T003 Create `src/utils/uuidDecoder.test.js` — test all exports: `normalizeInput` trims whitespace and strips braces; `parseUuid` returns `valid:false` for malformed input; `parseUuid` detects v1/v4/v7 with correct version and variant; `decodeUuidV7` extracts correct Unix ms timestamp and 12-bit sequence (use a known v7 UUID); `decodeUuidV1` extracts correct Gregorian-to-Unix timestamp and node field; `formatRelativeTime` returns correct label per threshold table in research.md decision 5
+- [x] T002 Create `src/utils/uuidDecoder.js` — export `normalizeInput(raw)`, `extractFields(uuid)`, `detectVariant(hex)`, `parseUuid(raw)`, `decodeUuidV1(fields)`, `decodeUuidV7(fields)`, `formatRelativeTime(date)` per `specs/010-uuid-decode/research.md` decisions 2–5 and `specs/010-uuid-decode/data-model.md` entity definitions
+- [x] T003 Create `src/utils/uuidDecoder.test.js` — test all exports: `normalizeInput` trims whitespace and strips braces; `parseUuid` returns `valid:false` for malformed input; `parseUuid` detects v1/v4/v7 with correct version and variant; `decodeUuidV7` extracts correct Unix ms timestamp and 12-bit sequence (use a known v7 UUID); `decodeUuidV1` extracts correct Gregorian-to-Unix timestamp and node field; `formatRelativeTime` returns correct label per threshold table in research.md decision 5
 
 **Checkpoint**: `npm run test` passes; `src/utils/uuidDecoder.js` coverage ≥85%
 
