@@ -414,7 +414,7 @@ kbd {
   min-width: 80px;
 }
 .row:hover .row-copy { opacity: 1; border-color: var(--seam-2); color: var(--ink); }
-.row-copy:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.row-copy:hover { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .row-copy.is-copied {
   background: var(--accent);
   color: var(--on-accent);
