@@ -52,10 +52,10 @@ function StatusBar({
 function ValidatorStatusBar({ result, checkCount, onShortcuts }) {
   const isValid = result?.valid ?? null;
   const version = result?.valid ? `v${result.version} detected` : null;
-  const variant = result?.valid ? result.variantBits : null;
+  const variant = result?.valid ? result.variantBits.split(" · b")[0] : null;
   const charCount = result?.valid ? `${result.charCount} chars` : null;
   const tsLabel = result?.valid && result.decoded
-    ? `ts · ${result.decoded.timestampIso?.slice(0, 19).replace("T", " ")}`
+    ? `ts · ${result.decoded.timestampIso?.slice(0, 19).replace("T", " ")} UTC`
     : null;
 
   return (

@@ -686,13 +686,6 @@ kbd {
   color: var(--ink-2);
 }
 .v-input-btn--secondary:hover:not(:disabled) { border-color: var(--seam-2); color: var(--ink); }
-.v-input-btn--accent {
-  background: var(--accent);
-  border: 1px solid transparent;
-  color: var(--on-accent);
-  font-weight: var(--fw-semibold);
-}
-.v-input-btn--accent:hover:not(:disabled) { opacity: 0.88; }
 
 /* ─── Sample pills ───────────────────────────────────────────────────────── */
 .v-sample-row { display: flex; gap: var(--sp-3); }
@@ -796,28 +789,6 @@ kbd {
 .v-panel-title { font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--ink); white-space: nowrap; }
 .v-panel-sep   { color: var(--ink-4); font-size: var(--fs-sm); }
 .v-panel-flag  { font-size: var(--fs-xs); color: var(--ink-3); letter-spacing: var(--tracking-wide); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.v-panel-actions { display: flex; align-items: center; gap: var(--sp-3); flex-shrink: 0; }
-.v-action-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-4);
-  padding: 7px 12px;
-  border-radius: var(--r-md);
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-medium);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: opacity var(--d-swap), border-color var(--d-swap);
-}
-.v-action-btn:disabled { opacity: 0.35; cursor: default; }
-.v-btn-icon { font-size: 13px; line-height: 1; }
-.accent-btn {
-  background: var(--accent);
-  border: 1px solid transparent;
-  color: var(--on-accent);
-  font-weight: var(--fw-semibold);
-}
-.accent-btn:hover:not(:disabled) { opacity: 0.88; }
 
 /* ─── Panel body sections ────────────────────────────────────────────────── */
 .v-panel-body { display: flex; flex-direction: column; }
