@@ -88,8 +88,7 @@ describe("buildVariantBits", () => {
 
 describe("computeProperties", () => {
   it("detects lowercase canonical input", () => {
-    const fields = extractFields(V4);
-    const props = computeProperties(V4, V4, 4, "RFC 4122", fields);
+    const props = computeProperties(V4, V4, 4, "RFC 4122");
     expect(props.isLowercase).toBe(true);
     expect(props.hasHyphens).toBe(true);
     expect(props.hasBraces).toBe(false);
@@ -100,29 +99,25 @@ describe("computeProperties", () => {
 
   it("detects uppercase input", () => {
     const upper = V4.toUpperCase();
-    const fields = extractFields(V4);
-    const props = computeProperties(upper, upper, 4, "RFC 4122", fields);
+    const props = computeProperties(upper, upper, 4, "RFC 4122");
     expect(props.isLowercase).toBe(false);
   });
 
   it("detects braces format", () => {
     const raw = `{${V4}}`;
-    const fields = extractFields(V4);
-    const props = computeProperties(raw, V4, 4, "RFC 4122", fields);
+    const props = computeProperties(raw, V4, 4, "RFC 4122");
     expect(props.hasBraces).toBe(true);
     expect(props.format).toBe("braces");
   });
 
   it("detects no-hyphens format", () => {
-    const fields = extractFields(V4);
-    const props = computeProperties(V4_COMPACT, V4, 4, "RFC 4122", fields);
-    expect(props.hasHyphens).toBe(true); // normalized has hyphens
-    expect(props.format).toBe("canonical"); // canonical after normalization
+    const props = computeProperties(V4_COMPACT, V4, 4, "RFC 4122");
+    expect(props.hasHyphens).toBe(true);
+    expect(props.format).toBe("canonical");
   });
 
   it("detects nil UUID", () => {
-    const fields = extractFields(NIL);
-    const props = computeProperties(NIL, NIL, 0, "NCS", fields);
+    const props = computeProperties(NIL, NIL, 0, "NCS");
     expect(props.isNil).toBe(true);
   });
 });

@@ -6,12 +6,12 @@ import Hero from "./Hero";
 import InsightCards from "./InsightCards";
 import ShortcutReference from "./ShortcutReference";
 import ThemeToggle from "./ThemeToggle";
-import DecodedFields from "./DecodedFields";
 import ToolbarNav from "./ToolbarNav";
-import UuidBreakdown from "./UuidBreakdown";
-import UuidInput from "./UuidInput";
 import UuidList from "./UuidList";
-import ValidationBadge from "./ValidationBadge";
+import ValidationBanner from "./ValidationBanner";
+import ValidatorPanelHead from "./ValidatorPanelHead";
+import ValidatorPropsGrid from "./ValidatorPropsGrid";
+import ValidatorSegCard from "./ValidatorSegCard";
 
 const defaultOptions = {
   uppercase: false,
@@ -19,55 +19,35 @@ const defaultOptions = {
   wrapBraces: false,
 };
 
-describe("UuidInput", () => {
-  it("renders input with placeholder", () => {
-    render(<UuidInput value="" onChange={() => {}} />);
-    expect(screen.getByPlaceholderText("Paste or type a UUID…")).toBeInTheDocument();
-  });
-
-  it("hides clear button when value is empty", () => {
-    render(<UuidInput value="" onChange={() => {}} />);
-    expect(screen.queryByRole("button", { name: /clear input/i })).toBeNull();
-  });
-
-  it("shows clear button when value is present", () => {
-    render(<UuidInput value="abc" onChange={() => {}} />);
-    expect(screen.getByRole("button", { name: /clear input/i })).toBeInTheDocument();
-  });
-
-  it("calls onChange with empty string when clear button is clicked", async () => {
-    const onChange = vi.fn();
-    const user = userEvent.setup();
-    render(<UuidInput value="abc" onChange={onChange} />);
-    await user.click(screen.getByRole("button", { name: /clear input/i }));
-    expect(onChange).toHaveBeenCalledWith("");
-  });
-});
-
-describe("ValidationBadge", () => {
+describe("ValidationBanner", () => {
   it("renders nothing for null result", () => {
-    const { container } = render(<ValidationBadge result={null} />);
+    const { container } = render(<ValidationBanner result={null} />);
     expect(container.firstChild).toBeNull();
   });
 
-  it("renders invalid badge for invalid result", () => {
-    render(<ValidationBadge result={{ valid: false }} />);
+  it("renders invalid banner for invalid result", () => {
+    render(<ValidationBanner result={{ valid: false }} />);
     expect(screen.getByRole("status")).toHaveTextContent("Invalid UUID");
   });
 
-  it("renders valid badge with version label for v4", () => {
-    render(<ValidationBadge result={{ valid: true, version: 4 }} />);
-    expect(screen.getByRole("status")).toHaveTextContent("Valid — UUID v4 (random)");
+  it("renders valid banner for v4 result", () => {
+    render(
+      <ValidationBanner
+        result={{ valid: true, version: 4, charCount: 36, variantBits: "RFC 4122 · 10x · b00…b01", isNil: false, decoded: null }}
+      />
+    );
+    expect(screen.getByRole("status")).toHaveTextContent("Valid");
+    expect(screen.getByRole("status")).toHaveTextContent("UUID v4");
+    expect(screen.getByRole("status")).toHaveTextContent("100%");
   });
 
-  it("renders valid badge with version label for v7", () => {
-    render(<ValidationBadge result={{ valid: true, version: 7 }} />);
-    expect(screen.getByRole("status")).toHaveTextContent("Valid — UUID v7 (time-ordered)");
-  });
-
-  it("renders valid badge with version label for v1", () => {
-    render(<ValidationBadge result={{ valid: true, version: 1 }} />);
-    expect(screen.getByRole("status")).toHaveTextContent("Valid — UUID v1 (time-based)");
+  it("renders valid banner for v7 result with decoded", () => {
+    render(
+      <ValidationBanner
+        result={{ valid: true, version: 7, charCount: 36, variantBits: "RFC 4122 · 10x · b00…b01", isNil: false, decoded: {} }}
+      />
+    );
+    expect(screen.getByRole("status")).toHaveTextContent("UUID v7");
   });
 });
 
@@ -316,48 +296,7 @@ describe("ShortcutReference", () => {
   });
 });
 
-describe("DecodedFields", () => {
-  const V7_DECODED = {
-    timestampRelative: "2 minutes ago",
-    timestampIso: "2024-01-01T00:00:00.001Z",
-    sequence: 123,
-    node: null,
-  };
-  const V1_DECODED = {
-    timestampRelative: "3 days ago",
-    timestampIso: "2024-01-01T00:00:00.000Z",
-    sequence: null,
-    node: "00c04fd430c8",
-  };
-
-  it("renders nothing when both decoded and variant are null", () => {
-    const { container } = render(<DecodedFields decoded={null} variant={null} />);
-    expect(container.firstChild).toBeNull();
-  });
-
-  it("renders only variant row when decoded is null", () => {
-    render(<DecodedFields decoded={null} variant="RFC 4122" />);
-    expect(screen.getByText("RFC 4122")).toBeInTheDocument();
-    expect(screen.queryByText(/ISO 8601/i)).toBeNull();
-  });
-
-  it("renders relative timestamp, ISO string, and sequence for v7 decoded", () => {
-    render(<DecodedFields decoded={V7_DECODED} variant="RFC 4122" />);
-    expect(screen.getByText("2 minutes ago")).toBeInTheDocument();
-    expect(screen.getByText("2024-01-01T00:00:00.001Z")).toBeInTheDocument();
-    expect(screen.getByText("123")).toBeInTheDocument();
-    expect(screen.queryByText("00c04fd430c8")).toBeNull();
-  });
-
-  it("renders timestamp and node for v1 decoded, no sequence", () => {
-    render(<DecodedFields decoded={V1_DECODED} variant="RFC 4122" />);
-    expect(screen.getByText("3 days ago")).toBeInTheDocument();
-    expect(screen.getByText("00c04fd430c8")).toBeInTheDocument();
-    expect(screen.queryByText("sequence")).toBeNull();
-  });
-});
-
-describe("UuidBreakdown", () => {
+describe("ValidatorSegCard", () => {
   const V4_FIELDS = {
     timeLow: "550e8400",
     timeMid: "e29b",
@@ -367,19 +306,104 @@ describe("UuidBreakdown", () => {
   };
 
   it("renders nothing for null fields", () => {
-    const { container } = render(<UuidBreakdown fields={null} />);
+    const { container } = render(<ValidatorSegCard fields={null} />);
     expect(container.firstChild).toBeNull();
   });
 
-  it("renders 5 segment blocks for valid fields", () => {
-    render(<UuidBreakdown fields={V4_FIELDS} />);
-    expect(document.querySelectorAll(".uuid-breakdown__seg")).toHaveLength(5);
+  it("renders all 5 segment values for valid fields", () => {
+    render(<ValidatorSegCard fields={V4_FIELDS} />);
+    expect(screen.getByText("550e8400")).toBeInTheDocument();
+    expect(screen.getByText("e29b")).toBeInTheDocument();
+    expect(screen.getByText("41d4")).toBeInTheDocument();
+    expect(screen.getByText("a716")).toBeInTheDocument();
+    expect(screen.getByText("446655440000")).toBeInTheDocument();
   });
 
-  it("each block contains the correct hex substring", () => {
-    render(<UuidBreakdown fields={V4_FIELDS} />);
-    expect(document.querySelector(".seg-a .uuid-breakdown__hex")).toHaveTextContent("550e8400");
-    expect(document.querySelector(".seg-e .uuid-breakdown__hex")).toHaveTextContent("446655440000");
+  it("labels version segment with version + rand caption", () => {
+    render(<ValidatorSegCard fields={V4_FIELDS} />);
+    expect(screen.getByText("version + rand")).toBeInTheDocument();
+  });
+});
+
+describe("ValidatorPanelHead", () => {
+  it("shows placeholder title when result is null", () => {
+    render(<ValidatorPanelHead result={null} onCopy={vi.fn()} copied={false} onRecheck={vi.fn()} />);
+    expect(screen.getByText("/ —")).toBeInTheDocument();
+  });
+
+  it("shows valid v4 title when result is valid", () => {
+    render(
+      <ValidatorPanelHead
+        result={{ valid: true, version: 4, variantBits: "RFC 4122 · 10x · b00…b01" }}
+        onCopy={vi.fn()} copied={false} onRecheck={vi.fn()}
+      />
+    );
+    expect(screen.getByText("/ valid · v4 UUID")).toBeInTheDocument();
+  });
+
+  it("shows invalid title when result is invalid", () => {
+    render(<ValidatorPanelHead result={{ valid: false }} onCopy={vi.fn()} copied={false} onRecheck={vi.fn()} />);
+    expect(screen.getByText("/ invalid UUID")).toBeInTheDocument();
+  });
+
+  it("shows copied! label when copied is true", () => {
+    render(
+      <ValidatorPanelHead
+        result={{ valid: true, version: 4, variantBits: "RFC 4122 · 10x · b00…b01" }}
+        onCopy={vi.fn()} copied={true} onRecheck={vi.fn()}
+      />
+    );
+    expect(screen.getByText("copied!")).toBeInTheDocument();
+  });
+});
+
+describe("ValidatorPropsGrid", () => {
+  const V4_RESULT = {
+    valid: true,
+    version: 4,
+    variantBits: "RFC 4122 · 10x · b00…b01",
+    isLowercase: true,
+    hasHyphens: true,
+    hasBraces: false,
+    isNil: false,
+    format: "canonical",
+    charCount: 36,
+    decoded: null,
+  };
+
+  it("renders nothing when result is null", () => {
+    const { container } = render(<ValidatorPropsGrid result={null} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders nothing when result is invalid", () => {
+    const { container } = render(<ValidatorPropsGrid result={{ valid: false }} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders version and variant rows", () => {
+    render(<ValidatorPropsGrid result={V4_RESULT} />);
+    expect(screen.getByText("version")).toBeInTheDocument();
+    expect(screen.getByText("variant")).toBeInTheDocument();
+  });
+
+  it("renders timestamp row only for decoded results", () => {
+    render(<ValidatorPropsGrid result={V4_RESULT} />);
+    expect(screen.queryByText("timestamp")).toBeNull();
+
+    const withDecoded = {
+      ...V4_RESULT,
+      decoded: { timestampRelative: "2 minutes ago", timestampIso: "2024-01-01T00:00:00.001Z" },
+    };
+    render(<ValidatorPropsGrid result={withDecoded} />);
+    expect(screen.getByText("timestamp")).toBeInTheDocument();
+  });
+
+  it("renders all 8 fixed property labels", () => {
+    render(<ValidatorPropsGrid result={V4_RESULT} />);
+    ["version", "variant", "format", "length", "lowercase", "hyphens", "braces", "nil uuid?"].forEach((label) => {
+      expect(screen.getByText(label)).toBeInTheDocument();
+    });
   });
 });
 

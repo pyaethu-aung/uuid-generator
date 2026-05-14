@@ -44,7 +44,7 @@ export function buildVariantBits(hex) {
   return "Reserved · 111";
 }
 
-export function computeProperties(raw, normalized, version, variant, fields) {
+export function computeProperties(raw, normalized, version, variant) {
   const hex = normalized.replace(/-/g, "").toLowerCase();
   const isLowercase = normalized === normalized.toLowerCase();
   const hasHyphens = UUID_REGEX.test(normalized);
@@ -99,7 +99,7 @@ export function parseUuid(raw, options = {}) {
   if (strictRfc && variant !== "RFC 4122") return { valid: false, raw: stripped };
 
   const fields = extractFields(lower);
-  const props = computeProperties(trimmed, normalized, version, variant, fields);
+  const props = computeProperties(trimmed, normalized, version, variant);
 
   let decoded = null;
   let unixMs = null;

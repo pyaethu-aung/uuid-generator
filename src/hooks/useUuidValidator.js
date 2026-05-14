@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import { parseUuid } from "../utils/uuidDecoder";
 
 const SAMPLES = {
@@ -26,9 +26,9 @@ function useUuidValidator() {
   }, [rawInput, options]);
 
   // Increment check count whenever a new valid result is produced
-  useMemo(() => {
+  useEffect(() => {
     if (result?.valid && !prevValidRef.current) {
-      setCheckCount((c) => c + 1);
+      setCheckCount((c) => c + 1); // eslint-disable-line react-hooks/set-state-in-effect
     }
     prevValidRef.current = result?.valid ?? false;
   }, [result]);

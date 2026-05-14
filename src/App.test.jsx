@@ -173,7 +173,7 @@ describe("App", () => {
 
     await user.click(screen.getByRole("button", { name: "Validator" }));
 
-    expect(screen.getByPlaceholderText(/Paste or type a UUID/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/xxxxxxxx-xxxx/i)).toBeInTheDocument();
     expect(screen.getByText(/Mint/i)).toBeInTheDocument();
   });
 });

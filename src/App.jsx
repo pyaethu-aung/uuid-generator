@@ -13,6 +13,7 @@ import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
 import useTheme from "./hooks/useTheme";
 import useBrowserThemeSync from "./hooks/useBrowserThemeSync";
 import useUuidGenerator from "./hooks/useUuidGenerator";
+import useUuidValidator from "./hooks/useUuidValidator";
 
 function BrandIcon() {
   return (
@@ -49,6 +50,8 @@ function App() {
     downloadList,
     commitBatchSize,
   } = useUuidGenerator();
+
+  const validator = useUuidValidator();
 
   useKeyboardShortcuts({
     batchSize,
@@ -121,16 +124,19 @@ function App() {
         </div>
 
         <div style={{ display: activeTab === "validator" ? "" : "none" }}>
-          <ValidatorPanel />
+          <ValidatorPanel validator={validator} />
         </div>
       </main>
 
       <StatusBar
+        activeTab={activeTab}
         version={selectedVersion}
         batch={batchSize}
         visible={visibleBatchSize}
         opts={options}
         feedback={feedback}
+        validatorResult={validator.result}
+        validatorCheckCount={validator.checkCount}
         onShortcuts={() => setShortcutHelpOpen(true)}
       />
 
