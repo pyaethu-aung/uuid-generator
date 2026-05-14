@@ -573,6 +573,9 @@ kbd {
   border-color: var(--seam);
   border-bottom-color: var(--accent);
 }
+[data-theme="light"] .tab-btn--active {
+  color: var(--ink);
+}
 
 /* ─── Validator panel ────────────────────────────────────────────────────── */
 .validator-panel {
