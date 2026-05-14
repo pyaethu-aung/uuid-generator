@@ -1,4 +1,4 @@
-function ValidatorPanelHead({ result, onCopy, copied, onRecheck }) {
+function ValidatorPanelHead({ result }) {
   const hasResult = result?.valid;
   const title = hasResult
     ? `/ valid · v${result.version} UUID`
@@ -20,37 +20,6 @@ function ValidatorPanelHead({ result, onCopy, copied, onRecheck }) {
             <span className="v-panel-flag mono">{flag}</span>
           </>
         )}
-      </div>
-      <div className="v-panel-actions">
-        <button
-          type="button"
-          className="ghost-btn mono v-action-btn"
-          onClick={onCopy}
-          disabled={!result?.valid}
-          aria-label="Copy UUID"
-        >
-          <span className="v-btn-icon">⎘</span>
-          <span>{copied ? "copied!" : "copy"}</span>
-        </button>
-        <button
-          type="button"
-          className="ghost-btn mono v-action-btn"
-          disabled={!result?.valid}
-          aria-label="Inspect raw UUID bytes"
-          title="Inspect raw"
-        >
-          <span className="v-btn-icon">{"{}"}</span>
-          <span>inspect raw</span>
-        </button>
-        <button
-          type="button"
-          className="accent-btn mono v-action-btn"
-          onClick={onRecheck}
-          aria-label="Recheck validation"
-        >
-          <span className="v-btn-icon">↺</span>
-          <span>recheck</span>
-        </button>
       </div>
     </div>
   );

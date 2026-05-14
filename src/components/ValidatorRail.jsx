@@ -68,14 +68,6 @@ function ValidatorRail({ value, onChange, options, onToggleOption, onLoadSample,
           >
             <span aria-hidden="true">×</span> clear
           </button>
-          <button
-            type="button"
-            className="v-input-btn v-input-btn--accent mono"
-            disabled={!value}
-            aria-label="Validate"
-          >
-            <span aria-hidden="true">✓</span> validate
-          </button>
         </div>
       </div>
 

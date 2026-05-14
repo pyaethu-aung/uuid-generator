@@ -44,12 +44,7 @@ function ValidatorPanel({ validator }) {
         />
 
         <div className="v-panel-view">
-          <ValidatorPanelHead
-            result={result}
-            onCopy={handleCopy}
-            copied={copied}
-            onRecheck={recheck}
-          />
+          <ValidatorPanelHead result={result} />
           <div className="v-panel-body">
             {result && (
               <>
