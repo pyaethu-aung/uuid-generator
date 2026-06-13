@@ -1,3 +1,5 @@
+import { KEY_OPT } from "../utils/platform";
+
 const VERSIONS = [
   { id: "v4", label: "v4", title: "Random",      desc: "Web Crypto entropy, the everyday workhorse." },
   { id: "v1", label: "v1", title: "Time + Node", desc: "Timestamp-first, sortable for logs and traces." },
@@ -28,7 +30,7 @@ function ControlPanel({
       <div className="rail-section">
         <div className="rail-head">
           <span className="rail-key mono">version</span>
-          <span className="rail-hint mono">⌥1 · ⌥2 · ⌥3</span>
+          <span className="rail-hint mono">{KEY_OPT}1 · {KEY_OPT}2 · {KEY_OPT}3</span>
         </div>
         <div className="version-stack">
           {VERSIONS.map((v) => {
@@ -57,7 +59,7 @@ function ControlPanel({
       <div className="rail-section">
         <div className="rail-head">
           <span className="rail-key mono">batch</span>
-          <span className="rail-hint mono">⌥↑/↓</span>
+          <span className="rail-hint mono">{KEY_OPT}↑/↓</span>
         </div>
         <div className="batch-display">
           <span className="batch-num mono">{String(batchSize).padStart(3, "0")}</span>
@@ -102,7 +104,7 @@ function ControlPanel({
       <div className="rail-section">
         <div className="rail-head">
           <span className="rail-key mono">format</span>
-          <span className="rail-hint mono">⌥U · ⌥H · ⌥B</span>
+          <span className="rail-hint mono">{KEY_OPT}U · {KEY_OPT}H · {KEY_OPT}B</span>
         </div>
         <div className="opt-stack">
           {FORMAT_OPTS.map((o) => (
