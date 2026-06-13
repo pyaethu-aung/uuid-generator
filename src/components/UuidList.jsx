@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { KEY_META } from "../utils/platform";
 
 function CopyIcon() {
   return (
@@ -60,10 +61,6 @@ function UuidRow({ index, uuid, isCopied, onCopy }) {
   );
 }
 
-const IS_MAC =
-  typeof navigator !== "undefined" &&
-  /Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent || "");
-const KEY_META = IS_MAC ? "⌘" : "Ctrl";
 
 function UuidList({
   uuids,

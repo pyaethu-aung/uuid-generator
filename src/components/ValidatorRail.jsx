@@ -1,3 +1,5 @@
+import { KEY_META, KEY_OPT } from "../utils/platform";
+
 const SAMPLE_ROWS = [
   ["nil", "v1", "v3"],
   ["v4", "v5", "v7"],
@@ -32,7 +34,7 @@ function ValidatorRail({ value, onChange, options, onToggleOption, onLoadSample,
       <div className="v-rail-section">
         <div className="v-rail-head">
           <span className="v-rail-key mono">paste uuid</span>
-          <span className="v-rail-hint mono">⌘V</span>
+          <span className="v-rail-hint mono">{KEY_META}V</span>
         </div>
         <div className="v-input-field-wrap">
           <input
@@ -99,7 +101,7 @@ function ValidatorRail({ value, onChange, options, onToggleOption, onLoadSample,
       <div className="v-rail-section v-rail-section--last">
         <div className="v-rail-head">
           <span className="v-rail-key mono">accept</span>
-          <span className="v-rail-hint mono">⌥R · ⌥{"{"} · ⌥-</span>
+          <span className="v-rail-hint mono">{KEY_OPT}R · {KEY_OPT}{"{"} · {KEY_OPT}-</span>
         </div>
         <div className="v-opt-stack">
           {OPTIONS_CONFIG.map(({ key, label, desc }) => (
