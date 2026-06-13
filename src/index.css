@@ -1596,3 +1596,13 @@ kbd {
     display: none;
   }
 }
+
+/* ─── Touch targets ──────────────────────────────────────────────────────── */
+.ghost-btn  { min-height: 44px; }
+.tab-btn    { min-height: 44px; }
+.status-btn { min-height: 44px; }
+
+/* Row copy buttons are opacity-hidden on desktop hover; reveal for touch */
+@media (hover: none) {
+  .row-copy { opacity: 1; }
+}
