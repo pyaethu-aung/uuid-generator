@@ -70,33 +70,46 @@ export function computeProperties(raw, normalized, version, variant) {
   };
 }
 
+function diagnoseFormat(stripped) {
+  const hyphenless = stripped.replace(/-/g, "").toLowerCase();
+  const nonHexMatch = hyphenless.match(/[^0-9a-f]/);
+  if (nonHexMatch) {
+    const pos = hyphenless.indexOf(nonHexMatch[0]) + 1;
+    return `invalid character '${nonHexMatch[0]}' at position ${pos}`;
+  }
+  if (hyphenless.length !== 32) {
+    return `expected 32 hex digits — got ${hyphenless.length}`;
+  }
+  return "expected groups 8-4-4-4-12";
+}
+
 export function parseUuid(raw, options = {}) {
   const { strictRfc = false, allowBraces = true, allowNoHyphens = false } = options;
   const trimmed = typeof raw === "string" ? raw.trim() : "";
   const hasBraces = trimmed.startsWith("{") && trimmed.endsWith("}");
   const stripped = hasBraces ? trimmed.slice(1, -1) : trimmed;
 
-  if (!stripped) return { valid: false, raw: stripped };
+  if (!stripped) return { valid: false, raw: stripped, reason: "paste a UUID to validate" };
 
   // Determine input format and normalize to canonical
   let normalized;
   if (UUID_REGEX.test(stripped)) {
     normalized = stripped;
   } else if (UUID_COMPACT_REGEX.test(stripped)) {
-    if (!allowNoHyphens) return { valid: false, raw: stripped };
+    if (!allowNoHyphens) return { valid: false, raw: stripped, reason: "compact form — enable 'allow no-hyphens'" };
     normalized = insertHyphens(stripped.toLowerCase());
   } else {
-    return { valid: false, raw: stripped };
+    return { valid: false, raw: stripped, reason: diagnoseFormat(stripped) };
   }
 
-  if (hasBraces && !allowBraces) return { valid: false, raw: stripped };
+  if (hasBraces && !allowBraces) return { valid: false, raw: stripped, reason: "braces form — enable 'allow braces { }'" };
 
   const lower = normalized.toLowerCase();
   const hex = lower.replace(/-/g, "");
   const version = parseInt(hex[12], 16);
   const variant = detectVariant(hex);
 
-  if (strictRfc && variant !== "RFC 4122") return { valid: false, raw: stripped };
+  if (strictRfc && variant !== "RFC 4122") return { valid: false, raw: stripped, reason: "non-RFC 4122 variant — disable 'strict RFC 4122'" };
 
   const fields = extractFields(lower);
   const props = computeProperties(trimmed, normalized, version, variant);

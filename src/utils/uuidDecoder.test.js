@@ -225,6 +225,41 @@ describe("parseUuid", () => {
     expect(typeof r.variantBits).toBe("string");
     expect(r.variantBits).toMatch(/RFC 4122/);
   });
+
+  it("returns reason for empty input", () => {
+    expect(parseUuid("").reason).toBe("paste a UUID to validate");
+  });
+
+  it("returns reason diagnosing a non-hex character", () => {
+    const r = parseUuid("gggggggg-gggg-4ggg-aggg-gggggggggggg");
+    expect(r.valid).toBe(false);
+    expect(r.reason).toMatch(/invalid character 'g' at position/);
+  });
+
+  it("returns reason diagnosing wrong hex digit count", () => {
+    const r = parseUuid("550e8400-e29b-41d4-a716");
+    expect(r.valid).toBe(false);
+    expect(r.reason).toMatch(/expected 32 hex digits — got/);
+  });
+
+  it("returns reason for compact form when allowNoHyphens is false", () => {
+    const r = parseUuid(V4_COMPACT);
+    expect(r.valid).toBe(false);
+    expect(r.reason).toBe("compact form — enable 'allow no-hyphens'");
+  });
+
+  it("returns reason for braces form when allowBraces is false", () => {
+    const r = parseUuid(`{${V4}}`, { allowBraces: false });
+    expect(r.valid).toBe(false);
+    expect(r.reason).toBe("braces form — enable 'allow braces { }'");
+  });
+
+  it("returns reason for non-RFC 4122 variant when strictRfc is true", () => {
+    const ncs = "00000000-0000-1000-0000-000000000000";
+    const r = parseUuid(ncs, { strictRfc: true });
+    expect(r.valid).toBe(false);
+    expect(r.reason).toBe("non-RFC 4122 variant — disable 'strict RFC 4122'");
+  });
 });
 
 describe("decodeUuidV7", () => {
