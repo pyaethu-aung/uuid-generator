@@ -18,7 +18,9 @@ function ValidationBanner({ result }) {
         <div className="v-banner-icon v-banner-icon--invalid" aria-hidden="true">✕</div>
         <div className="v-banner-text">
           <span className="v-banner-line1 mono">Invalid UUID</span>
-          <span className="v-banner-line2 mono">Input does not match RFC 4122 or any known UUID format.</span>
+          <span className="v-banner-line2 mono">
+            {result.reason ?? "Input does not match RFC 4122 or any known UUID format."}
+          </span>
         </div>
       </div>
     );

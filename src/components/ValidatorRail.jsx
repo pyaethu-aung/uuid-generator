@@ -98,7 +98,7 @@ function ValidatorRail({ value, onChange, options, onToggleOption, onLoadSample,
       {/* Options Section */}
       <div className="v-rail-section v-rail-section--last">
         <div className="v-rail-head">
-          <span className="v-rail-key mono">match</span>
+          <span className="v-rail-key mono">accept</span>
           <span className="v-rail-hint mono">⌥R · ⌥{"{"} · ⌥-</span>
         </div>
         <div className="v-opt-stack">
