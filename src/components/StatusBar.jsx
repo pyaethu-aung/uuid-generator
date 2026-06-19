@@ -2,6 +2,7 @@ function StatusBar({
   activeTab,
   version, batch, visible, opts, feedback,
   validatorResult, validatorCheckCount,
+  ulidResult,
   onShortcuts,
 }) {
   if (activeTab === "validator") {
@@ -12,6 +13,10 @@ function StatusBar({
         onShortcuts={onShortcuts}
       />
     );
+  }
+
+  if (activeTab === "ulid") {
+    return <UlidStatusBar result={ulidResult} onShortcuts={onShortcuts} />;
   }
 
   const flags = [];
@@ -71,6 +76,32 @@ function ValidatorStatusBar({ result, checkCount, onShortcuts }) {
       {tsLabel  && <span className="status-cell">{tsLabel}</span>}
       {charCount && <span className="status-cell">{charCount}</span>}
       <span className="status-cell">{checkCount} checks today</span>
+      <span className="status-spacer" />
+      <button className="status-btn" onClick={onShortcuts}>
+        press <kbd>?</kbd> for shortcuts
+      </button>
+    </footer>
+  );
+}
+
+function UlidStatusBar({ result, onShortcuts }) {
+  const isValid = result?.valid ?? null;
+  const kind = result?.valid ? result.kind.toUpperCase() : null;
+  const tsLabel = result?.valid
+    ? `ts · ${result.timestampIso.slice(0, 19).replace("T", " ")} UTC`
+    : null;
+
+  return (
+    <footer className="status mono">
+      {isValid !== null && (
+        <span className={`status-cell${isValid ? " status-cell--valid" : " status-cell--invalid"}`}>
+          <span className={`status-dot${isValid ? "" : " status-dot--invalid"}`} />
+          {isValid ? "VALID" : "INVALID"}
+        </span>
+      )}
+      {kind     && <span className="status-cell">{kind}</span>}
+      {tsLabel  && <span className="status-cell">{tsLabel}</span>}
+      <span className="status-cell">ulid · 26 chars</span>
       <span className="status-spacer" />
       <button className="status-btn" onClick={onShortcuts}>
         press <kbd>?</kbd> for shortcuts

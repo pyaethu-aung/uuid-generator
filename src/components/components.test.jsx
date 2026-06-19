@@ -7,6 +7,7 @@ import Hero from "./Hero";
 import ShortcutReference from "./ShortcutReference";
 import ThemeToggle from "./ThemeToggle";
 import ToolbarNav from "./ToolbarNav";
+import UlidPanel from "./UlidPanel";
 import UuidList from "./UuidList";
 import ValidationBanner from "./ValidationBanner";
 import ValidatorConvert from "./ValidatorConvert";
@@ -623,5 +624,121 @@ describe("ConvertPanel", () => {
     render(<ConvertPanel converter={makeConverter({ setRawInput })} />);
     await user.click(screen.getByRole("button", { name: "Load nil sample UUID" }));
     expect(setRawInput).toHaveBeenCalledWith("00000000-0000-0000-0000-000000000000");
+  });
+});
+
+const ULID_RESULT = {
+  valid: true,
+  kind: "ulid",
+  ulid: "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+  timestampMs: 1469918176385,
+  timestamp: new Date(1469918176385),
+  timestampIso: "2016-07-30T23:36:16.385Z",
+  timestampRelative: "9 years ago",
+  randomness: "0xb5cdd6e6f0e2502c2fab",
+  randomnessChars: "TSV4RRFFQ69G5FAV",
+  uuid: "0156fbce-d6e2-71f9-89d8-c81e2502c2fab".slice(0, 36),
+  uuidCompact: "0156fbced6e271f989d8c81e2502c2fa",
+};
+
+const makeUlid = (overrides = {}) => ({
+  rawInput: "",
+  setRawInput: vi.fn(),
+  result: null,
+  hasInput: false,
+  generate: vi.fn(),
+  clearInput: vi.fn(),
+  loadSample: vi.fn(),
+  activeSample: null,
+  copiedKey: null,
+  copyValue: vi.fn(),
+  ...overrides,
+});
+
+describe("UlidPanel", () => {
+  it("shows the empty-state prompt when there is no input", () => {
+    render(<UlidPanel ulid={makeUlid()} />);
+    expect(screen.getByText("mint or paste a ULID to decode")).toBeInTheDocument();
+  });
+
+  it("shows the decode error reason when input is invalid", () => {
+    render(
+      <UlidPanel
+        ulid={makeUlid({
+          rawInput: "nope",
+          hasInput: true,
+          result: { valid: false, reason: "not a ULID or UUID" },
+        })}
+      />
+    );
+    expect(screen.getByText("not a ULID or UUID")).toBeInTheDocument();
+  });
+
+  it("renders decoded fields and representation rows for a valid ULID", () => {
+    render(
+      <UlidPanel ulid={makeUlid({ rawInput: ULID_RESULT.ulid, hasInput: true, result: ULID_RESULT })} />
+    );
+    expect(screen.getByText("valid ULID")).toBeInTheDocument();
+    expect(screen.getByText(ULID_RESULT.randomness)).toBeInTheDocument();
+    expect(screen.getByText(String(ULID_RESULT.timestampMs))).toBeInTheDocument();
+    expect(screen.getByText("compact")).toBeInTheDocument();
+    expect(screen.getByText(ULID_RESULT.uuidCompact)).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /^Copy / })).toHaveLength(3);
+  });
+
+  it("labels a UUIDv7 conversion result", () => {
+    render(
+      <UlidPanel
+        ulid={makeUlid({
+          rawInput: "018e3f4a-9c2b-7d8e-9f7a-9b3c2e5f6a7d",
+          hasInput: true,
+          result: { ...ULID_RESULT, kind: "uuidv7" },
+        })}
+      />
+    );
+    expect(screen.getByText("valid UUIDv7")).toBeInTheDocument();
+  });
+
+  it("calls generate when the mint button is clicked", async () => {
+    const generate = vi.fn();
+    const user = userEvent.setup();
+    render(<UlidPanel ulid={makeUlid({ generate })} />);
+    await user.click(screen.getByRole("button", { name: "mint a ulid" }));
+    expect(generate).toHaveBeenCalledTimes(1);
+  });
+
+  it("calls copyValue with the row key when a copy button is clicked", async () => {
+    const copyValue = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <UlidPanel ulid={makeUlid({ rawInput: ULID_RESULT.ulid, hasInput: true, result: ULID_RESULT, copyValue })} />
+    );
+    await user.click(screen.getByRole("button", { name: "Copy ulid" }));
+    expect(copyValue).toHaveBeenCalledWith("ulid", ULID_RESULT.ulid);
+  });
+
+  it("reflects the copied state on the matching row button", () => {
+    render(
+      <UlidPanel
+        ulid={makeUlid({ rawInput: ULID_RESULT.ulid, hasInput: true, result: ULID_RESULT, copiedKey: "uuid" })}
+      />
+    );
+    expect(screen.getByRole("button", { name: "Copied" })).toHaveTextContent("✓ copied");
+  });
+
+  it("calls clearInput when the clear button is clicked", async () => {
+    const clearInput = vi.fn();
+    const user = userEvent.setup();
+    render(<UlidPanel ulid={makeUlid({ rawInput: ULID_RESULT.ulid, clearInput })} />);
+    await user.click(screen.getByRole("button", { name: "Clear input" }));
+    expect(clearInput).toHaveBeenCalled();
+  });
+
+  it("loads a sample when a sample pill is clicked", async () => {
+    const loadSample = vi.fn();
+    const user = userEvent.setup();
+    render(<UlidPanel ulid={makeUlid({ loadSample })} />);
+    await user.click(screen.getByRole("button", { name: "Load uuidv7 sample" }));
+    expect(loadSample).toHaveBeenCalledWith("uuidv7");
   });
 });
