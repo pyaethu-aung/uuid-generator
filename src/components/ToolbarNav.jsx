@@ -3,6 +3,7 @@ const TABS = [
   { id: "validator", label: "Validator" },
   { id: "converter", label: "Converter" },
   { id: "bulk", label: "Bulk" },
+  { id: "ulid", label: "ULID" },
 ];
 
 function ToolbarNav({ activeTab, onTabChange }) {

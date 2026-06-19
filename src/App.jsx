@@ -9,6 +9,7 @@ import UuidList from "./components/UuidList";
 import ConvertPanel from "./components/ConvertPanel";
 import BulkPanel from "./components/BulkPanel";
 import ValidatorPanel from "./components/ValidatorPanel";
+import UlidPanel from "./components/UlidPanel";
 import SHORTCUTS from "./data/shortcuts";
 import useActiveTab from "./hooks/useActiveTab";
 import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
@@ -18,6 +19,7 @@ import useUuidGenerator from "./hooks/useUuidGenerator";
 import useUuidConverter from "./hooks/useUuidConverter";
 import useUuidBulk from "./hooks/useUuidBulk";
 import useUuidValidator from "./hooks/useUuidValidator";
+import useUlid from "./hooks/useUlid";
 
 function BrandIcon() {
   return (
@@ -72,6 +74,7 @@ function App() {
   const validator = useUuidValidator();
   const converter = useUuidConverter();
   const bulk = useUuidBulk();
+  const ulid = useUlid();
 
   useKeyboardShortcuts({
     batchSize,
@@ -169,6 +172,10 @@ function App() {
         <div style={{ display: activeTab === "bulk" ? "" : "none" }}>
           <BulkPanel bulk={bulk} />
         </div>
+
+        <div style={{ display: activeTab === "ulid" ? "" : "none" }}>
+          <UlidPanel ulid={ulid} />
+        </div>
       </main>
 
       <StatusBar
@@ -180,6 +187,7 @@ function App() {
         feedback={feedback}
         validatorResult={validator.result}
         validatorCheckCount={validator.checkCount}
+        ulidResult={ulid.result}
         onShortcuts={() => setShortcutHelpOpen(true)}
       />
 

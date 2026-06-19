@@ -1295,6 +1295,20 @@ input.name-input.ts-field[type="time"] {
   color: var(--ink);
 }
 
+/* Primary CTA — accent fill, on-accent text. The ULID "mint" action; follows
+   the same contract as the Regenerate button (accent at an interaction point,
+   1px lift on hover, no colour shift). */
+.v-input-btn--primary {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--on-accent);
+  font-weight: var(--fw-semibold);
+}
+
+.v-input-btn--primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
 /* ─── Sample pills ───────────────────────────────────────────────────────── */
 .v-sample-row {
   display: flex;
@@ -1800,6 +1814,19 @@ input.name-input.ts-field[type="time"] {
   color: var(--error);
 }
 
+/* ─── ULID representations ───────────────────────────────────────────────── */
+/* Boxes the shared .cx-row list so the ulid/uuid/compact rows read as one unit,
+   matching the bordered .v-props-grid above it. */
+.ulid-repr {
+  border: 1px solid var(--seam);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.ulid-repr .cx-row {
+  padding: 12px 16px;
+}
+
 /* ─── Bulk validate / decode ─────────────────────────────────────────────── */
 .bulk-textarea {
   resize: vertical;
@@ -2045,6 +2072,28 @@ input.name-input.ts-field[type="time"] {
 
   .bulk-table-wrap {
     max-height: none;
+  }
+
+  /* Narrow panels crush the fixed label + copy columns, leaving the value a
+     few characters wide. Restack: label and copy on top, value full-width. */
+  .ulid-repr .cx-row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "label copy"
+      "value value";
+    gap: 8px var(--sp-6);
+  }
+
+  .ulid-repr .cx-label {
+    grid-area: label;
+  }
+
+  .ulid-repr .cx-copy {
+    grid-area: copy;
+  }
+
+  .ulid-repr .cx-value {
+    grid-area: value;
   }
 }
 

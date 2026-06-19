@@ -80,7 +80,7 @@ describe("App", () => {
     const user = userEvent.setup();
     render(<App />);
 
-    expect(screen.getByText(/Mint/i)).toBeInTheDocument();
+    expect(screen.getByText(/mint\s+identifiers/i)).toBeInTheDocument();
     expect(screen.getByText("Copied!")).toBeInTheDocument();
 
     await user.click(
@@ -187,6 +187,6 @@ describe("App", () => {
 
     // Validator and Converter both render UUID inputs; generator stays mounted too
     expect(screen.getAllByPlaceholderText(/xxxxxxxx-xxxx/i)).toHaveLength(2);
-    expect(screen.getByText(/Mint/i)).toBeInTheDocument();
+    expect(screen.getByText(/mint\s+identifiers/i)).toBeInTheDocument();
   });
 });
