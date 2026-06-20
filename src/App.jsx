@@ -10,6 +10,7 @@ import ConvertPanel from "./components/ConvertPanel";
 import BulkPanel from "./components/BulkPanel";
 import ValidatorPanel from "./components/ValidatorPanel";
 import UlidPanel from "./components/UlidPanel";
+import NanoIdPanel from "./components/NanoIdPanel";
 import SHORTCUTS from "./data/shortcuts";
 import useActiveTab from "./hooks/useActiveTab";
 import useKeyboardShortcuts from "./hooks/useKeyboardShortcuts";
@@ -20,6 +21,7 @@ import useUuidConverter from "./hooks/useUuidConverter";
 import useUuidBulk from "./hooks/useUuidBulk";
 import useUuidValidator from "./hooks/useUuidValidator";
 import useUlid from "./hooks/useUlid";
+import useNanoId from "./hooks/useNanoId";
 
 function BrandIcon() {
   return (
@@ -75,6 +77,7 @@ function App() {
   const converter = useUuidConverter();
   const bulk = useUuidBulk();
   const ulid = useUlid();
+  const nanoid = useNanoId();
 
   useKeyboardShortcuts({
     batchSize,
@@ -176,6 +179,10 @@ function App() {
         <div style={{ display: activeTab === "ulid" ? "" : "none" }}>
           <UlidPanel ulid={ulid} />
         </div>
+
+        <div style={{ display: activeTab === "nanoid" ? "" : "none" }}>
+          <NanoIdPanel nanoid={nanoid} />
+        </div>
       </main>
 
       <StatusBar
@@ -188,6 +195,8 @@ function App() {
         validatorResult={validator.result}
         validatorCheckCount={validator.checkCount}
         ulidResult={ulid.result}
+        nanoidStats={nanoid.stats}
+        nanoidCount={nanoid.ids.length}
         onShortcuts={() => setShortcutHelpOpen(true)}
       />
 

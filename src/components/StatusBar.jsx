@@ -3,6 +3,7 @@ function StatusBar({
   version, batch, visible, opts, feedback,
   validatorResult, validatorCheckCount,
   ulidResult,
+  nanoidStats, nanoidCount,
   onShortcuts,
 }) {
   if (activeTab === "validator") {
@@ -17,6 +18,16 @@ function StatusBar({
 
   if (activeTab === "ulid") {
     return <UlidStatusBar result={ulidResult} onShortcuts={onShortcuts} />;
+  }
+
+  if (activeTab === "nanoid") {
+    return (
+      <NanoIdStatusBar
+        stats={nanoidStats}
+        count={nanoidCount}
+        onShortcuts={onShortcuts}
+      />
+    );
   }
 
   const flags = [];
@@ -102,6 +113,24 @@ function UlidStatusBar({ result, onShortcuts }) {
       {kind     && <span className="status-cell">{kind}</span>}
       {tsLabel  && <span className="status-cell">{tsLabel}</span>}
       <span className="status-cell">ulid · 26 chars</span>
+      <span className="status-spacer" />
+      <button className="status-btn" onClick={onShortcuts}>
+        press <kbd>?</kbd> for shortcuts
+      </button>
+    </footer>
+  );
+}
+
+function NanoIdStatusBar({ stats, count, onShortcuts }) {
+  return (
+    <footer className="status mono">
+      <span className="status-cell">
+        <span className="status-dot" />
+        live
+      </span>
+      <span className="status-cell">{stats.alphabetSize} symbols</span>
+      <span className="status-cell">{stats.bits.toFixed(1)} bits</span>
+      <span className="status-cell">batch {String(count).padStart(2, "0")}</span>
       <span className="status-spacer" />
       <button className="status-btn" onClick={onShortcuts}>
         press <kbd>?</kbd> for shortcuts
