@@ -1343,6 +1343,16 @@ input.name-input.ts-field[type="time"] {
   color: var(--ink);
 }
 
+/* The NanoID alphabet picker has five presets — too many for the rail's single
+   row, so they wrap two-up (the lone fifth pill fills its row). */
+.nano-alphabets {
+  flex-wrap: wrap;
+}
+
+.nano-alphabets .v-sample-pill {
+  flex: 1 1 40%;
+}
+
 /* ─── Option toggles ─────────────────────────────────────────────────────── */
 .v-opt-stack {
   display: flex;

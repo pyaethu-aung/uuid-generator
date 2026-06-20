@@ -4,6 +4,7 @@ const TABS = [
   { id: "converter", label: "Converter" },
   { id: "bulk", label: "Bulk" },
   { id: "ulid", label: "ULID" },
+  { id: "nanoid", label: "NanoID" },
 ];
 
 function ToolbarNav({ activeTab, onTabChange }) {

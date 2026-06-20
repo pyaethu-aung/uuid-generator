@@ -5,6 +5,7 @@ function pathToTab(pathname) {
   if (pathname.startsWith("/converter")) return "converter";
   if (pathname.startsWith("/bulk")) return "bulk";
   if (pathname.startsWith("/ulid")) return "ulid";
+  if (pathname.startsWith("/nanoid")) return "nanoid";
   return "generator";
 }
 
