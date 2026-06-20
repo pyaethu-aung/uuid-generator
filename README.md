@@ -15,6 +15,7 @@ A Tailwind-styled UUID generator and validator built with React 19 and Vite. Gen
 - Validator tab decodes any pasted UUID (version, variant, timestamp for v1/v7); shows the v6 counterpart for v1 inputs and vice versa.
 - Bulk tab validates and decodes a pasted list (one UUID per line) into a table of status, version, variant, and timestamp, with a valid/invalid/total summary and one-click copy of every valid UUID.
 - ULID tab mints ULIDs (crypto-random, no dependency) and decodes a pasted ULID into its timestamp, randomness, and equivalent UUID forms. Accepts a UUIDv7 in the same field to convert the other way, since ULID and UUIDv7 share the 48-bit millisecond timestamp.
+- NanoID tab generates batches of compact, URL-safe NanoIDs (crypto-random, no dependency) with an adjustable length (2–36) and alphabet preset (url-safe, alphanumeric, lowercase, hex, numbers); a live entropy readout reports the bit strength and the id count needed for a 1% collision chance.
 - Copy-to-clipboard with micro-interaction feedback plus a timestamped download action guarded against oversized files.
 - Insight cards summarizing current options (version, batch size, characters per UUID) placed directly above the list for quick scanning.
 - Responsive layout with gradients, keyboard-friendly control handling, and pointer event throttling to avoid jank.
