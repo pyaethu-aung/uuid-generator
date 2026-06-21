@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import ControlPanel from "./ControlPanel";
 import ConvertPanel from "./ConvertPanel";
 import Hero from "./Hero";
@@ -821,6 +821,11 @@ describe("ValidatorPanel", () => {
     expect(screen.getByText(conversion.value)).toBeInTheDocument();
   });
 
+  it("renders the upload file button", () => {
+    render(<ValidatorPanel validator={makeValidator()} />);
+    expect(screen.getByRole("button", { name: "Upload a file" })).toBeInTheDocument();
+  });
+
   it("wires copy-all, copy-one, clear, sample, and sample-list controls", async () => {
     const copyValid = vi.fn();
     const copyOne = vi.fn();
@@ -855,5 +860,81 @@ describe("ValidatorPanel", () => {
 
     await user.click(screen.getByRole("button", { name: "Load v4 sample UUID" }));
     expect(loadSample).toHaveBeenCalledWith("v4");
+  });
+});
+
+describe("ValidatorPanel file upload", () => {
+  function stubFileReader(contentQueue) {
+    const queue = [...contentQueue];
+    vi.stubGlobal(
+      "FileReader",
+      vi.fn().mockImplementation(function () {
+        this.onload = null;
+        this.onerror = null;
+        this.readAsText = () => {
+          const content = queue.shift() ?? "";
+          Promise.resolve().then(() => this.onload?.({ target: { result: content } }));
+        };
+      })
+    );
+  }
+
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("loads a single file's text into the validator input", async () => {
+    const setRawInput = vi.fn();
+    const content = "uuid-a\nuuid-b";
+    stubFileReader([content]);
+
+    render(<ValidatorPanel validator={makeValidator({ setRawInput })} />);
+
+    const file = new File([content], "uuids.txt", { type: "text/plain" });
+    const input = document.querySelector('input[type="file"]');
+    await userEvent.upload(input, file);
+
+    await waitFor(() => expect(setRawInput).toHaveBeenCalledWith(content));
+  });
+
+  it("concatenates multiple files separated by a newline", async () => {
+    const setRawInput = vi.fn();
+    stubFileReader(["line-a", "line-b"]);
+
+    render(<ValidatorPanel validator={makeValidator({ setRawInput })} />);
+
+    const files = [
+      new File(["line-a"], "a.txt", { type: "text/plain" }),
+      new File(["line-b"], "b.txt", { type: "text/plain" }),
+    ];
+    const input = document.querySelector('input[type="file"]');
+    await userEvent.upload(input, files);
+
+    await waitFor(() => expect(setRawInput).toHaveBeenCalledWith("line-a\nline-b"));
+  });
+
+  it("shows an error and skips a file over 1 MB", () => {
+    const setRawInput = vi.fn();
+    render(<ValidatorPanel validator={makeValidator({ setRawInput })} />);
+
+    const bigFile = new File(["x".repeat(1_000_001)], "huge.txt", { type: "text/plain" });
+    const input = document.querySelector('input[type="file"]');
+    fireEvent.change(input, { target: { files: [bigFile] } });
+
+    expect(screen.getByRole("alert")).toHaveTextContent("huge.txt exceeds 1 MB");
+    expect(setRawInput).not.toHaveBeenCalled();
+  });
+
+  it("loads readable files and reports skipped oversized ones", async () => {
+    const setRawInput = vi.fn();
+    stubFileReader(["uuid-ok"]);
+
+    render(<ValidatorPanel validator={makeValidator({ setRawInput })} />);
+
+    const bigFile = new File(["x".repeat(1_000_001)], "huge.txt", { type: "text/plain" });
+    const okFile = new File(["uuid-ok"], "ok.txt", { type: "text/plain" });
+    const input = document.querySelector('input[type="file"]');
+    await userEvent.upload(input, [bigFile, okFile]);
+
+    expect(screen.getByRole("alert")).toHaveTextContent("huge.txt exceeds 1 MB");
+    await waitFor(() => expect(setRawInput).toHaveBeenCalledWith("uuid-ok"));
   });
 });

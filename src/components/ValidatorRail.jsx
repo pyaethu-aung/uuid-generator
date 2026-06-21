@@ -1,4 +1,7 @@
+import { useRef, useState } from "react";
 import { KEY_META, KEY_OPT } from "../utils/platform";
+
+const MAX_FILE_BYTES = 1_000_000;
 
 const SAMPLE_ROWS = [
   ["nil", "max", "v1", "v6"],
@@ -39,6 +42,48 @@ function ValidatorRail({
   onLoadSampleList,
   activeSample,
 }) {
+  const fileInputRef = useRef(null);
+  const [fileError, setFileError] = useState(null);
+  const errorTimerRef = useRef(null);
+
+  const showFileError = (msg) => {
+    setFileError(msg);
+    clearTimeout(errorTimerRef.current);
+    errorTimerRef.current = setTimeout(() => setFileError(null), 3000);
+  };
+
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files ?? []);
+    e.target.value = "";
+    if (!files.length) return;
+
+    const tooBig = files.filter((f) => f.size > MAX_FILE_BYTES);
+    const readable = files.filter((f) => f.size <= MAX_FILE_BYTES);
+
+    if (tooBig.length) {
+      showFileError(
+        tooBig.length === 1
+          ? `${tooBig[0].name} exceeds 1 MB`
+          : `${tooBig.length} files exceed 1 MB`
+      );
+      if (!readable.length) return;
+    }
+
+    Promise.all(
+      readable.map(
+        (file) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (ev) => resolve(ev.target.result ?? "");
+            reader.onerror = () => reject(new Error(file.name));
+            reader.readAsText(file);
+          })
+      )
+    )
+      .then((texts) => onChange(texts.join("\n")))
+      .catch(() => showFileError("could not read file"));
+  };
+
   const lines = value ? value.split(/\r?\n/).filter((line) => line.trim()) : [];
   const lineCount = lines.length;
   const meta =
@@ -98,7 +143,28 @@ function ValidatorRail({
           >
             sample list
           </button>
+          <button
+            type="button"
+            className="v-input-btn v-input-btn--secondary mono"
+            onClick={() => fileInputRef.current?.click()}
+            aria-label="Upload a file"
+          >
+            <span aria-hidden="true">↑</span> file
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".txt,.csv,text/*"
+            multiple
+            className="v-file-input"
+            tabIndex={-1}
+            aria-hidden="true"
+            onChange={handleFileChange}
+          />
         </div>
+        {fileError && (
+          <span className="v-file-error mono" role="alert">{fileError}</span>
+        )}
       </div>
 
       {/* Samples Section */}
