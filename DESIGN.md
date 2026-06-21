@@ -1,6 +1,6 @@
 ---
-name: uuidlab
-description: "Terminal-luxury — a dense, monospace-forward developer tool that earns the right to feel calm."
+name: idlab
+description: "Terminal-luxury: a dense, monospace-forward developer ID workbench that earns the right to feel calm."
 colors:
   accent-lime: "oklch(0.86 0.20 130)"
   accent-amber: "oklch(0.82 0.18 65)"
@@ -112,13 +112,13 @@ components:
     padding: "0 12px"
 ---
 
-# Design System: uuidlab
+# Design System: idlab
 
 ## 1. Overview
 
 **Creative North Star: "Terminal-Luxury"**
 
-uuidlab operates at the intersection of CLI discipline and considered craft. It is dense where
+idlab operates at the intersection of CLI discipline and considered craft. It is dense where
 developers are scanning, spacious where developers are reading, and entirely at rest when not
 responding to input. The default state is a deep near-black — not a styled brand gesture, but
 the literal dark that a terminal earns after years of daily use. Every surface decision asks:
@@ -299,17 +299,21 @@ to full height). `padding: 0 28px`. 1px `--seam` bottom hairline.
 Three-column grid (`grid-template-columns: auto 1fr auto`): brand on the left, tab navigation
 centered in the `1fr` column, utility controls on the right.
 
-- **Left:** brand mark icon (16×16 SVG, `--accent`-colored) + brand name (Geist Sans 700, 16px,
-  tracking -0.01em). No route label — the active tab communicates current location.
-- **Center:** six tab buttons (see Tab Navigation), centered via `justify-content: center`.
+- **Left:** brand mark icon (16×16 SVG, `--accent`-colored) + brand name (`idlab`, Geist Sans 700,
+  16px, tracking -0.01em). No route label — the active family tab plus the mode switcher
+  communicate current location.
+- **Center:** three ID-family tab buttons (see Tab Navigation), centered via `justify-content: center`.
 - **Right:** ghost shortcut button + theme toggle button.
 
 ### Tab Navigation
 
-Five tabs (Generator / Validator / Converter / ULID / NanoID), rendered inside a flex
-container that stretches to the topbar's full 44px height (`align-items: stretch`). The
-Validator absorbed the former Bulk tab: it validates one UUID or a pasted list, with each
-row expandable into the full inspector.
+The nav is **ID-family first**: three top-bar tabs (UUID / ULID / NanoID), rendered inside a flex
+container that stretches to the topbar's full 44px height (`align-items: stretch`). Operations
+live one level down, inside the family (see Mode Switcher). The five internal leaves
+(UUID Generate/Validate/Convert, ULID, NanoID) stay the source of truth for routing and keyboard
+jumps; the bar just groups them. Clicking a family lands on its last-used mode. The Validator
+absorbed the former Bulk tool: it validates one UUID or a pasted list, with each row expandable
+into the full inspector.
 
 - **Default:** `--ink-3` text, 2px `transparent` bottom border, no border-radius (zero radius
   keeps the underline flush with the topbar's hairline without a gap). 0/12px padding.
@@ -318,6 +322,24 @@ row expandable into the full inspector.
   topbar's own `--seam` bottom hairline — it reads as a continuation of that edge, not a
   floating decoration.
 - **Font:** Geist Mono, `var(--fs-sm)` (11px), label weight.
+
+### Mode Switcher
+
+The family-scoped operation sub-nav (`Generate / Validate / Convert`), rendered as a content-area
+segmented control at the top of the workbench, **only** for families with more than one mode (UUID
+today). ULID and NanoID are single-mode and show nothing here, which keeps the structure honest.
+Deliberately not a second underlined nav bar: it is a bordered, content-width pill group inside the
+`.main` column so it reads as a control nested under the active family tab, never as SaaS-style
+double navigation chrome.
+
+- **Group:** `--bg-2` fill, 1px `--seam` border, `--r-md` radius, 2px inner padding.
+- **Segment (default):** transparent, `--ink-3` text, Geist Mono 600 at `--fs-sm`, `--r-sm` radius.
+- **Segment (hover):** `--bg-3` fill, `--ink` text over `var(--d-swap)`.
+- **Segment (active):** `--accent` text on a `color-mix(in oklch, var(--accent) 12%, var(--bg-2))`
+  tint — the same "selected" vocabulary as a checked format option, softer than the CTA fill so it
+  doesn't double up full saturation with the family tab's accent underline. The filled background is
+  the non-colour state cue; `aria-current="page"` carries the state to assistive tech.
+- **Modes map 1:1 to the `⌥⇧1…5` jump keys**, so each segment advertises its own `aria-keyshortcuts`.
 
 ### Status Bar
 

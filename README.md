@@ -1,6 +1,8 @@
-# UUID Generator (AI Built)
+# idlab — ID workbench (AI Built)
 
-A Tailwind-styled UUID generator and validator built with React 19 and Vite. Generate and batch-export UUIDs (v1, v3, v4, v5, v6, v7, nil, max), validate and decode any UUID (one at a time or a pasted list in bulk), and copy or download results without leaving the keyboard.
+A keyboard-first ID workbench built with React 19 and Vite, organised by ID family. **UUID** is the anchor (generate v1/v3/v4/v5/v6/v7 plus nil/max, validate and decode, convert between representations), with **ULID** and **NanoID** alongside it. Generate, validate, decode, convert, and copy or download results without leaving the keyboard.
+
+The top bar selects an ID family (UUID / ULID / NanoID); within UUID a mode switcher picks the operation (Generate / Validate / Convert). The canonical routes are `/uuid/generate`, `/uuid/validate`, `/uuid/convert`, `/ulid`, and `/nanoid`; the old `/generator`, `/validator`, `/converter`, and `/bulk` links redirect to their new homes.
 
 ## AI Agent & Tooling
 - Core implementation produced by GitHub Copilot running the GPT-5.1-Codex model.
@@ -12,7 +14,7 @@ A Tailwind-styled UUID generator and validator built with React 19 and Vite. Gen
 - Unified slider that drives both the on-screen preview count (capped at 20) and the downloadable batch size (1–200).
 - Version selector covering v1, v3, v4, v5, v6, v7, nil, and max via the `uuid` npm package. v3/v5 are deterministic (namespace + name); v6 is the index-friendly field-reordered rewrite of v1.
 - Pinned timestamp for the time-based versions (v1, v6, v7): switch from live "now" to a chosen moment to mint UUIDs for that instant, with a readout echoing the epoch milliseconds and decoded UTC. Useful for testing time-ordered ID systems; the inverse of the validator's timestamp decode.
-- Validator tab handles one UUID or many: paste a single value or a list (one per line), or upload a `.txt` / `.csv` file — select multiple files to merge their contents. Every entry becomes a row in a triage table of status, version, variant, and timestamp, with a valid/invalid/total summary and one-click copy of every valid UUID. Click any row to expand the full inspector inline (parsed structure, properties, timestamp decode, and the v1↔v6 counterpart) — a lone UUID auto-expands. The retired `/bulk` deep link now lands here.
+- Validator tab handles one UUID or many: paste a single value or a list (one per line), or upload a `.txt` / `.csv` file — select multiple files to merge their contents. Every entry becomes a row in a triage table of status, version, variant, and timestamp, with a valid/invalid/total summary and one-click copy of every valid UUID. Click any row to expand the full inspector inline (parsed structure, properties, timestamp decode, and the v1↔v6 counterpart) — a lone UUID auto-expands. The retired `/bulk` deep link now lands here (`/uuid/validate`).
 - ULID tab mints ULIDs (crypto-random, no dependency) and decodes a pasted ULID into its timestamp, randomness, and equivalent UUID forms. Accepts a UUIDv7 in the same field to convert the other way, since ULID and UUIDv7 share the 48-bit millisecond timestamp.
 - NanoID tab generates batches of compact, URL-safe NanoIDs (crypto-random, no dependency) with an adjustable length (2–36) and alphabet preset (url-safe, alphanumeric, lowercase, hex, numbers); a live entropy readout reports the bit strength and the id count needed for a 1% collision chance.
 - Copy-to-clipboard with micro-interaction feedback plus a timestamped download action guarded against oversized files.
@@ -27,6 +29,8 @@ A Tailwind-styled UUID generator and validator built with React 19 and Vite. Gen
 - ⌥/Alt + 1 … 8 — Switch generators in order: v4, v1, v6, v7, v3, v5, nil, max.
 - ⌥/Alt + U / H / B — Toggle uppercase, remove hyphens, or wrap with braces.
 - ⌥/Alt + R / [ / − — (Validator tab) Toggle strict RFC 4122, allow braces, allow no-hyphens.
+- ⌥/Alt + Shift + 1 … 5 — Jump to a tool: UUID Generate, UUID Validate, UUID Convert, ULID, NanoID.
+- ⌥/Alt + Shift + ← / → — Cycle to the previous / next tool (wraps at the ends).
 - Shift + ? — Open the in-app shortcut reference overlay.
 - Esc — Close the shortcut reference overlay.
 
