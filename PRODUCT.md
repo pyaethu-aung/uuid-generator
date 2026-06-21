@@ -6,17 +6,20 @@ product
 
 ## Users
 
-Developer-fluent engineers who need UUIDs routinely: seeding databases, constructing test fixtures,
-wiring API contracts, generating IDs during prototyping. They know what v4 vs v7 means, work
-primarily from the keyboard, and return dozens of times a week. The tool earns trust by
-disappearing into the task.
+Developer-fluent engineers who reach for IDs routinely: seeding databases, constructing test
+fixtures, wiring API contracts, minting tokens and short URLs, generating IDs during prototyping.
+They shop by ID strategy (random vs sortable vs compact), know what v4 vs v7 means, work primarily
+from the keyboard, and return dozens of times a week. The tool earns trust by disappearing into
+the task.
 
 ## Product Purpose
 
-uuidlab removes every marginal step between "I need a UUID" and having it ready. It generates
-batches (v1/v4/v7, 1–200 entries) with formatting options (uppercase, no hyphens, braces),
-validates and decodes existing UUIDs, and exposes every action via keyboard shortcut. Success
-means a developer never opens another tab for UUIDs.
+idlab removes every marginal step between "I need an ID" and having it ready. Organised by ID
+family (UUID, ULID, NanoID), it generates batches (UUID v1/v3/v4/v5/v6/v7 plus nil/max, 1–200
+entries; ULID; NanoID) with formatting options, validates and decodes existing UUIDs and ULIDs,
+converts between representations (including ULID↔UUIDv7), and exposes every action via keyboard
+shortcut. UUID is the anchor; the structure has room for more families (KSUID, Snowflake). Success
+means a developer never opens another tab for an ID.
 
 ## Brand Personality
 
