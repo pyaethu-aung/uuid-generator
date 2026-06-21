@@ -14,11 +14,11 @@ const SHORTCUTS = [
     items: [
       {
         combo: "⌥/Alt + Shift + 1 … 5",
-        description: "Jump to a tab: Generator, Validator, Converter, ULID, NanoID",
+        description: "Jump to a tool: UUID Generate, Validate, Convert, ULID, NanoID",
       },
       {
         combo: "⌥/Alt + Shift + ← / →",
-        description: "Cycle to the previous / next tab (wraps at the ends)",
+        description: "Cycle to the previous / next tool (wraps at the ends)",
       },
       {
         combo: "Shift + ?",
@@ -31,7 +31,7 @@ const SHORTCUTS = [
     ],
   },
   {
-    group: "Generator",
+    group: "UUID Generate",
     tab: "generator",
     items: [
       {
@@ -69,7 +69,7 @@ const SHORTCUTS = [
     ],
   },
   {
-    group: "Validator",
+    group: "UUID Validate",
     tab: "validator",
     items: [
       {
@@ -91,7 +91,7 @@ const SHORTCUTS = [
     ],
   },
   {
-    group: "Converter",
+    group: "UUID Convert",
     tab: "converter",
     items: [
       {

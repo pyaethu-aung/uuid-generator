@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { TABS } from "../data/tabs";
-
-const TAB_LABELS = Object.fromEntries(TABS.map(({ id, label }) => [id, label]));
+import { announceLabel } from "../data/tabs";
 
 // A single, always-mounted live region for tab changes. The per-tab status bar
 // footer remounts on every switch, so it can't carry the announcement — this
@@ -20,7 +18,7 @@ function TabAnnouncer({ activeTab }) {
   useEffect(() => {
     if (prevTab.current === activeTab) return;
     prevTab.current = activeTab;
-    setMessage(`${TAB_LABELS[activeTab] ?? activeTab} tab`);
+    setMessage(`${announceLabel(activeTab)} tab`);
   }, [activeTab]);
 
   return (
