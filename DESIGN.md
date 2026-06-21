@@ -110,6 +110,15 @@ components:
   tab-btn-active:
     textColor: "{colors.accent-lime}"
     padding: "0 12px"
+  mode-btn:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink-3}"
+    rounded: "{rounded.sm}"
+    padding: "6px 14px"
+  mode-btn-active:
+    textColor: "{colors.accent-lime}"
+    rounded: "{rounded.sm}"
+    padding: "6px 14px"
 ---
 
 # Design System: idlab

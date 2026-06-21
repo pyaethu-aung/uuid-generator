@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-06-20T00:00:00+07:00",
-  "title": "Design System: uuidlab",
+  "generatedAt": "2026-06-22T00:00:00+07:00",
+  "title": "Design System: idlab",
   "extensions": {
     "colorMeta": {
       "accent-lime": {
@@ -263,9 +263,17 @@
       "name": "Tab Navigation",
       "kind": "nav",
       "refersTo": "tab-btn",
-      "description": "Centered topbar nav. Tabs stretch to full bar height; active underline is flush with the bar's bottom border.",
-      "html": "<nav class=\"ds-tab-nav\"><button class=\"ds-tab-btn ds-tab-btn--active\">Generator</button><button class=\"ds-tab-btn\">Validator</button><button class=\"ds-tab-btn\">Converter</button><button class=\"ds-tab-btn\">Bulk</button><button class=\"ds-tab-btn\">ULID</button><button class=\"ds-tab-btn\">NanoID</button></nav>",
+      "description": "Centered topbar nav, grouped by ID family (UUID / ULID / NanoID). Tabs stretch to full bar height; the active underline is flush with the bar's bottom border. Operations within a family live one level down in the Mode Switcher.",
+      "html": "<nav class=\"ds-tab-nav\"><button class=\"ds-tab-btn ds-tab-btn--active\">UUID</button><button class=\"ds-tab-btn\">ULID</button><button class=\"ds-tab-btn\">NanoID</button></nav>",
       "css": ".ds-tab-nav { display: flex; height: 44px; align-items: stretch; justify-content: center; gap: 2px; background: oklch(0.16 0.005 60); border-bottom: 1px solid oklch(0.28 0.006 60); } .ds-tab-btn { display: inline-flex; align-items: center; padding: 0 12px; background: transparent; border: none; border-bottom: 2px solid transparent; border-radius: 0; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; font-weight: 600; font-feature-settings: 'zero', 'ss01'; letter-spacing: 0.04em; color: oklch(0.55 0.005 60); cursor: pointer; transition: color 120ms cubic-bezier(0.2, 0.7, 0.3, 1), border-color 120ms cubic-bezier(0.2, 0.7, 0.3, 1); } .ds-tab-btn:hover { color: oklch(0.78 0.005 60); border-bottom-color: oklch(0.36 0.008 60); } .ds-tab-btn--active { color: oklch(0.86 0.20 130); border-bottom-color: oklch(0.86 0.20 130); }"
+    },
+    {
+      "name": "Mode Switcher",
+      "kind": "nav",
+      "refersTo": "mode-btn",
+      "description": "Family-scoped operation sub-nav (UUID: Generate / Validate / Convert). A content-area segmented control, not a second underlined nav bar; rendered only for families with more than one mode. The active segment uses the accent-tint 'selected' vocabulary, softer than the CTA fill; the filled background is the non-colour state cue.",
+      "html": "<div class=\"ds-mode-switcher\"><button class=\"ds-mode-btn ds-mode-btn--active\" aria-current=\"page\">Generate</button><button class=\"ds-mode-btn\">Validate</button><button class=\"ds-mode-btn\">Convert</button></div>",
+      "css": ".ds-mode-switcher { display: inline-flex; gap: 2px; padding: 2px; background: oklch(0.18 0.005 60); border: 1px solid oklch(0.28 0.006 60); border-radius: 6px; } .ds-mode-btn { display: inline-flex; align-items: center; padding: 6px 14px; background: transparent; border: none; border-radius: 5px; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; font-weight: 600; font-feature-settings: 'zero', 'ss01'; letter-spacing: 0.02em; color: oklch(0.55 0.005 60); cursor: pointer; transition: color 120ms cubic-bezier(0.2, 0.7, 0.3, 1), background-color 120ms cubic-bezier(0.2, 0.7, 0.3, 1); } .ds-mode-btn:hover { color: oklch(0.97 0.004 60); background: oklch(0.21 0.006 60); } .ds-mode-btn--active, .ds-mode-btn--active:hover { color: oklch(0.86 0.20 130); background: color-mix(in oklch, oklch(0.86 0.20 130) 12%, oklch(0.18 0.005 60)); } .ds-mode-btn:focus-visible { outline: 2px solid oklch(0.86 0.20 130); outline-offset: 2px; }"
     },
     {
       "name": "Representation Row",
@@ -278,7 +286,7 @@
   ],
   "narrative": {
     "northStar": "Terminal-Luxury",
-    "overview": "uuidlab operates at the intersection of CLI discipline and considered craft. It is dense where developers are scanning, spacious where developers are reading, and entirely at rest when not responding to input. The default state is a deep near-black — not a styled brand gesture, but the literal dark that a terminal earns after years of daily use.\n\nThis system rejects all three of its closest failure modes by name. It is not SaaS-dashboard grey (blue-tinted panels, sidebar chrome, card-grid layouts). It is not flashy developer marketing (gradient-heavy dark mode, stacked neon accents, glassmorphism). It is not the bare-bones utility that mistakes zero effort for minimal design. \"Terminal-luxury\" names the space between: a tool with genuine craft opinions that never asks for attention.\n\nThe accent color — lime by default, swappable across four palettes — appears only as a consequence of action. Its rarity is structural.",
+    "overview": "idlab operates at the intersection of CLI discipline and considered craft. It is dense where developers are scanning, spacious where developers are reading, and entirely at rest when not responding to input. The default state is a deep near-black — not a styled brand gesture, but the literal dark that a terminal earns after years of daily use.\n\nThis system rejects all three of its closest failure modes by name. It is not SaaS-dashboard grey (blue-tinted panels, sidebar chrome, card-grid layouts). It is not flashy developer marketing (gradient-heavy dark mode, stacked neon accents, glassmorphism). It is not the bare-bones utility that mistakes zero effort for minimal design. \"Terminal-luxury\" names the space between: a tool with genuine craft opinions that never asks for attention.\n\nThe accent color — lime by default, swappable across four palettes — appears only as a consequence of action. Its rarity is structural.",
     "keyCharacteristics": [
       "Dark-native by conviction, warm-grey neutral ramp (hue 60°) that reads as ink-and-paper, not blue-shift",
       "Monospace-forward: Geist Mono is body and chrome; Geist Sans is display and prose only",
