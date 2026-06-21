@@ -1297,6 +1297,15 @@ input.name-input.ts-field[type="time"] {
   transform: translateY(-1px);
 }
 
+.v-file-input {
+  display: none;
+}
+
+.v-file-error {
+  color: var(--error);
+  font-size: var(--fs-xxs);
+}
+
 /* ─── Sample pills ───────────────────────────────────────────────────────── */
 .v-sample-row {
   display: flex;
