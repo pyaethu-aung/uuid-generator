@@ -487,31 +487,67 @@ describe("ValidatorPropsGrid", () => {
 });
 
 describe("ToolbarNav", () => {
-  it("renders Generator and Validator buttons", () => {
+  it("renders the three ID family buttons", () => {
     render(<ToolbarNav activeTab="generator" onTabChange={() => {}} />);
-    expect(screen.getByRole("button", { name: "Generator" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Validator" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "UUID" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "ULID" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "NanoID" })).toBeInTheDocument();
   });
 
-  it("marks the active tab with aria-current", () => {
+  it("marks the active family with aria-current", () => {
     render(<ToolbarNav activeTab="generator" onTabChange={() => {}} />);
-    expect(screen.getByRole("button", { name: "Generator" })).toHaveAttribute("aria-current", "page");
-    expect(screen.getByRole("button", { name: "Validator" })).not.toHaveAttribute("aria-current");
+    expect(screen.getByRole("button", { name: "UUID" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("button", { name: "ULID" })).not.toHaveAttribute("aria-current");
   });
 
-  it("calls onTabChange when clicking the inactive tab", async () => {
+  it("treats every UUID mode as the active UUID family", () => {
+    render(<ToolbarNav activeTab="converter" onTabChange={() => {}} />);
+    expect(screen.getByRole("button", { name: "UUID" })).toHaveAttribute("aria-current", "page");
+  });
+
+  it("navigates to a family's first mode when no last-used mode is known", async () => {
     const onTabChange = vi.fn();
     const user = userEvent.setup();
-    render(<ToolbarNav activeTab="generator" onTabChange={onTabChange} />);
-    await user.click(screen.getByRole("button", { name: "Validator" }));
+    render(<ToolbarNav activeTab="ulid" onTabChange={onTabChange} />);
+    await user.click(screen.getByRole("button", { name: "UUID" }));
+    expect(onTabChange).toHaveBeenCalledWith("generator");
+  });
+
+  it("returns to the family's last-used mode when one is remembered", async () => {
+    const onTabChange = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <ToolbarNav
+        activeTab="ulid"
+        onTabChange={onTabChange}
+        lastLeafByFamily={{ uuid: "validator" }}
+      />
+    );
+    await user.click(screen.getByRole("button", { name: "UUID" }));
     expect(onTabChange).toHaveBeenCalledWith("validator");
   });
 
-  it("does not call onTabChange when clicking the active tab", async () => {
+  it("advertises the jump key only on single-mode family tabs", () => {
+    render(<ToolbarNav activeTab="generator" onTabChange={() => {}} />);
+    expect(screen.getByRole("button", { name: "ULID" })).toHaveAttribute(
+      "aria-keyshortcuts",
+      "Alt+Shift+4"
+    );
+    expect(screen.getByRole("button", { name: "NanoID" })).toHaveAttribute(
+      "aria-keyshortcuts",
+      "Alt+Shift+5"
+    );
+    // UUID owns three jump keys, so the family tab advertises none.
+    expect(screen.getByRole("button", { name: "UUID" })).not.toHaveAttribute(
+      "aria-keyshortcuts"
+    );
+  });
+
+  it("does not call onTabChange when clicking the active family", async () => {
     const onTabChange = vi.fn();
     const user = userEvent.setup();
     render(<ToolbarNav activeTab="generator" onTabChange={onTabChange} />);
-    await user.click(screen.getByRole("button", { name: "Generator" }));
+    await user.click(screen.getByRole("button", { name: "UUID" }));
     expect(onTabChange).not.toHaveBeenCalled();
   });
 });
@@ -540,10 +576,10 @@ describe("TabAnnouncer", () => {
     expect(screen.getByRole("status")).toHaveTextContent("ULID tab");
   });
 
-  it("re-announces on every subsequent change", () => {
+  it("re-announces family and mode on every subsequent change", () => {
     const { rerender } = render(<TabAnnouncer activeTab="generator" />);
     rerender(<TabAnnouncer activeTab="validator" />);
-    expect(screen.getByRole("status")).toHaveTextContent("Validator tab");
+    expect(screen.getByRole("status")).toHaveTextContent("UUID Validate tab");
     rerender(<TabAnnouncer activeTab="nanoid" />);
     expect(screen.getByRole("status")).toHaveTextContent("NanoID tab");
   });

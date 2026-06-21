@@ -72,6 +72,10 @@ const createGeneratorState = (overrides = {}) => ({
 
 beforeEach(() => {
   vi.clearAllMocks();
+  // useActiveTab runs for real and reads window.location, and pushState from a
+  // prior test persists in jsdom — reset to the canonical default so each test
+  // starts on UUID Generate independent of order.
+  window.history.replaceState(null, "", "/uuid/generate");
   useThemeMock.mockReturnValue({ theme: "dark", toggleTheme: mockToggleTheme });
   useUuidGeneratorMock.mockReturnValue(createGeneratorState());
 });
@@ -151,49 +155,63 @@ describe("App", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
-  it("switches to validator panel when Validator tab is clicked", async () => {
+  // The UUID family is active on load, so its mode switcher (Generate / Validate
+  // / Convert) drives switching between the three UUID leaves. The switcher is
+  // itself a `.main > div`, so panel queries skip it with :not(.mode-switcher).
+  it("switches to validator panel when the Validate mode is clicked", async () => {
     const user = userEvent.setup();
     const { container } = render(<App />);
 
-    await user.click(screen.getByRole("button", { name: "Validator" }));
+    await user.click(screen.getByRole("button", { name: "Validate" }));
 
-    const panels = container.querySelectorAll(".main > div");
+    const panels = container.querySelectorAll(".main > div:not(.mode-switcher)");
     expect(panels[0]).toHaveStyle({ display: "none" });
     expect(panels[1]).not.toHaveStyle({ display: "none" });
   });
 
-  it("switches back to generator when Generator tab is clicked", async () => {
+  it("switches back to generator when the Generate mode is clicked", async () => {
     const user = userEvent.setup();
     const { container } = render(<App />);
 
-    await user.click(screen.getByRole("button", { name: "Validator" }));
-    await user.click(screen.getByRole("button", { name: "Generator" }));
+    await user.click(screen.getByRole("button", { name: "Validate" }));
+    await user.click(screen.getByRole("button", { name: "Generate" }));
 
-    const panels = container.querySelectorAll(".main > div");
+    const panels = container.querySelectorAll(".main > div:not(.mode-switcher)");
     expect(panels[0]).not.toHaveStyle({ display: "none" });
     expect(panels[1]).toHaveStyle({ display: "none" });
   });
 
-  it("switches to converter panel when Converter tab is clicked", async () => {
+  it("switches to converter panel when the Convert mode is clicked", async () => {
     const user = userEvent.setup();
     const { container } = render(<App />);
 
-    await user.click(screen.getByRole("button", { name: "Converter" }));
+    await user.click(screen.getByRole("button", { name: "Convert" }));
 
-    const panels = container.querySelectorAll(".main > div");
+    const panels = container.querySelectorAll(".main > div:not(.mode-switcher)");
     expect(panels[0]).toHaveStyle({ display: "none" });
     expect(panels[1]).toHaveStyle({ display: "none" });
     expect(panels[2]).not.toHaveStyle({ display: "none" });
   });
 
-  it("keeps all panels in DOM when switching tabs", async () => {
+  it("keeps all panels in DOM when switching modes", async () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole("button", { name: "Validator" }));
+    await user.click(screen.getByRole("button", { name: "Validate" }));
 
     // Validator and Converter both render UUID inputs; generator stays mounted too
     expect(screen.getAllByPlaceholderText(/xxxxxxxx-xxxx/i)).toHaveLength(2);
     expect(screen.getByText(/mint\s+identifiers/i)).toBeInTheDocument();
+  });
+
+  it("hides the mode switcher for single-mode families and shows it for UUID", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<App />);
+
+    expect(container.querySelector(".mode-switcher")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "NanoID" }));
+    expect(container.querySelector(".mode-switcher")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "UUID" }));
+    expect(container.querySelector(".mode-switcher")).toBeInTheDocument();
   });
 });

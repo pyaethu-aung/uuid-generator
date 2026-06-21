@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import ControlPanel from "./components/ControlPanel";
 import Hero from "./components/Hero";
+import ModeSwitcher from "./components/ModeSwitcher";
 import ShortcutReference from "./components/ShortcutReference";
 import StatusBar from "./components/StatusBar";
 import TabAnnouncer from "./components/TabAnnouncer";
@@ -34,7 +35,7 @@ function BrandIcon() {
 }
 
 function App() {
-  const { activeTab, setActiveTab } = useActiveTab();
+  const { activeTab, setActiveTab, lastLeafByFamily } = useActiveTab();
   const { theme, toggleTheme } = useTheme();
   useBrowserThemeSync(theme);
   const [isShortcutHelpOpen, setShortcutHelpOpen] = useState(false);
@@ -125,10 +126,14 @@ function App() {
           <span className="brand-mark">
             <BrandIcon />
           </span>
-          <span className="brand-name">uuidlab</span>
+          <span className="brand-name">idlab</span>
         </div>
-        <nav className="topbar-nav mono" aria-label="Tabs">
-          <ToolbarNav activeTab={activeTab} onTabChange={setActiveTab} />
+        <nav className="topbar-nav mono" aria-label="ID families">
+          <ToolbarNav
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            lastLeafByFamily={lastLeafByFamily}
+          />
         </nav>
         <div className="topbar-right">
           <button
@@ -144,6 +149,8 @@ function App() {
       </header>
 
       <main className="main">
+        <ModeSwitcher activeLeaf={activeTab} onSelect={setActiveTab} />
+
         <div style={{ display: activeTab === "generator" ? "" : "none" }}>
           <Hero />
 
