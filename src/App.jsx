@@ -131,7 +131,7 @@ function App() {
         <div className="topbar-right">
           <button
             type="button"
-            className="ghost-btn mono"
+            className="ghost-btn mono shortcut-trigger"
             onClick={() => setShortcutHelpOpen(true)}
             aria-label="Open keyboard shortcuts"
           >

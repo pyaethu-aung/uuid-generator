@@ -2311,6 +2311,18 @@ input.name-input.ts-field[type="time"] {
   .row-copy { opacity: 1; }
 }
 
+/* Shortcut affordances need a physical keyboard, so gate them on input
+   capability rather than viewport width: a narrow desktop window keeps its
+   hints, a touch device drops them as dead pixels. The key handlers stay
+   active regardless, so a keyboard paired to a tablet still works. */
+@media (hover: none), (pointer: coarse) {
+  .shortcut-trigger,
+  .kbd-hint,
+  .cta-kbd {
+    display: none;
+  }
+}
+
 /* ─── Reduced motion ─────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
