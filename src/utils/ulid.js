@@ -1,4 +1,5 @@
 import { formatRelativeTime } from "./uuidDecoder";
+import { insertHyphens } from "./uuid";
 
 // ULID: a 128-bit, lexicographically sortable identifier (a 48-bit Unix
 // millisecond timestamp followed by 80 bits of randomness), rendered as 26
@@ -29,10 +30,6 @@ const DECODE = (() => {
 const UUID_CANONICAL_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const UUID_COMPACT_RE = /^[0-9a-f]{32}$/i;
-
-function insertHyphens(hex) {
-  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
-}
 
 // Strip braces / urn:uuid: wrappers and hyphens, returning a lowercase 32-char
 // hex string, or null when the input is not a UUID in any accepted form.
