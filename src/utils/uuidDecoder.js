@@ -1,3 +1,5 @@
+import { insertHyphens } from "./uuid";
+
 const UUID_REGEX =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -11,10 +13,6 @@ export function normalizeInput(raw) {
   let s = raw.trim();
   if (s.startsWith("{") && s.endsWith("}")) s = s.slice(1, -1);
   return s;
-}
-
-function insertHyphens(hex32) {
-  return `${hex32.slice(0, 8)}-${hex32.slice(8, 12)}-${hex32.slice(12, 16)}-${hex32.slice(16, 20)}-${hex32.slice(20)}`;
 }
 
 export function extractFields(uuid) {
