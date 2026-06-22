@@ -1,3 +1,5 @@
+import { insertHyphens } from "./uuid";
+
 const UUID_REGEX =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -11,10 +13,6 @@ export function normalizeInput(raw) {
   let s = raw.trim();
   if (s.startsWith("{") && s.endsWith("}")) s = s.slice(1, -1);
   return s;
-}
-
-function insertHyphens(hex32) {
-  return `${hex32.slice(0, 8)}-${hex32.slice(8, 12)}-${hex32.slice(12, 16)}-${hex32.slice(16, 20)}-${hex32.slice(20)}`;
 }
 
 export function extractFields(uuid) {
@@ -50,7 +48,7 @@ export function computeProperties(raw, normalized, version, variant) {
   const hasHyphens = UUID_REGEX.test(normalized);
   const hasBraces = raw.trim().startsWith("{") && raw.trim().endsWith("}");
   const isNil = /^0+$/.test(hex);
-  const charCount = normalized.replace(/-/g, "").length === 32 && !hasHyphens ? 32 : 36;
+  const charCount = hasHyphens ? 36 : 32;
 
   let format = "canonical";
   if (hasBraces) format = "braces";
@@ -74,7 +72,7 @@ function diagnoseFormat(stripped) {
   const hyphenless = stripped.replace(/-/g, "").toLowerCase();
   const nonHexMatch = hyphenless.match(/[^0-9a-f]/);
   if (nonHexMatch) {
-    const pos = hyphenless.indexOf(nonHexMatch[0]) + 1;
+    const pos = nonHexMatch.index + 1;
     return `invalid character '${nonHexMatch[0]}' at position ${pos}`;
   }
   if (hyphenless.length !== 32) {
@@ -175,20 +173,22 @@ export function decodeUuidV1(fields) {
   };
 }
 
+const RTF = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+
 export function formatRelativeTime(date) {
   const diffMs = Date.now() - date.getTime();
-  const diffSec = Math.round(Math.abs(diffMs) / 1000);
-  const diffMin = Math.round(Math.abs(diffMs) / 60000);
-  const diffHour = Math.round(Math.abs(diffMs) / 3600000);
-  const diffDay = Math.round(Math.abs(diffMs) / 86400000);
+  const absDiffMs = Math.abs(diffMs);
+  const diffSec = Math.round(absDiffMs / 1000);
+  const diffMin = Math.round(absDiffMs / 60000);
+  const diffHour = Math.round(absDiffMs / 3600000);
+  const diffDay = Math.round(absDiffMs / 86400000);
   const sign = diffMs >= 0 ? -1 : 1;
-  const fmt = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
-  if (diffSec < 60) return fmt.format(sign * diffSec, "second");
-  if (diffMin < 60) return fmt.format(sign * diffMin, "minute");
-  if (diffHour < 24) return fmt.format(sign * diffHour, "hour");
-  if (diffDay < 30) return fmt.format(sign * diffDay, "day");
-  const diffMonth = Math.round(Math.abs(diffMs) / (30 * 86400000));
-  if (diffMonth < 24) return fmt.format(sign * diffMonth, "month");
-  const diffYear = Math.round(Math.abs(diffMs) / (365 * 86400000));
-  return fmt.format(sign * diffYear, "year");
+  if (diffSec < 60) return RTF.format(sign * diffSec, "second");
+  if (diffMin < 60) return RTF.format(sign * diffMin, "minute");
+  if (diffHour < 24) return RTF.format(sign * diffHour, "hour");
+  if (diffDay < 30) return RTF.format(sign * diffDay, "day");
+  const diffMonth = Math.round(absDiffMs / (30 * 86400000));
+  if (diffMonth < 24) return RTF.format(sign * diffMonth, "month");
+  const diffYear = Math.round(absDiffMs / (365 * 86400000));
+  return RTF.format(sign * diffYear, "year");
 }
